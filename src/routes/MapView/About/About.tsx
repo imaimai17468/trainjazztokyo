@@ -31,21 +31,15 @@ export default function About(props: Props) {
           onClick={(e) => e.stopPropagation()}
         >
           <p class="mb-6">
-            Every dot is a real train. Over three thousand of them, give or take, form a small jazz
-            combo — walking bass, piano, sax, vibes, brushes — that has been playing without pause
-            since the first Ginza Line train ran in 1927. On the platforms they are precise,
-            relentless, full of ceremony. This is the music inside the silence.
+            ひとつひとつの点は、実際の電車です。およそ三千の列車が、ウォーキングベース、ピアノ、サックス、ヴィブラフォン、ドラム
+            ──
+            小さなジャズの合奏を組み、1872年に新橋から最初の汽車が走り出してからずっと、一度も止まることなく演奏を続けています。ホームでは正確で、容赦なく、儀式のように整然としている。これは、その静寂の内側にある音楽です。
           </p>
           <p class="mb-6">
-            The harmony moves through a slow chorus. A note is placed precisely where the train
-            happens to be along its route. Rush hour fills the band with held tones; past the last
-            train the silences stretch until dawn. Whatever is playing now has not played before and
-            will not play again.
+            ハーモニーはゆっくりとしたコーラスのように進みます。音は、列車が路線上のちょうどその場所にいるところに置かれます。ラッシュアワーにはバンドが長い音で満たされ、終電を過ぎると夜明けまで沈黙が広がります。いま鳴っているものは、これまで鳴ったことがなく、二度と鳴ることもありません。
           </p>
           <p>
-            Share your location and the trains nearest you grow louder. The piece rearranges itself
-            around your body. You are listening to a portrait of where you stand, played by the city
-            you are standing in.
+            位置情報を共有すると、あなたの近くの電車の音が大きくなります。この曲はあなたの身体を中心に再構成されます。あなたが立っている場所の肖像画を、あなたが立っている街が演奏しているのを、聴いているのです。
           </p>
         </div>
       </div>
