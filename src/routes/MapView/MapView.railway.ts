@@ -20,7 +20,7 @@ export function addRailwayLayers(map: maplibregl.Map) {
     source: "railway-lines",
     paint: {
       "line-color": RAILWAY_COLOR,
-      "line-width": 2,
+      "line-width": 1,
     },
   });
 
