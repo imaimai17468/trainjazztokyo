@@ -85,7 +85,7 @@ export default function MapView(props: Props) {
   });
 
   return (
-    <div class="relative w-full h-dvh">
+    <div class="relative w-full h-dvh bg-white transition-colors duration-700 dark:bg-gray-950">
       <div ref={container} class="w-full h-full" style={{ opacity: ready() ? "1" : "0" }} />
       <button
         type="button"
