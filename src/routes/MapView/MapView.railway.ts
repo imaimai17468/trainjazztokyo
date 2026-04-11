@@ -80,46 +80,58 @@ export function addRailwayLayers(map: maplibregl.Map) {
   });
 }
 
+type PulseEntry = {
+  color: string;
+  coordinates: [number, number];
+  startTime: number;
+};
+
+const PULSE_DURATION = 800; // ms
+const activePulses: PulseEntry[] = [];
+let animating = false;
+
 export function triggerDepartures(map: maplibregl.Map, departures: DepartureEvent[]) {
   const source = map.getSource("railway-pulse") as maplibregl.GeoJSONSource | undefined;
   if (!source) return;
 
-  const features = departures.map((d) => ({
-    type: "Feature" as const,
-    properties: { color: d.color, opacity: 1, radius: 3 },
-    geometry: {
-      type: "Point" as const,
-      coordinates: d.coordinates,
-    },
-  }));
-
-  source.setData({ type: "FeatureCollection", features });
-
-  // Animate fade out
-  let frame = 0;
-  const totalFrames = 40;
-
-  function animate() {
-    frame++;
-    const progress = frame / totalFrames;
-    const opacity = 1 - progress;
-    const radius = 3 + progress * 15;
-
-    const updated = features.map((f) => ({
-      ...f,
-      properties: { ...f.properties, opacity, radius },
-    }));
-
-    source!.setData({ type: "FeatureCollection", features: updated });
-
-    if (frame < totalFrames) {
-      requestAnimationFrame(animate);
-    } else {
-      source!.setData({ type: "FeatureCollection", features: [] });
-    }
+  const now = performance.now();
+  for (const d of departures) {
+    activePulses.push({ color: d.color, coordinates: d.coordinates, startTime: now });
   }
 
-  requestAnimationFrame(animate);
+  if (!animating) {
+    animating = true;
+    requestAnimationFrame(() => animatePulses(source));
+  }
+}
+
+function animatePulses(source: maplibregl.GeoJSONSource) {
+  const now = performance.now();
+
+  // Remove expired pulses
+  while (activePulses.length > 0 && now - activePulses[0].startTime > PULSE_DURATION) {
+    activePulses.shift();
+  }
+
+  if (activePulses.length === 0) {
+    source.setData({ type: "FeatureCollection", features: [] });
+    animating = false;
+    return;
+  }
+
+  const features = activePulses.map((p) => {
+    const progress = (now - p.startTime) / PULSE_DURATION;
+    const opacity = 1 - progress;
+    const radius = 3 + progress * 15;
+    return {
+      type: "Feature" as const,
+      properties: { color: p.color, opacity, radius },
+      geometry: { type: "Point" as const, coordinates: p.coordinates },
+    };
+  });
+
+  source.setData({ type: "FeatureCollection", features });
+  requestAnimationFrame(() => animatePulses(source));
 }
 
 export function removeRailwayLayers(map: maplibregl.Map) {
