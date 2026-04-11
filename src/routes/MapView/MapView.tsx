@@ -39,6 +39,7 @@ export default function MapView(props: Props) {
     if (map) {
       changeMapStyle(map, style);
       map.once("style.load", () => {
+        removeBaseRailwayLayers(map!);
         addRailwayLayers(map!);
         if (props.railwayOnly) {
           setBaseLayersVisible(map!, false);
@@ -64,7 +65,7 @@ export default function MapView(props: Props) {
       <button
         type="button"
         onClick={props.onToggleRailwayOnly}
-        class="fixed bottom-4 right-14 z-50 rounded-full bg-gray-200 p-1.5 text-gray-500 dark:bg-gray-800 dark:text-gray-400"
+        class="fixed bottom-4 right-14 z-50 rounded-full bg-gray-200 p-1.5 text-gray-500 transition-colors duration-700 dark:bg-gray-800 dark:text-gray-400"
         aria-label={props.railwayOnly ? "地図を表示" : "線路のみ表示"}
       >
         <TrainFront size={16} />

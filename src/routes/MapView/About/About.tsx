@@ -12,14 +12,14 @@ export default function About(props: Props) {
       <button
         type="button"
         onClick={() => (props.open ? props.onClose() : props.onOpen())}
-        class="fixed bottom-4 right-24 z-50 rounded-full bg-gray-200 p-1.5 text-gray-500 dark:bg-gray-800 dark:text-gray-400"
+        class="fixed bottom-4 right-24 z-50 rounded-full bg-gray-200 p-1.5 text-gray-500 transition-colors duration-700 dark:bg-gray-800 dark:text-gray-400"
         aria-label="About"
       >
         <Info size={16} />
       </button>
 
       <div
-        class="fixed inset-0 z-40 flex justify-center bg-white transition-opacity duration-700 ease-in-out dark:bg-gray-950"
+        class="fixed inset-0 z-40 flex justify-center bg-white transition-[opacity,background-color] duration-700 ease-in-out dark:bg-gray-950"
         classList={{
           "opacity-100 pointer-events-auto": props.open,
           "opacity-0 pointer-events-none": !props.open,
@@ -27,7 +27,7 @@ export default function About(props: Props) {
         onClick={props.onClose}
       >
         <div
-          class="px-6 pt-16 max-w-lg text-sm leading-relaxed text-gray-700 dark:text-gray-300"
+          class="px-6 pt-16 max-w-lg text-sm leading-relaxed text-gray-700 transition-colors duration-700 dark:text-gray-300"
           onClick={(e) => e.stopPropagation()}
         >
           <p class="mb-6">
