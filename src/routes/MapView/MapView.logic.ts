@@ -1,6 +1,6 @@
 import maplibregl from "maplibre-gl";
 
-export type MapOptions = {
+type MapOptions = {
   container: HTMLDivElement;
   center: [number, number];
   zoom: number;
@@ -12,7 +12,7 @@ export const MAP_STYLES = {
   dark: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
 } as const;
 
-export const TOKYO_BOUNDS: [[number, number], [number, number]] = [
+const TOKYO_BOUNDS: [[number, number], [number, number]] = [
   [139.56, 35.53],
   [139.92, 35.82],
 ];

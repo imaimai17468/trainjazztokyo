@@ -4,7 +4,7 @@ import type { DepartureEvent } from "./MapView.timetable";
 
 const RAILWAY_COLOR = "#9ca3af";
 
-export type StationInfo = {
+type StationInfo = {
   name: string;
   lines: string[];
   coordinates: [number, number];
@@ -132,13 +132,4 @@ function animatePulses(source: maplibregl.GeoJSONSource) {
 
   source.setData({ type: "FeatureCollection", features });
   requestAnimationFrame(() => animatePulses(source));
-}
-
-export function removeRailwayLayers(map: maplibregl.Map) {
-  for (const id of ["railway-pulse-glow", "railway-pulse", "railway-stations", "railway-lines"]) {
-    if (map.getLayer(id)) map.removeLayer(id);
-  }
-  for (const id of ["railway-pulse", "railway-stations", "railway-lines"]) {
-    if (map.getSource(id)) map.removeSource(id);
-  }
 }
