@@ -8,7 +8,7 @@ type Props = {
 export default function Intro(props: Props) {
   return (
     <div
-      class="fixed inset-0 z-40 flex items-center justify-center bg-white transition-[opacity,background-color] duration-700 ease-in-out dark:bg-gray-950"
+      class="fixed inset-0 z-60 flex items-center justify-center bg-white transition-[opacity,background-color] duration-700 ease-in-out dark:bg-gray-950"
       classList={{
         "opacity-100 pointer-events-auto": props.open,
         "opacity-0 pointer-events-none": !props.open,

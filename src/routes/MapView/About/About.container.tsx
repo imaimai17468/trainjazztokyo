@@ -1,8 +1,22 @@
 import { createSignal } from "solid-js";
 import About from "./About";
 
-export default function AboutContainer() {
+type Props = {
+  onOpenChange?: (open: boolean) => void;
+};
+
+export default function AboutContainer(props: Props) {
   const [open, setOpen] = createSignal(false);
 
-  return <About open={open()} onOpen={() => setOpen(true)} onClose={() => setOpen(false)} />;
+  const handleOpen = () => {
+    setOpen(true);
+    props.onOpenChange?.(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    props.onOpenChange?.(false);
+  };
+
+  return <About open={open()} onOpen={handleOpen} onClose={handleClose} />;
 }
