@@ -1,4 +1,4 @@
-import { onMount, onCleanup, createEffect } from "solid-js";
+import { onMount, onCleanup, createEffect, untrack } from "solid-js";
 import type maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { Globe } from "lucide-solid";
@@ -62,10 +62,12 @@ export default function MapView(props: Props) {
       center: props.center,
       zoom: props.zoom,
       style: props.style,
-      hideBaseLayers: props.railwayOnly,
     });
 
     map.on("load", () => {
+      if (props.railwayOnly) {
+        setBaseLayersVisible(map!, false);
+      }
       addRailwayLayers(map!);
       startTicking();
     });
@@ -74,17 +76,25 @@ export default function MapView(props: Props) {
   createEffect(() => {
     const style = props.style;
     if (map) {
-      changeMapStyle(map, style, props.railwayOnly);
+      const hide = untrack(() => props.railwayOnly);
+      changeMapStyle(map, style, hide);
       map.once("style.load", () => {
         addRailwayLayers(map!);
+        if (!hide) {
+          setBaseLayersVisible(map!, true);
+        }
       });
     }
   });
 
   createEffect(() => {
     const railwayOnly = props.railwayOnly;
-    if (map && map.isStyleLoaded()) {
-      setBaseLayersVisible(map, !railwayOnly);
+    if (!map) return;
+    const apply = () => setBaseLayersVisible(map!, !railwayOnly);
+    if (map.isStyleLoaded()) {
+      apply();
+    } else {
+      map.once("style.load", apply);
     }
   });
 

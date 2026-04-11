@@ -46,6 +46,8 @@ export function getStations(): StationInfo[] {
 }
 
 export function addRailwayLayers(map: maplibregl.Map) {
+  if (map.getSource("railway-lines")) return;
+
   map.addSource("railway-lines", {
     type: "geojson",
     data: railwayData.lines as GeoJSON.FeatureCollection,
@@ -68,6 +70,7 @@ export function addRailwayLayers(map: maplibregl.Map) {
     paint: {
       "line-color": RAILWAY_COLOR,
       "line-width": 1,
+      "line-opacity": 0.4,
     },
   });
 
@@ -77,7 +80,8 @@ export function addRailwayLayers(map: maplibregl.Map) {
     source: "railway-stations",
     paint: {
       "circle-color": RAILWAY_COLOR,
-      "circle-radius": 3,
+      "circle-radius": 1.5,
+      "circle-opacity": 0.4,
       "circle-stroke-width": 0,
     },
   });

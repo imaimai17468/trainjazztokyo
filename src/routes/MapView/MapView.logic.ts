@@ -5,7 +5,6 @@ type MapOptions = {
   center: [number, number];
   zoom: number;
   style: string;
-  hideBaseLayers: boolean;
 };
 
 export const MAP_STYLES = {
@@ -32,17 +31,48 @@ const RAILWAY_LAYER_IDS = new Set([
   "railway-pulse-glow",
 ]);
 
-function hideBaseLayersTransform(
+const DIM = 0.35;
+
+const TYPE_OPACITY: Record<string, string[]> = {
+  background: ["background-opacity"],
+  fill: ["fill-opacity"],
+  line: ["line-opacity"],
+  symbol: ["text-opacity", "icon-opacity"],
+  raster: ["raster-opacity"],
+  circle: ["circle-opacity"],
+  "fill-extrusion": ["fill-extrusion-opacity"],
+};
+
+function dimLayout(layout: Record<string, unknown> = {}): Record<string, unknown> {
+  const out = { ...layout };
+  const size = out["text-size"];
+  if (typeof size === "number") {
+    out["text-size"] = size * 0.7;
+  }
+  return out;
+}
+
+function transformStyle(
+  hide: boolean,
   _prev: maplibregl.StyleSpecification | undefined,
   next: maplibregl.StyleSpecification,
 ): maplibregl.StyleSpecification {
   return {
     ...next,
-    layers: next.layers.map((layer) =>
-      RAILWAY_LAYER_IDS.has(layer.id)
-        ? layer
-        : { ...layer, layout: { ...layer.layout, visibility: "none" as const } },
-    ),
+    layers: next.layers.map((layer) => {
+      if (RAILWAY_LAYER_IDS.has(layer.id)) return layer;
+      const keys = TYPE_OPACITY[layer.type];
+      if (!keys) return layer;
+      const paint = { ...(layer.paint as Record<string, unknown>) };
+      for (const key of keys) {
+        paint[key] = hide ? 0 : DIM;
+      }
+      const result = { ...layer, paint };
+      if (!hide && layer.layout) {
+        result.layout = dimLayout(layer.layout as Record<string, unknown>);
+      }
+      return result;
+    }),
   };
 }
 
@@ -67,8 +97,6 @@ export function createMap(options: MapOptions): maplibregl.Map {
     attributionControl: false,
     fadeDuration: 0,
     renderWorldCopies: false,
-    antialias: false,
-    transformStyle: options.hideBaseLayers ? hideBaseLayersTransform : undefined,
   });
 
   map.fitBounds(DEFAULT_BOUNDS, { padding: 20 });
@@ -81,24 +109,20 @@ export function changeMapStyle(
   style: string,
   hideBaseLayers: boolean,
 ) {
-  cachedBaseLayerIds = null;
   map?.setStyle(style, {
-    transformStyle: hideBaseLayers ? hideBaseLayersTransform : undefined,
+    transformStyle: (prev, next) => transformStyle(hideBaseLayers, prev, next),
   });
 }
 
-let cachedBaseLayerIds: string[] | null = null;
-
 export function setBaseLayersVisible(map: maplibregl.Map, visible: boolean) {
-  const visibility = visible ? "visible" : "none";
-  if (!cachedBaseLayerIds) {
-    cachedBaseLayerIds = map
-      .getStyle()
-      .layers.filter((l) => !RAILWAY_LAYER_IDS.has(l.id))
-      .map((l) => l.id);
-  }
-  for (const id of cachedBaseLayerIds) {
-    map.setLayoutProperty(id, "visibility", visibility);
+  const style = map.getStyle();
+  for (const layer of style.layers) {
+    if (RAILWAY_LAYER_IDS.has(layer.id)) continue;
+    const keys = TYPE_OPACITY[layer.type];
+    if (!keys) continue;
+    for (const key of keys) {
+      map.setPaintProperty(layer.id, key, visible ? DIM : 0);
+    }
   }
 }
 
