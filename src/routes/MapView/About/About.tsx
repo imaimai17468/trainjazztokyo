@@ -17,8 +17,19 @@ export function AboutText() {
       <p class="mb-6">
         ハーモニーはゆっくりとしたコーラスのように進みます。音は、列車が路線上のちょうどその場所にいるところに置かれます。ラッシュアワーにはバンドが長い音で満たされ、終電を過ぎると夜明けまで沈黙が広がります。いま鳴っているものは、これまで鳴ったことがなく、二度と鳴ることもありません。
       </p>
-      <p>
+      <p class="mb-6">
         位置情報を共有すると、あなたの近くの電車の音が大きくなります。この曲はあなたの身体を中心に再構成されます。あなたが立っている場所の肖像画を、あなたが立っている街が演奏しているのを、聴いているのです。
+      </p>
+      <p class="text-xs text-gray-400 dark:text-gray-500">
+        Inspired by{" "}
+        <a
+          href="https://www.trainjazz.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="underline"
+        >
+          trainjazz.com
+        </a>
       </p>
     </>
   );
