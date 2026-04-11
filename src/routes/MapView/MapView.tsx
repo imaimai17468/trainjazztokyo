@@ -3,7 +3,8 @@ import type maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { TrainFront } from "lucide-solid";
 import { createMap, changeMapStyle, setBaseLayersVisible, destroyMap } from "./MapView.logic";
-import { addRailwayLayers } from "./MapView.railway";
+import { addRailwayLayers, getStations, triggerDepartures } from "./MapView.railway";
+import { getDepartures } from "./MapView.timetable";
 import AboutContainer from "./About/About.container";
 
 type Props = {
@@ -17,6 +18,27 @@ type Props = {
 export default function MapView(props: Props) {
   let container!: HTMLDivElement;
   let map: maplibregl.Map | undefined;
+  let tickInterval: ReturnType<typeof setInterval> | undefined;
+
+  const stations = getStations();
+
+  const startTicking = () => {
+    stopTicking();
+    tickInterval = setInterval(() => {
+      if (!map) return;
+      const departures = getDepartures(stations, new Date());
+      if (departures.length > 0) {
+        triggerDepartures(map, departures);
+      }
+    }, 1000);
+  };
+
+  const stopTicking = () => {
+    if (tickInterval) {
+      clearInterval(tickInterval);
+      tickInterval = undefined;
+    }
+  };
 
   onMount(() => {
     map = createMap({
@@ -31,6 +53,7 @@ export default function MapView(props: Props) {
       if (props.railwayOnly) {
         setBaseLayersVisible(map!, false);
       }
+      startTicking();
     });
   });
 
@@ -55,6 +78,7 @@ export default function MapView(props: Props) {
   });
 
   onCleanup(() => {
+    stopTicking();
     destroyMap(map);
   });
 
