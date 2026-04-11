@@ -12,6 +12,7 @@
     "typecheck": "tsgo --noEmit"
   },
   "dependencies": {
+    "@fontsource-variable/m-plus-1-code": "^5.2.9",
     "@solidjs/router": "^0.15.0",
     "@solidjs/start": "2.0.0-alpha.2",
     "@solidjs/vite-plugin-nitro-2": "^0.1.0",
@@ -22,6 +23,8 @@
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.0.7",
+    "@types/geojson": "^7946.0.16",
+    "@types/node": "^25.6.0",
     "@typescript/native-preview": "7.0.0-dev.20260410.1",
     "oxfmt": "^0.44.0",
     "oxlint": "^1.59.0",
