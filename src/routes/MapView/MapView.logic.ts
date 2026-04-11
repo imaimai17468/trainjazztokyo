@@ -34,6 +34,8 @@ export function createMap(options: MapOptions): maplibregl.Map {
     attributionControl: false,
   });
 
+  map.fitBounds(TOKYO_BOUNDS, { padding: 0 });
+
   return map;
 }
 
