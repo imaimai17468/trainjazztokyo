@@ -17,7 +17,12 @@ export const TOKYO_BOUNDS: [[number, number], [number, number]] = [
   [139.92, 35.82],
 ];
 
-const RAILWAY_LAYER_IDS = new Set(["railway-lines", "railway-stations"]);
+const RAILWAY_LAYER_IDS = new Set([
+  "railway-lines",
+  "railway-stations",
+  "railway-pulse",
+  "railway-pulse-glow",
+]);
 
 export function createMap(options: MapOptions): maplibregl.Map {
   const map = new maplibregl.Map({

@@ -1,7 +1,7 @@
-import { onMount, onCleanup, createEffect } from "solid-js";
+import { onMount, onCleanup, createEffect, createSignal } from "solid-js";
 import type maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { TrainFront } from "lucide-solid";
+import { Globe } from "lucide-solid";
 import { createMap, changeMapStyle, setBaseLayersVisible, destroyMap } from "./MapView.logic";
 import { addRailwayLayers, getStations, triggerDepartures } from "./MapView.railway";
 import { getDepartures } from "./MapView.timetable";
@@ -19,6 +19,7 @@ export default function MapView(props: Props) {
   let container!: HTMLDivElement;
   let map: maplibregl.Map | undefined;
   let tickInterval: ReturnType<typeof setInterval> | undefined;
+  const [ready, setReady] = createSignal(false);
 
   const stations = getStations();
 
@@ -53,6 +54,7 @@ export default function MapView(props: Props) {
       if (props.railwayOnly) {
         setBaseLayersVisible(map!, false);
       }
+      setReady(true);
       startTicking();
     });
   });
@@ -84,14 +86,14 @@ export default function MapView(props: Props) {
 
   return (
     <div class="relative w-full h-dvh">
-      <div ref={container} class="w-full h-full" />
+      <div ref={container} class="w-full h-full" style={{ opacity: ready() ? "1" : "0" }} />
       <button
         type="button"
         onClick={props.onToggleRailwayOnly}
         class="fixed bottom-4 right-14 z-50 rounded-full bg-gray-200 p-1.5 text-gray-500 transition-colors duration-700 dark:bg-gray-800 dark:text-gray-400"
         aria-label={props.railwayOnly ? "地図を表示" : "線路のみ表示"}
       >
-        <TrainFront size={16} />
+        <Globe size={16} />
       </button>
       <AboutContainer />
     </div>

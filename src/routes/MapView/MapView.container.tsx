@@ -10,7 +10,7 @@ const DEFAULT_ZOOM = 12;
 
 export default function MapViewContainer() {
   const theme = useTheme();
-  const [railwayOnly, setRailwayOnly] = createSignal(false);
+  const [railwayOnly, setRailwayOnly] = createSignal(true);
 
   return (
     <MapViewPresenter
