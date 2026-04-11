@@ -88,31 +88,43 @@ async function fetchWithRetry(query: string, retries = 3): Promise<OverpassEleme
 
 async function fetchLine(name: string): Promise<OverpassElement[]> {
   const query = `[out:json][timeout:60];
-(
-  relation["route"~"train|subway"]["name"~"${name}"](${BBOX});
-);
-out body;
->;
-out skel qt;`;
+relation["route"~"train|subway"]["name"~"${name}"](${BBOX})->.rels;
+.rels out body;
+.rels >;
+out skel qt;
+node(r.rels:"stop")->.stops;
+.stops out body;`;
   return fetchWithRetry(query);
 }
 
-async function fetchStations(): Promise<OverpassElement[]> {
-  const query = `[out:json][timeout:60];
-node["railway"="station"]["name"](${BBOX});
-out body;`;
-  return fetchWithRetry(query);
-}
-
-function buildLines(elements: OverpassElement[]): GeoJSONFeature[] {
+function buildLinesAndStations(elements: OverpassElement[]): {
+  lines: GeoJSONFeature[];
+  stations: GeoJSONFeature[];
+} {
   const nodeMap = new Map<number, [number, number]>();
+  const stationNodes = new Set<number>();
+
+  // Collect stop node IDs from relations
+  for (const el of elements) {
+    if (el.type === "relation" && el.members) {
+      for (const m of el.members) {
+        if (
+          m.type === "node" &&
+          (m.role === "stop" || m.role === "stop_entry_only" || m.role === "stop_exit_only")
+        ) {
+          stationNodes.add(m.ref);
+        }
+      }
+    }
+  }
+
   for (const el of elements) {
     if (el.type === "node" && el.lat != null && el.lon != null) {
       nodeMap.set(el.id, [el.lon, el.lat]);
     }
   }
 
-  return elements
+  const lines = elements
     .filter((el) => el.type === "way" && el.nodes)
     .map((el) => {
       const coords = el
@@ -124,16 +136,16 @@ function buildLines(elements: OverpassElement[]): GeoJSONFeature[] {
         geometry: { type: "LineString" as const, coordinates: coords },
       };
     });
-}
 
-function buildStations(elements: OverpassElement[]): GeoJSONFeature[] {
-  return elements
-    .filter((el) => el.type === "node" && el.tags?.railway === "station" && el.lat != null)
+  const stations = elements
+    .filter((el) => el.type === "node" && el.tags?.name && el.lat != null)
     .map((el) => ({
       type: "Feature" as const,
       properties: { name: el.tags?.name ?? "" },
       geometry: { type: "Point" as const, coordinates: [el.lon!, el.lat!] },
     }));
+
+  return { lines, stations };
 }
 
 async function main() {
@@ -145,38 +157,37 @@ async function main() {
     existing = JSON.parse(readFileSync(CACHE_PATH, "utf-8"));
   }
 
-  console.log("Fetching 24 railway lines...");
+  console.log("Fetching 24 railway lines and their stations...");
 
   const allLineFeatures: GeoJSONFeature[] = [];
+  const allStationFeatures: GeoJSONFeature[] = [];
+  const seenStations = new Set<string>();
 
   for (const name of LINES) {
     console.log(`  Fetching: ${name}`);
     try {
       const elements = await fetchLine(name);
-      const features = buildLines(elements);
-      allLineFeatures.push(...features);
-      console.log(`    → ${features.length} segments`);
+      const { lines, stations } = buildLinesAndStations(elements);
+      allLineFeatures.push(...lines);
+      for (const s of stations) {
+        const key = JSON.stringify(s.geometry.coordinates);
+        if (!seenStations.has(key)) {
+          seenStations.add(key);
+          allStationFeatures.push(s);
+        }
+      }
+      console.log(`    → ${lines.length} segments, ${stations.length} stations`);
     } catch (e) {
       console.error(`    ✗ Failed: ${e}`);
     }
     await sleep(3000);
   }
 
-  console.log("Fetching stations...");
-  let stationFeatures: GeoJSONFeature[];
-  try {
-    const stationElements = await fetchStations();
-    stationFeatures = buildStations(stationElements);
-    console.log(`  → ${stationFeatures.length} stations`);
-  } catch (e) {
-    console.error(`  ✗ Failed: ${e}`);
-    stationFeatures = existing?.stations?.features ?? [];
-    console.log(`  Using cached ${stationFeatures.length} stations`);
-  }
+  console.log(`\nTotal: ${allStationFeatures.length} unique stations`);
 
   const result = {
     lines: { type: "FeatureCollection", features: allLineFeatures },
-    stations: { type: "FeatureCollection", features: stationFeatures },
+    stations: { type: "FeatureCollection", features: allStationFeatures },
   };
 
   writeFileSync(CACHE_PATH, JSON.stringify(result));

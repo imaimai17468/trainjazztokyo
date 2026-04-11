@@ -39,7 +39,6 @@ export default function MapView(props: Props) {
     if (map) {
       changeMapStyle(map, style);
       map.once("style.load", () => {
-        removeBaseRailwayLayers(map!);
         addRailwayLayers(map!);
         if (props.railwayOnly) {
           setBaseLayersVisible(map!, false);
