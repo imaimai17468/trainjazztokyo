@@ -90,7 +90,11 @@ export default function MapView(props: Props) {
       <button
         type="button"
         onClick={props.onToggleRailwayOnly}
-        class="fixed bottom-4 right-14 z-50 rounded-full bg-gray-200 p-1.5 text-gray-500 transition-colors duration-700 dark:bg-gray-800 dark:text-gray-400"
+        class="fixed bottom-4 right-14 z-50 rounded-full p-1.5 transition-colors duration-700"
+        classList={{
+          "bg-gray-200 text-gray-500 dark:bg-gray-800 dark:text-gray-400": props.railwayOnly,
+          "bg-gray-800 text-white dark:bg-gray-200 dark:text-gray-900": !props.railwayOnly,
+        }}
         aria-label={props.railwayOnly ? "地図を表示" : "線路のみ表示"}
       >
         <Globe size={16} />
