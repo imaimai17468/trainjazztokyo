@@ -115,12 +115,14 @@ type PulseEntry = {
   color: string;
   coordinates: [number, number];
   startTime: number;
+  line: string;
 };
 
 const PULSE_DURATION = 800; // ms
 const activePulses: PulseEntry[] = [];
 let animating = false;
 let pulseMap: maplibregl.Map | undefined;
+let highlightedLines: Set<string> | null = null;
 
 export function triggerDepartures(map: maplibregl.Map, departures: DepartureEvent[]) {
   if (!map.getSource("railway-pulse")) return;
@@ -128,7 +130,7 @@ export function triggerDepartures(map: maplibregl.Map, departures: DepartureEven
 
   const now = performance.now();
   for (const d of departures) {
-    activePulses.push({ color: d.color, coordinates: d.coordinates, startTime: now });
+    activePulses.push({ color: d.color, coordinates: d.coordinates, startTime: now, line: d.line });
   }
 
   if (!animating) {
@@ -156,7 +158,11 @@ function animatePulses() {
     return;
   }
 
-  const features = activePulses.map((p) => {
+  const visiblePulses = highlightedLines
+    ? activePulses.filter((p) => highlightedLines!.has(p.line))
+    : activePulses;
+
+  const features = visiblePulses.map((p) => {
     const progress = (now - p.startTime) / PULSE_DURATION;
     const opacity = 1 - progress;
     const radius = 3 + progress * 15;
@@ -172,11 +178,17 @@ function animatePulses() {
 }
 
 export function highlightLines(map: maplibregl.Map, lineNames: string[] | null) {
+  highlightedLines = lineNames ? new Set(lineNames) : null;
+
   if (!lineNames) {
     map.setPaintProperty("railway-lines", "line-color", RAILWAY_COLOR);
     map.setPaintProperty("railway-lines", "line-width", 1);
+    map.setPaintProperty("railway-lines", "line-opacity", 0.4);
+    map.setPaintProperty("railway-stations", "circle-opacity", 0.4);
     return;
   }
+
+  const DIM_LINE = 0.1;
 
   map.setPaintProperty("railway-lines", "line-color", [
     "match",
@@ -188,6 +200,13 @@ export function highlightLines(map: maplibregl.Map, lineNames: string[] | null) 
     "match",
     ["get", "line"],
     ...lineNames.flatMap((n) => [n, 2.5]),
-    1,
+    0.5,
   ]);
+  map.setPaintProperty("railway-lines", "line-opacity", [
+    "match",
+    ["get", "line"],
+    ...lineNames.flatMap((n) => [n, 1]),
+    DIM_LINE,
+  ]);
+  map.setPaintProperty("railway-stations", "circle-opacity", 0);
 }

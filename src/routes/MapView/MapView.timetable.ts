@@ -67,6 +67,7 @@ const LINE_COLORS: Record<string, string> = {
 
 export type DepartureEvent = {
   stationName: string;
+  line: string;
   lines: string[];
   coordinates: [number, number];
   color: string;
@@ -86,6 +87,7 @@ export function getDepartures(
     const line = station.lines[Math.floor(Math.random() * station.lines.length)];
     departures.push({
       stationName: station.name,
+      line,
       lines: station.lines,
       coordinates: station.coordinates,
       color: LINE_COLORS[line] ?? "#9ca3af",
