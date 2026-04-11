@@ -2,7 +2,13 @@ import { onMount, onCleanup, createEffect } from "solid-js";
 import type maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { Globe } from "lucide-solid";
-import { createMap, changeMapStyle, setBaseLayersVisible, destroyMap } from "./MapView.logic";
+import {
+  createMap,
+  changeMapStyle,
+  setBaseLayersVisible,
+  destroyMap,
+  prefetchStyles,
+} from "./MapView.logic";
 import { addRailwayLayers, getStations, triggerDepartures } from "./MapView.railway";
 import { getDepartures } from "./MapView.timetable";
 import AboutContainer from "./About/About.container";
@@ -41,6 +47,7 @@ export default function MapView(props: Props) {
   };
 
   onMount(() => {
+    prefetchStyles();
     map = createMap({
       container,
       center: props.center,

@@ -39,6 +39,17 @@ function hideBaseLayersTransform(
   };
 }
 
+export function prefetchStyles() {
+  for (const url of Object.values(MAP_STYLES)) {
+    const link = document.createElement("link");
+    link.rel = "prefetch";
+    link.href = url;
+    link.as = "fetch";
+    link.crossOrigin = "anonymous";
+    document.head.appendChild(link);
+  }
+}
+
 export function createMap(options: MapOptions): maplibregl.Map {
   const map = new maplibregl.Map({
     container: options.container,
@@ -47,6 +58,9 @@ export function createMap(options: MapOptions): maplibregl.Map {
     zoom: options.zoom,
     maxBounds: TOKYO_BOUNDS,
     attributionControl: false,
+    fadeDuration: 0,
+    renderWorldCopies: false,
+    antialias: false,
     transformStyle: options.hideBaseLayers ? hideBaseLayersTransform : undefined,
   });
 
