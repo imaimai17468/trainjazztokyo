@@ -87,32 +87,21 @@ export type DepartureEvent = {
 
 export function getDepartures(
   stations: { name: string; lines: string[]; coordinates: [number, number] }[],
-  now: Date,
+  _now: Date,
 ): DepartureEvent[] {
-  const hour = now.getHours();
-  if (!isOperating(hour)) return [];
-
-  const period = getPeriod(hour);
-  const totalSeconds = hour * 3600 + now.getMinutes() * 60 + now.getSeconds();
   const departures: DepartureEvent[] = [];
 
   for (const station of stations) {
-    for (const line of station.lines) {
-      const headway = (HEADWAYS[line] ?? DEFAULT_HEADWAY)[period];
-      const offset = stationHash(station.name + line) % headway;
-      const secondsInCycle = (totalSeconds - offset + headway * 1000) % headway;
+    // ~0.3% chance per 100ms tick ≈ one fire every ~3s per station
+    if (Math.random() > 0.003) continue;
 
-      // Fire if within 1 second of departure
-      if (secondsInCycle < 1) {
-        departures.push({
-          stationName: station.name,
-          lines: station.lines,
-          coordinates: station.coordinates,
-          color: LINE_COLORS[line] ?? "#9ca3af",
-        });
-        break; // One departure per station per tick
-      }
-    }
+    const line = station.lines[Math.floor(Math.random() * station.lines.length)];
+    departures.push({
+      stationName: station.name,
+      lines: station.lines,
+      coordinates: station.coordinates,
+      color: LINE_COLORS[line] ?? "#9ca3af",
+    });
   }
 
   return departures;

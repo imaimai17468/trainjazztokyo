@@ -30,7 +30,7 @@ export default function MapView(props: Props) {
       if (departures.length > 0) {
         triggerDepartures(map, departures);
       }
-    }, 1000);
+    }, 100);
   };
 
   const stopTicking = () => {
