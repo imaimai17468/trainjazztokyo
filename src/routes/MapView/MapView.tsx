@@ -1,7 +1,7 @@
-import { onMount, onCleanup } from "solid-js";
+import { onMount, onCleanup, createEffect } from "solid-js";
 import type maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { createMap, destroyMap } from "./MapView.logic";
+import { createMap, changeMapStyle, destroyMap } from "./MapView.logic";
 
 type Props = {
   center: [number, number];
@@ -20,6 +20,10 @@ export default function MapView(props: Props) {
       zoom: props.zoom,
       style: props.style,
     });
+  });
+
+  createEffect(() => {
+    changeMapStyle(map, props.style);
   });
 
   onCleanup(() => {
