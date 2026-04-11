@@ -1,35 +1,7 @@
 import type maplibregl from "maplibre-gl";
 import railwayData from "./tokyo-railway.json";
 import type { DepartureEvent } from "./MapView.timetable";
-
-const RAILWAY_COLOR = "#9ca3af";
-
-const LINE_COLOR_MAP: Record<string, string> = {
-  山手線: "#9acd32",
-  中央線快速: "#f15a22",
-  "中央・総武緩行線": "#ffd400",
-  京浜東北線: "#00b2e5",
-  埼京線: "#00ac9b",
-  湘南新宿ライン: "#e85298",
-  上野東京ライン: "#f15a22",
-  東京メトロ銀座線: "#f39700",
-  東京メトロ丸ノ内線: "#e60012",
-  東京メトロ日比谷線: "#9caeb7",
-  東京メトロ東西線: "#00a7db",
-  東京メトロ千代田線: "#00a650",
-  東京メトロ有楽町線: "#c1a470",
-  東京メトロ半蔵門線: "#8b76d0",
-  東京メトロ南北線: "#00ada9",
-  東京メトロ副都心線: "#9c5e31",
-  都営浅草線: "#e85298",
-  都営三田線: "#0079c2",
-  都営新宿線: "#6cbb5a",
-  都営大江戸線: "#b6007a",
-  東急東横線: "#da0442",
-  東急田園都市線: "#009944",
-  小田急小田原線: "#1e90ff",
-  京王線: "#dd0077",
-};
+import { RAILWAY_COLOR, LINE_COLORS } from "./MapView.lines";
 
 type StationInfo = {
   name: string;
@@ -118,11 +90,19 @@ type PulseEntry = {
   line: string;
 };
 
-const PULSE_DURATION = 800; // ms
-const activePulses: PulseEntry[] = [];
+const MAX_PULSES = 200;
+const PULSE_DURATION = 800;
+let activePulses: PulseEntry[] = [];
 let animating = false;
 let pulseMap: maplibregl.Map | undefined;
 let highlightedLines: Set<string> | null = null;
+
+export function resetPulseState() {
+  activePulses = [];
+  animating = false;
+  pulseMap = undefined;
+  highlightedLines = null;
+}
 
 export function triggerDepartures(map: maplibregl.Map, departures: DepartureEvent[]) {
   if (!map.getSource("railway-pulse")) return;
@@ -131,6 +111,10 @@ export function triggerDepartures(map: maplibregl.Map, departures: DepartureEven
   const now = performance.now();
   for (const d of departures) {
     activePulses.push({ color: d.color, coordinates: d.coordinates, startTime: now, line: d.line });
+  }
+
+  if (activePulses.length > MAX_PULSES) {
+    activePulses = activePulses.slice(-MAX_PULSES);
   }
 
   if (!animating) {
@@ -148,8 +132,15 @@ function animatePulses() {
 
   const now = performance.now();
 
-  while (activePulses.length > 0 && now - activePulses[0].startTime > PULSE_DURATION) {
-    activePulses.shift();
+  let expiredCount = 0;
+  while (
+    expiredCount < activePulses.length &&
+    now - activePulses[expiredCount].startTime > PULSE_DURATION
+  ) {
+    expiredCount++;
+  }
+  if (expiredCount > 0) {
+    activePulses = activePulses.slice(expiredCount);
   }
 
   if (activePulses.length === 0) {
@@ -193,7 +184,7 @@ export function highlightLines(map: maplibregl.Map, lineNames: string[] | null) 
   map.setPaintProperty("railway-lines", "line-color", [
     "match",
     ["get", "line"],
-    ...lineNames.flatMap((n) => [n, LINE_COLOR_MAP[n] ?? RAILWAY_COLOR]),
+    ...lineNames.flatMap((n) => [n, LINE_COLORS[n] ?? RAILWAY_COLOR]),
     RAILWAY_COLOR,
   ]);
   map.setPaintProperty("railway-lines", "line-width", [

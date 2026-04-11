@@ -14,6 +14,7 @@ import {
   getStations,
   triggerDepartures,
   highlightLines,
+  resetPulseState,
 } from "./MapView.railway";
 import { getDepartures } from "./MapView.timetable";
 import AboutContainer from "./About/About.container";
@@ -42,7 +43,7 @@ export default function MapView(props: Props) {
     stopTicking();
     tickInterval = setInterval(() => {
       if (!map) return;
-      const departures = getDepartures(stations, new Date());
+      const departures = getDepartures(stations);
       if (departures.length > 0) {
         triggerDepartures(map, departures);
       }
@@ -101,6 +102,7 @@ export default function MapView(props: Props) {
 
   onCleanup(() => {
     stopTicking();
+    resetPulseState();
     destroyMap(map);
   });
 

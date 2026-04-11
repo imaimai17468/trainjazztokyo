@@ -215,9 +215,9 @@ export default function Legend(props: Props) {
     <>
       <div
         class="fixed top-4 left-4 z-50 flex flex-col gap-1.5 transition-opacity duration-700"
-        style={{
-          opacity: props.visible ? "1" : "0",
-          "pointer-events": props.visible ? "auto" : "none",
+        classList={{
+          "opacity-100 pointer-events-auto": props.visible,
+          "opacity-0 pointer-events-none": !props.visible,
         }}
       >
         {ROWS.map((row) => (
