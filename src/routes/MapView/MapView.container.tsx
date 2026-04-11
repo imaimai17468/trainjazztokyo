@@ -1,3 +1,4 @@
+import { createSignal } from "solid-js";
 import { clientOnly } from "@solidjs/start";
 import { useTheme } from "~/ThemeToggle/ThemeToggle.logic";
 import { MAP_STYLES } from "./MapView.logic";
@@ -9,6 +10,15 @@ const DEFAULT_ZOOM = 12;
 
 export default function MapViewContainer() {
   const theme = useTheme();
+  const [railwayOnly, setRailwayOnly] = createSignal(false);
 
-  return <MapViewPresenter center={TOKYO_CENTER} zoom={DEFAULT_ZOOM} style={MAP_STYLES[theme()]} />;
+  return (
+    <MapViewPresenter
+      center={TOKYO_CENTER}
+      zoom={DEFAULT_ZOOM}
+      style={MAP_STYLES[theme()]}
+      railwayOnly={railwayOnly()}
+      onToggleRailwayOnly={() => setRailwayOnly((v) => !v)}
+    />
+  );
 }

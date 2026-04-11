@@ -13,9 +13,11 @@ export const MAP_STYLES = {
 } as const;
 
 export const TOKYO_BOUNDS: [[number, number], [number, number]] = [
-  [139.5, 35.5],
-  [140.05, 35.85],
+  [139.56, 35.53],
+  [139.92, 35.82],
 ];
+
+const RAILWAY_LAYER_IDS = new Set(["railway-lines", "railway-stations"]);
 
 export function createMap(options: MapOptions): maplibregl.Map {
   const map = new maplibregl.Map({
@@ -32,6 +34,15 @@ export function createMap(options: MapOptions): maplibregl.Map {
 
 export function changeMapStyle(map: maplibregl.Map | undefined, style: string) {
   map?.setStyle(style);
+}
+
+export function setBaseLayersVisible(map: maplibregl.Map, visible: boolean) {
+  const visibility = visible ? "visible" : "none";
+  for (const layer of map.getStyle().layers) {
+    if (!RAILWAY_LAYER_IDS.has(layer.id)) {
+      map.setLayoutProperty(layer.id, "visibility", visibility);
+    }
+  }
 }
 
 export function destroyMap(map: maplibregl.Map | undefined) {
