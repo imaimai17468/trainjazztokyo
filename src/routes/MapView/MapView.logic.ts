@@ -12,15 +12,20 @@ export const MAP_STYLES = {
   dark: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
 } as const;
 
+export const TOKYO_BOUNDS: [[number, number], [number, number]] = [
+  [139.5, 35.5],
+  [140.05, 35.85],
+];
+
 export function createMap(options: MapOptions): maplibregl.Map {
   const map = new maplibregl.Map({
     container: options.container,
     style: options.style,
     center: options.center,
     zoom: options.zoom,
+    maxBounds: TOKYO_BOUNDS,
+    attributionControl: false,
   });
-
-  map.addControl(new maplibregl.NavigationControl(), "top-right");
 
   return map;
 }
