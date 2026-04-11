@@ -116,10 +116,11 @@ type PulseEntry = {
 const PULSE_DURATION = 800; // ms
 const activePulses: PulseEntry[] = [];
 let animating = false;
+let pulseMap: maplibregl.Map | undefined;
 
 export function triggerDepartures(map: maplibregl.Map, departures: DepartureEvent[]) {
-  const source = map.getSource("railway-pulse") as maplibregl.GeoJSONSource | undefined;
-  if (!source) return;
+  if (!map.getSource("railway-pulse")) return;
+  pulseMap = map;
 
   const now = performance.now();
   for (const d of departures) {
@@ -128,14 +129,19 @@ export function triggerDepartures(map: maplibregl.Map, departures: DepartureEven
 
   if (!animating) {
     animating = true;
-    requestAnimationFrame(() => animatePulses(source));
+    requestAnimationFrame(animatePulses);
   }
 }
 
-function animatePulses(source: maplibregl.GeoJSONSource) {
+function animatePulses() {
+  const source = pulseMap?.getSource("railway-pulse") as maplibregl.GeoJSONSource | undefined;
+  if (!source) {
+    animating = false;
+    return;
+  }
+
   const now = performance.now();
 
-  // Remove expired pulses
   while (activePulses.length > 0 && now - activePulses[0].startTime > PULSE_DURATION) {
     activePulses.shift();
   }
@@ -158,7 +164,7 @@ function animatePulses(source: maplibregl.GeoJSONSource) {
   });
 
   source.setData({ type: "FeatureCollection", features });
-  requestAnimationFrame(() => animatePulses(source));
+  requestAnimationFrame(animatePulses);
 }
 
 export function highlightLines(map: maplibregl.Map, lineNames: string[] | null) {
