@@ -10,7 +10,8 @@
     "fmt": "oxfmt --write .",
     "fmt:check": "oxfmt --check .",
     "typecheck": "tsgo --noEmit",
-    "knip": "knip"
+    "knip": "knip",
+    "serve": "vite build && node .output/server/index.mjs"
   },
   "dependencies": {
     "@fontsource-variable/m-plus-1-code": "^5.2.9",
