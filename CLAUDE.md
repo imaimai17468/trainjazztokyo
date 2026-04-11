@@ -94,15 +94,17 @@ export default function Home() {
 [Knip](https://knip.dev/) で未使用の export やファイルを検出する。
 
 ```sh
+# 初回セットアップ: pnpm create @knip/config
 pnpm knip
 ```
 
 ### コード重複検出
 
-[similarity](https://github.com/mizchi/similarity) で類似・重複コードを検出する。
+[similarity-ts](https://github.com/mizchi/similarity) で類似・重複コードを検出する。
 
 ```sh
-pnpm similarity
+similarity-ts .
+similarity-ts . --print  # コード表示付き
 ```
 
 ## Tailwind CSS
