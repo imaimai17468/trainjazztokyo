@@ -5,6 +5,7 @@ type MapOptions = {
   center: [number, number];
   zoom: number;
   style: string;
+  hideBaseLayers: boolean;
 };
 
 export const MAP_STYLES = {
@@ -24,6 +25,20 @@ const RAILWAY_LAYER_IDS = new Set([
   "railway-pulse-glow",
 ]);
 
+function hideBaseLayersTransform(
+  _prev: maplibregl.StyleSpecification | undefined,
+  next: maplibregl.StyleSpecification,
+): maplibregl.StyleSpecification {
+  return {
+    ...next,
+    layers: next.layers.map((layer) =>
+      RAILWAY_LAYER_IDS.has(layer.id)
+        ? layer
+        : { ...layer, layout: { ...layer.layout, visibility: "none" as const } },
+    ),
+  };
+}
+
 export function createMap(options: MapOptions): maplibregl.Map {
   const map = new maplibregl.Map({
     container: options.container,
@@ -32,6 +47,7 @@ export function createMap(options: MapOptions): maplibregl.Map {
     zoom: options.zoom,
     maxBounds: TOKYO_BOUNDS,
     attributionControl: false,
+    transformStyle: options.hideBaseLayers ? hideBaseLayersTransform : undefined,
   });
 
   map.fitBounds(TOKYO_BOUNDS, { padding: 0 });
@@ -39,9 +55,15 @@ export function createMap(options: MapOptions): maplibregl.Map {
   return map;
 }
 
-export function changeMapStyle(map: maplibregl.Map | undefined, style: string) {
+export function changeMapStyle(
+  map: maplibregl.Map | undefined,
+  style: string,
+  hideBaseLayers: boolean,
+) {
   cachedBaseLayerIds = null;
-  map?.setStyle(style);
+  map?.setStyle(style, {
+    transformStyle: hideBaseLayers ? hideBaseLayersTransform : undefined,
+  });
 }
 
 let cachedBaseLayerIds: string[] | null = null;

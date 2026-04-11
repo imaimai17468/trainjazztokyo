@@ -1,4 +1,4 @@
-import { onMount, onCleanup, createEffect, createSignal } from "solid-js";
+import { onMount, onCleanup, createEffect } from "solid-js";
 import type maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { Globe } from "lucide-solid";
@@ -19,7 +19,6 @@ export default function MapView(props: Props) {
   let container!: HTMLDivElement;
   let map: maplibregl.Map | undefined;
   let tickInterval: ReturnType<typeof setInterval> | undefined;
-  const [ready, setReady] = createSignal(false);
 
   const stations = getStations();
 
@@ -47,14 +46,11 @@ export default function MapView(props: Props) {
       center: props.center,
       zoom: props.zoom,
       style: props.style,
+      hideBaseLayers: props.railwayOnly,
     });
 
     map.on("load", () => {
       addRailwayLayers(map!);
-      if (props.railwayOnly) {
-        setBaseLayersVisible(map!, false);
-      }
-      setReady(true);
       startTicking();
     });
   });
@@ -62,12 +58,9 @@ export default function MapView(props: Props) {
   createEffect(() => {
     const style = props.style;
     if (map) {
-      changeMapStyle(map, style);
+      changeMapStyle(map, style, props.railwayOnly);
       map.once("style.load", () => {
         addRailwayLayers(map!);
-        if (props.railwayOnly) {
-          setBaseLayersVisible(map!, false);
-        }
       });
     }
   });
@@ -86,7 +79,7 @@ export default function MapView(props: Props) {
 
   return (
     <div class="relative w-full h-dvh bg-white transition-colors duration-700 dark:bg-gray-950">
-      <div ref={container} class="w-full h-full" style={{ opacity: ready() ? "1" : "0" }} />
+      <div ref={container} class="w-full h-full" />
       <button
         type="button"
         onClick={props.onToggleRailwayOnly}
