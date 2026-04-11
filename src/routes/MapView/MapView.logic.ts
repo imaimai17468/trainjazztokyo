@@ -13,9 +13,16 @@ export const MAP_STYLES = {
   dark: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
 } as const;
 
-const TOKYO_BOUNDS: [[number, number], [number, number]] = [
+// 初期表示: 路線の周囲に余白あり
+const DEFAULT_BOUNDS: [[number, number], [number, number]] = [
   [139.56, 35.53],
   [139.92, 35.82],
+];
+
+// スクロール制限: より広い範囲
+const MAX_BOUNDS: [[number, number], [number, number]] = [
+  [139.2, 35.3],
+  [140.2, 36.0],
 ];
 
 const RAILWAY_LAYER_IDS = new Set([
@@ -56,7 +63,7 @@ export function createMap(options: MapOptions): maplibregl.Map {
     style: options.style,
     center: options.center,
     zoom: options.zoom,
-    maxBounds: TOKYO_BOUNDS,
+    maxBounds: MAX_BOUNDS,
     attributionControl: false,
     fadeDuration: 0,
     renderWorldCopies: false,
@@ -64,7 +71,7 @@ export function createMap(options: MapOptions): maplibregl.Map {
     transformStyle: options.hideBaseLayers ? hideBaseLayersTransform : undefined,
   });
 
-  map.fitBounds(TOKYO_BOUNDS, { padding: 0 });
+  map.fitBounds(DEFAULT_BOUNDS, { padding: 20 });
 
   return map;
 }
