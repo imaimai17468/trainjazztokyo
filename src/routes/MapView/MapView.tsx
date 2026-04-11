@@ -9,7 +9,12 @@ import {
   destroyMap,
   prefetchStyles,
 } from "./MapView.logic";
-import { addRailwayLayers, getStations, triggerDepartures } from "./MapView.railway";
+import {
+  addRailwayLayers,
+  getStations,
+  triggerDepartures,
+  highlightLines,
+} from "./MapView.railway";
 import { getDepartures } from "./MapView.timetable";
 import AboutContainer from "./About/About.container";
 import Intro from "./Intro/Intro";
@@ -103,7 +108,13 @@ export default function MapView(props: Props) {
       >
         <Globe size={16} />
       </button>
-      {!props.introOpen && <Legend />}
+      {!props.introOpen && (
+        <Legend
+          onHighlight={(lines) => {
+            if (map && map.isStyleLoaded()) highlightLines(map, lines);
+          }}
+        />
+      )}
       <AboutContainer />
       <Intro open={props.introOpen} onClose={props.onCloseIntro} />
     </div>
