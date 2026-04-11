@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fetch Tokyo 24 railway lines from Overpass API and output GeoJSON."""
+"""Fetch Tokyo 24 railway lines from Overpass API and save raw data."""
 
 import asyncio
 import json
@@ -15,32 +15,50 @@ ENDPOINTS = [
     "https://lz4.overpass-api.de/api/interpreter",
     "https://overpass.kumi.systems/api/interpreter",
 ]
-BBOX = "35.53,139.56,35.82,139.92"
-OUT = Path("src/routes/MapView/tokyo-railway.json")
-CONCURRENCY = 3  # max parallel requests
+BBOX = "35.3,139.2,36.6,140.4"
+OUT = Path("scripts/raw-railway.json")
+CONCURRENCY = 3
 RETRIES = 5
 TIMEOUT = 60
 
+# (search_name, output_name) — search_name is regex matched against relation name
 LINES = [
-    "山手線", "中央線快速", "中央・総武緩行線", "京浜東北線",
-    "埼京線", "湘南新宿ライン", "上野東京ライン",
-    "東京メトロ銀座線", "東京メトロ丸ノ内線", "東京メトロ日比谷線",
-    "東京メトロ東西線", "東京メトロ千代田線", "東京メトロ有楽町線",
-    "東京メトロ半蔵門線", "東京メトロ南北線", "東京メトロ副都心線",
-    "都営浅草線", "都営三田線", "都営新宿線", "都営大江戸線",
-    "東急東横線", "東急田園都市線", "小田急小田原線", "京王線",
+    ("山手線", "山手線"),
+    ("中央線快速", "中央線快速"),
+    ("中央・総武緩行線", "中央・総武緩行線"),
+    ("京浜東北線", "京浜東北線"),
+    ("埼京線", "埼京線"),
+    ("湘南新宿ライン", "湘南新宿ライン"),
+    ("上野東京ライン", "上野東京ライン"),
+    ("東京メトロ銀座線", "東京メトロ銀座線"),
+    ("東京メトロ丸ノ内線", "東京メトロ丸ノ内線"),
+    ("東京メトロ日比谷線", "東京メトロ日比谷線"),
+    ("東京メトロ東西線", "東京メトロ東西線"),
+    ("千代田線", "東京メトロ千代田線"),
+    ("東京メトロ有楽町線", "東京メトロ有楽町線"),
+    ("東京メトロ半蔵門線", "東京メトロ半蔵門線"),
+    ("東京メトロ南北線", "東京メトロ南北線"),
+    ("東京メトロ副都心線", "東京メトロ副都心線"),
+    ("都営浅草線", "都営浅草線"),
+    ("都営三田線", "都営三田線"),
+    ("都営新宿線", "都営新宿線"),
+    ("都営大江戸線", "都営大江戸線"),
+    ("東急東横線", "東急東横線"),
+    ("東急田園都市線", "東急田園都市線"),
+    ("小田急電鉄小田原線", "小田急小田原線"),
+    ("京王線", "京王線"),
 ]
 
 
-def query_for(name: str) -> str:
+def query_for(search_name: str) -> str:
     return (
         f'[out:json][timeout:{TIMEOUT}];'
-        f'relation["route"~"train|subway"]["name"~"{name}"]({BBOX})->.rels;'
+        f'relation["route"~"train|subway"]["name"~"{search_name}"]({BBOX})->.rels;'
         f'.rels out body;'
         f'.rels >;'
         f'out skel qt;'
-        f'node(r.rels:"stop")->.stops;'
-        f'.stops out body;'
+        f'node(r.rels)->.all_nodes;'
+        f'.all_nodes out body;'
     )
 
 
@@ -75,72 +93,27 @@ async def fetch_one(session: aiohttp.ClientSession, name: str, sem: asyncio.Sema
     return name, []
 
 
-def build(elements: list, line_name: str):
-    nodes = {}
-    for el in elements:
-        if el["type"] == "node" and "lat" in el and "lon" in el:
-            nodes[el["id"]] = (el["lon"], el["lat"])
-
-    lines = []
-    for el in elements:
-        if el["type"] == "way" and "nodes" in el:
-            coords = [nodes[n] for n in el["nodes"] if n in nodes]
-            if coords:
-                lines.append({
-                    "type": "Feature",
-                    "properties": {"line": line_name},
-                    "geometry": {"type": "LineString", "coordinates": coords},
-                })
-
-    stations = []
-    for el in elements:
-        if el["type"] == "node" and el.get("tags", {}).get("name") and "lat" in el:
-            stations.append({
-                "type": "Feature",
-                "properties": {"name": el["tags"]["name"], "lines": [line_name]},
-                "geometry": {"type": "Point", "coordinates": [el["lon"], el["lat"]]},
-            })
-
-    return lines, stations
-
-
 async def main():
     sem = asyncio.Semaphore(CONCURRENCY)
     async with aiohttp.ClientSession() as session:
-        tasks = [fetch_one(session, name, sem) for name in LINES]
+        tasks = [fetch_one(session, search, sem) for search, _out in LINES]
         results = await asyncio.gather(*tasks)
 
-    all_lines = []
-    station_map: dict[str, dict] = {}
-
-    for name, elements in results:
+    raw = {}
+    failed = []
+    for (search, out_name), (_, elements) in zip(LINES, results):
         if not elements:
+            failed.append(out_name)
             continue
-        lines, stations = build(elements, name)
-        all_lines.extend(lines)
-        for s in stations:
-            key = json.dumps(s["geometry"]["coordinates"])
-            if key in station_map:
-                station_map[key]["properties"]["lines"].append(name)
-            else:
-                station_map[key] = s
-        print(f"  {name}: {len(lines)} segments, {len(stations)} stations")
+        raw[out_name] = elements
+        print(f"  {out_name}: {len(elements)} elements")
 
-    all_stations = list(station_map.values())
-    failed = [name for name, el in results if not el]
-
-    result = {
-        "lines": {"type": "FeatureCollection", "features": all_lines},
-        "stations": {"type": "FeatureCollection", "features": all_stations},
-    }
-
-    OUT.write_text(json.dumps(result, ensure_ascii=False), encoding="utf-8")
-    size_kb = OUT.stat().st_size / 1024
-    print(f"\n{len(all_stations)} unique stations, {size_kb:.0f} KB → {OUT}")
+    OUT.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+    size_mb = OUT.stat().st_size / 1024 / 1024
+    print(f"\n{len(raw)}/{len(LINES)} lines fetched, {size_mb:.1f} MB → {OUT}")
 
     if failed:
         print(f"\nFailed ({len(failed)}): {', '.join(failed)}")
-        print("Re-run to retry only failed lines.")
         sys.exit(1)
 
 
