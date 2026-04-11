@@ -161,19 +161,37 @@ def build_line(elements: list, line_name: str, polygon: list):
         if el["type"] == "node" and "lat" in el and "lon" in el:
             nodes[el["id"]] = (el["lon"], el["lat"])
 
-    lines = []
+    # First pass: collect segments with at least one point in Tokyo
+    way_coords: list[list[tuple[float, float]]] = []
+    in_tokyo_endpoints: set[tuple[float, float]] = set()
+
     for el in elements:
         if el["type"] == "way" and "nodes" in el and el["id"] in own_member_ids:
             coords = [nodes[n] for n in el["nodes"] if n in nodes]
-            if coords and all(point_in_polygon(c[0], c[1], polygon) for c in coords):
-                lines.append({
-                    "type": "Feature",
-                    "properties": {"line": line_name},
-                    "geometry": {
-                        "type": "LineString",
-                        "coordinates": [[r5(c[0]), r5(c[1])] for c in coords],
-                    },
-                })
+            if not coords:
+                continue
+            way_coords.append(coords)
+            if any(point_in_polygon(c[0], c[1], polygon) for c in coords):
+                in_tokyo_endpoints.add(coords[0])
+                in_tokyo_endpoints.add(coords[-1])
+
+    # Second pass: include segments that touch a Tokyo endpoint (bridges gaps)
+    lines = []
+    for coords in way_coords:
+        touches_tokyo = (
+            any(point_in_polygon(c[0], c[1], polygon) for c in coords)
+            or coords[0] in in_tokyo_endpoints
+            or coords[-1] in in_tokyo_endpoints
+        )
+        if touches_tokyo:
+            lines.append({
+                "type": "Feature",
+                "properties": {"line": line_name},
+                "geometry": {
+                    "type": "LineString",
+                    "coordinates": [[r5(c[0]), r5(c[1])] for c in coords],
+                },
+            })
 
     stations = []
     for el in elements:
