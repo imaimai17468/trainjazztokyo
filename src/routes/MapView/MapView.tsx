@@ -12,6 +12,7 @@ import {
 import { addRailwayLayers, getStations, triggerDepartures } from "./MapView.railway";
 import { getDepartures } from "./MapView.timetable";
 import AboutContainer from "./About/About.container";
+import IntroContainer from "./Intro/Intro.container";
 
 type Props = {
   center: [number, number];
@@ -100,6 +101,7 @@ export default function MapView(props: Props) {
         <Globe size={16} />
       </button>
       <AboutContainer />
+      <IntroContainer />
     </div>
   );
 }
