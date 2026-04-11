@@ -194,6 +194,7 @@ const ROWS: LineEntry[][] = [
 ];
 
 type Props = {
+  visible: boolean;
   onHighlight: (lineNames: string[] | null) => void;
 };
 
@@ -212,7 +213,13 @@ export default function Legend(props: Props) {
 
   return (
     <>
-      <div class="fixed bottom-4 left-4 z-50 flex flex-col gap-1.5">
+      <div
+        class="fixed top-4 left-4 z-50 flex flex-col gap-1.5 transition-opacity duration-700"
+        style={{
+          opacity: props.visible ? "1" : "0",
+          "pointer-events": props.visible ? "auto" : "none",
+        }}
+      >
         {ROWS.map((row) => (
           <div class="flex gap-0.5">
             {row.map((line) => (
@@ -229,7 +236,10 @@ export default function Legend(props: Props) {
         ))}
       </div>
       {active() !== null && (
-        <div class="fixed bottom-4 left-1/2 z-50 -translate-x-1/2 max-w-80 text-center text-2.5 leading-relaxed text-gray-500 dark:text-gray-400">
+        <div
+          class="fixed bottom-4 left-1/2 z-50 -translate-x-1/2 max-w-80 text-center italic tracking-wide leading-relaxed text-gray-400 dark:text-gray-600"
+          style={{ "font-size": "10px" }}
+        >
           {active()!.flavor}
         </div>
       )}
