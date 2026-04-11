@@ -40,15 +40,22 @@ export function createMap(options: MapOptions): maplibregl.Map {
 }
 
 export function changeMapStyle(map: maplibregl.Map | undefined, style: string) {
+  cachedBaseLayerIds = null;
   map?.setStyle(style);
 }
 
+let cachedBaseLayerIds: string[] | null = null;
+
 export function setBaseLayersVisible(map: maplibregl.Map, visible: boolean) {
   const visibility = visible ? "visible" : "none";
-  for (const layer of map.getStyle().layers) {
-    if (!RAILWAY_LAYER_IDS.has(layer.id)) {
-      map.setLayoutProperty(layer.id, "visibility", visibility);
-    }
+  if (!cachedBaseLayerIds) {
+    cachedBaseLayerIds = map
+      .getStyle()
+      .layers.filter((l) => !RAILWAY_LAYER_IDS.has(l.id))
+      .map((l) => l.id);
+  }
+  for (const id of cachedBaseLayerIds) {
+    map.setLayoutProperty(id, "visibility", visibility);
   }
 }
 
