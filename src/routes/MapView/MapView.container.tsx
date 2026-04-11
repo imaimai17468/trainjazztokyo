@@ -11,6 +11,7 @@ const DEFAULT_ZOOM = 12;
 export default function MapViewContainer() {
   const theme = useTheme();
   const [railwayOnly, setRailwayOnly] = createSignal(true);
+  const [introOpen, setIntroOpen] = createSignal(true);
 
   return (
     <MapViewPresenter
@@ -19,6 +20,8 @@ export default function MapViewContainer() {
       style={MAP_STYLES[theme()]}
       railwayOnly={railwayOnly()}
       onToggleRailwayOnly={() => setRailwayOnly((v) => !v)}
+      introOpen={introOpen()}
+      onCloseIntro={() => setIntroOpen(false)}
     />
   );
 }

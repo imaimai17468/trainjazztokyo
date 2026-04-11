@@ -12,7 +12,8 @@ import {
 import { addRailwayLayers, getStations, triggerDepartures } from "./MapView.railway";
 import { getDepartures } from "./MapView.timetable";
 import AboutContainer from "./About/About.container";
-import IntroContainer from "./Intro/Intro.container";
+import Intro from "./Intro/Intro";
+import Legend from "./Legend/Legend";
 
 type Props = {
   center: [number, number];
@@ -20,6 +21,8 @@ type Props = {
   style: string;
   railwayOnly: boolean;
   onToggleRailwayOnly: () => void;
+  introOpen: boolean;
+  onCloseIntro: () => void;
 };
 
 export default function MapView(props: Props) {
@@ -100,8 +103,9 @@ export default function MapView(props: Props) {
       >
         <Globe size={16} />
       </button>
+      {!props.introOpen && <Legend />}
       <AboutContainer />
-      <IntroContainer />
+      <Intro open={props.introOpen} onClose={props.onCloseIntro} />
     </div>
   );
 }
