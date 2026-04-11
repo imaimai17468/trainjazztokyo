@@ -78,6 +78,33 @@ export default function Home() {
 }
 ```
 
+## Tooling
+
+### Formatter / Linter
+
+- **Formatter**: `oxfmt` (oxc formatter) — `pnpm oxfmt --check` / `pnpm oxfmt --write`
+- **Linter**: `oxlint` — `pnpm oxlint --fix`
+- **Git hooks**: `lefthook` — pre-commit で `oxfmt --check` と `oxlint` を実行
+- **biome は使わない**
+
+フォーマットエラーが出た場合は `pnpm oxfmt --write <file>` で修正する。
+
+### Dead code / Unused exports
+
+[Knip](https://knip.dev/) で未使用の export やファイルを検出する。
+
+```sh
+pnpm knip
+```
+
+### コード重複検出
+
+[similarity](https://github.com/mizchi/similarity) で類似・重複コードを検出する。
+
+```sh
+pnpm similarity
+```
+
 ## Tailwind CSS
 
 ### No arbitrary value brackets
