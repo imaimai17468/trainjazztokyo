@@ -133,6 +133,18 @@ Prefer `dvh` / `dvw` over `vh` / `vw` / `screen` for viewport-relative sizing. T
 <div class="h-screen w-screen" />
 ```
 
+### No opacity modifiers
+
+Do not use Tailwind's `/` opacity modifier syntax. Use solid color values instead.
+
+```tsx
+// Good
+<p class="text-gray-300" />
+
+// Bad
+<p class="text-gray-400/60" />
+```
+
 ### Custom colors and fonts as CSS theme variables
 
 Define project-specific colors, fonts, and other design tokens as `@theme` variables in CSS. Do not hardcode hex values or font names in utility classes.
