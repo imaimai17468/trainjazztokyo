@@ -1,7 +1,7 @@
 import type maplibregl from "maplibre-gl";
 import railwayData from "./tokyo-railway.json";
 import { RAILWAY_COLOR, LINE_COLORS } from "./MapView.lines";
-import type { TrainPosition } from "./MapView.train";
+import type { TrainPosition } from "./entity/train";
 
 export function addRailwayLayers(map: maplibregl.Map) {
   if (map.getSource("railway-lines")) return;

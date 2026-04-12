@@ -16,7 +16,7 @@ import {
   highlightLines,
   resetPulseState,
 } from "./MapView.railway";
-import { initTrains, advanceTrains, getPositions, SNAPSHOT_INTERVAL } from "./MapView.train";
+import { createTrainGateway } from "./gateway/trainGateway";
 import AboutContainer from "./About/About.container";
 import Intro from "./Intro/Intro";
 import Legend from "./Legend/Legend";
@@ -37,25 +37,26 @@ export default function MapView(props: Props) {
   let snapshotTimer: ReturnType<typeof setInterval> | undefined;
   let pulseTimer: ReturnType<typeof setInterval> | undefined;
   const [aboutOpen, setAboutOpen] = createSignal(false);
+  const gateway = createTrainGateway();
 
-  const PULSE_CHANCE = 0.003;
+  const PULSE_CHANCE = 0.015;
 
-  const snapshot = () => {
+  const snapshot = async () => {
     if (!map) return;
-    advanceTrains();
-    updateTrainPositions(map, getPositions());
+    await gateway.refresh();
+    updateTrainPositions(map, gateway.getPositions());
   };
 
-  const startTicking = () => {
+  const startTicking = async () => {
     stopTicking();
-    initTrains();
-    if (map) updateTrainPositions(map, getPositions());
+    await gateway.init();
+    if (map) updateTrainPositions(map, gateway.getPositions());
 
-    snapshotTimer = setInterval(snapshot, SNAPSHOT_INTERVAL);
+    snapshotTimer = setInterval(snapshot, gateway.snapshotInterval);
 
     pulseTimer = setInterval(() => {
       if (!map) return;
-      const positions = getPositions();
+      const positions = gateway.getPositions();
       for (const p of positions) {
         if (Math.random() < PULSE_CHANCE) {
           triggerPulse(map, p);
