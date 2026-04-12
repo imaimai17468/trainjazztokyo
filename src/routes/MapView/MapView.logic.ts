@@ -26,7 +26,7 @@ const MAX_BOUNDS: [[number, number], [number, number]] = [
 
 const RAILWAY_LAYER_IDS = new Set([
   "railway-lines",
-  "railway-stations",
+  "railway-trains",
   "railway-pulse",
   "railway-pulse-glow",
 ]);

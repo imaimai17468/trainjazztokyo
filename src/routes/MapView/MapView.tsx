@@ -11,12 +11,12 @@ import {
 } from "./MapView.logic";
 import {
   addRailwayLayers,
-  getStations,
-  triggerDepartures,
+  updateTrainPositions,
+  triggerPulse,
   highlightLines,
   resetPulseState,
 } from "./MapView.railway";
-import { getDepartures } from "./MapView.timetable";
+import { initTrains, advanceTrains, getPositions, SNAPSHOT_INTERVAL } from "./MapView.train";
 import AboutContainer from "./About/About.container";
 import Intro from "./Intro/Intro";
 import Legend from "./Legend/Legend";
@@ -34,26 +34,44 @@ type Props = {
 export default function MapView(props: Props) {
   let container!: HTMLDivElement;
   let map: maplibregl.Map | undefined;
-  let tickInterval: ReturnType<typeof setInterval> | undefined;
+  let snapshotTimer: ReturnType<typeof setInterval> | undefined;
+  let pulseTimer: ReturnType<typeof setInterval> | undefined;
   const [aboutOpen, setAboutOpen] = createSignal(false);
 
-  const stations = getStations();
+  const PULSE_CHANCE = 0.003;
+
+  const snapshot = () => {
+    if (!map) return;
+    advanceTrains();
+    updateTrainPositions(map, getPositions());
+  };
 
   const startTicking = () => {
     stopTicking();
-    tickInterval = setInterval(() => {
+    initTrains();
+    if (map) updateTrainPositions(map, getPositions());
+
+    snapshotTimer = setInterval(snapshot, SNAPSHOT_INTERVAL);
+
+    pulseTimer = setInterval(() => {
       if (!map) return;
-      const departures = getDepartures(stations);
-      if (departures.length > 0) {
-        triggerDepartures(map, departures);
+      const positions = getPositions();
+      for (const p of positions) {
+        if (Math.random() < PULSE_CHANCE) {
+          triggerPulse(map, p);
+        }
       }
     }, 100);
   };
 
   const stopTicking = () => {
-    if (tickInterval) {
-      clearInterval(tickInterval);
-      tickInterval = undefined;
+    if (snapshotTimer) {
+      clearInterval(snapshotTimer);
+      snapshotTimer = undefined;
+    }
+    if (pulseTimer) {
+      clearInterval(pulseTimer);
+      pulseTimer = undefined;
     }
   };
 

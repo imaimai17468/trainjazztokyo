@@ -1,21 +1,7 @@
 import type maplibregl from "maplibre-gl";
 import railwayData from "./tokyo-railway.json";
-import type { DepartureEvent } from "./MapView.timetable";
 import { RAILWAY_COLOR, LINE_COLORS } from "./MapView.lines";
-
-type StationInfo = {
-  name: string;
-  lines: string[];
-  coordinates: [number, number];
-};
-
-export function getStations(): StationInfo[] {
-  return railwayData.stations.features.map((f) => ({
-    name: f.properties.name as string,
-    lines: f.properties.lines as string[],
-    coordinates: f.geometry.coordinates as [number, number],
-  }));
-}
+import type { TrainPosition } from "./MapView.train";
 
 export function addRailwayLayers(map: maplibregl.Map) {
   if (map.getSource("railway-lines")) return;
@@ -25,9 +11,9 @@ export function addRailwayLayers(map: maplibregl.Map) {
     data: railwayData.lines as GeoJSON.FeatureCollection,
   });
 
-  map.addSource("railway-stations", {
+  map.addSource("railway-trains", {
     type: "geojson",
-    data: railwayData.stations as GeoJSON.FeatureCollection,
+    data: { type: "FeatureCollection", features: [] },
   });
 
   map.addSource("railway-pulse", {
@@ -47,13 +33,13 @@ export function addRailwayLayers(map: maplibregl.Map) {
   });
 
   map.addLayer({
-    id: "railway-stations",
+    id: "railway-trains",
     type: "circle",
-    source: "railway-stations",
+    source: "railway-trains",
     paint: {
       "circle-color": RAILWAY_COLOR,
-      "circle-radius": 1.5,
-      "circle-opacity": 0.4,
+      "circle-radius": 2.5,
+      "circle-opacity": 0.9,
       "circle-stroke-width": 0,
     },
   });
@@ -83,6 +69,19 @@ export function addRailwayLayers(map: maplibregl.Map) {
   });
 }
 
+export function updateTrainPositions(map: maplibregl.Map, positions: TrainPosition[]) {
+  const source = map.getSource("railway-trains") as maplibregl.GeoJSONSource | undefined;
+  if (!source) return;
+
+  const features = positions.map((p) => ({
+    type: "Feature" as const,
+    properties: { color: p.color, line: p.line },
+    geometry: { type: "Point" as const, coordinates: p.coordinates },
+  }));
+
+  source.setData({ type: "FeatureCollection", features });
+}
+
 type PulseEntry = {
   color: string;
   coordinates: [number, number];
@@ -104,14 +103,16 @@ export function resetPulseState() {
   highlightedLines = null;
 }
 
-export function triggerDepartures(map: maplibregl.Map, departures: DepartureEvent[]) {
+export function triggerPulse(map: maplibregl.Map, position: TrainPosition) {
   if (!map.getSource("railway-pulse")) return;
   pulseMap = map;
 
-  const now = performance.now();
-  for (const d of departures) {
-    activePulses.push({ color: d.color, coordinates: d.coordinates, startTime: now, line: d.line });
-  }
+  activePulses.push({
+    color: position.color,
+    coordinates: position.coordinates,
+    startTime: performance.now(),
+    line: position.line,
+  });
 
   if (activePulses.length > MAX_PULSES) {
     activePulses = activePulses.slice(-MAX_PULSES);
@@ -175,7 +176,8 @@ export function highlightLines(map: maplibregl.Map, lineNames: string[] | null) 
     map.setPaintProperty("railway-lines", "line-color", RAILWAY_COLOR);
     map.setPaintProperty("railway-lines", "line-width", 1);
     map.setPaintProperty("railway-lines", "line-opacity", 0.4);
-    map.setPaintProperty("railway-stations", "circle-opacity", 0.4);
+    map.setPaintProperty("railway-trains", "circle-color", RAILWAY_COLOR);
+    map.setPaintProperty("railway-trains", "circle-opacity", 0.9);
     return;
   }
 
@@ -199,5 +201,5 @@ export function highlightLines(map: maplibregl.Map, lineNames: string[] | null) 
     ...lineNames.flatMap((n) => [n, 1]),
     DIM_LINE,
   ]);
-  map.setPaintProperty("railway-stations", "circle-opacity", 0);
+  map.setPaintProperty("railway-trains", "circle-opacity", 0);
 }
