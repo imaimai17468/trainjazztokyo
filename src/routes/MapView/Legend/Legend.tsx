@@ -1,5 +1,5 @@
 import { createSignal } from "solid-js";
-import type { Instrument } from "../MapView.timetable";
+import type { Instrument } from "../MapView.lines";
 
 type LineEntry = {
   code: string;
