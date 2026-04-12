@@ -102,6 +102,7 @@ for (const item of items) {
 
 - **Formatter**: `oxfmt` (oxc formatter) — `pnpm oxfmt --check` / `pnpm oxfmt --write`
 - **Linter**: `oxlint` — `pnpm oxlint --fix`
+- **Lint ルールの緩和・削除・`eslint-disable-next-line` の使用はユーザーの許可が必要**
 - **Git hooks**: `lefthook` — pre-commit で `oxfmt --check` と `oxlint` を実行
 - **biome は使わない**
 
