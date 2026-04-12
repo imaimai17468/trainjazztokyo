@@ -224,12 +224,20 @@ export default function Legend(props: Props) {
           <div class="flex gap-0.5">
             {row.map((line) => (
               <img
+                role="button"
+                tabIndex={0}
                 src={`/icons/lines/${line.code}.svg`}
                 alt={line.name}
                 class="h-4.5 w-4.5 cursor-pointer"
                 onMouseEnter={() => handleEnter(line)}
                 onMouseLeave={handleLeave}
                 onClick={() => (active() === line ? handleLeave() : handleEnter(line))}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    if (active() === line) handleLeave();
+                    else handleEnter(line);
+                  }
+                }}
               />
             ))}
           </div>

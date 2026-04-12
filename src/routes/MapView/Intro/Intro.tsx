@@ -8,16 +8,21 @@ type Props = {
 export default function Intro(props: Props) {
   return (
     <div
+      role="button"
+      tabIndex={0}
       class="fixed inset-0 z-60 flex items-center justify-center bg-white transition-[opacity,background-color] duration-700 ease-in-out dark:bg-gray-950"
       classList={{
         "opacity-100 pointer-events-auto": props.open,
         "opacity-0 pointer-events-none": !props.open,
       }}
       onClick={props.onClose}
+      onKeyDown={(e) => e.key === "Escape" && props.onClose()}
     >
       <div
+        role="presentation"
         class="px-6 max-w-lg text-sm leading-relaxed text-gray-700 transition-colors duration-700 dark:text-gray-300"
         onClick={(e) => e.stopPropagation()}
+        onKeyDown={(e) => e.stopPropagation()}
       >
         <AboutText />
         <button
