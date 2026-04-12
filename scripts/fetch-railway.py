@@ -57,8 +57,6 @@ def query_for(search_name: str) -> str:
         f'.rels out body;'
         f'.rels >;'
         f'out skel qt;'
-        f'node(r.rels)->.all_nodes;'
-        f'.all_nodes out body;'
     )
 
 

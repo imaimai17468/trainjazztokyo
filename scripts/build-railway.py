@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Build tokyo-railway.json from raw Overpass data, filtered to Tokyo-to polygon."""
+"""Build tokyo-railway.json from raw Overpass data, filtered to Tokyo-to polygon.
+
+Outputs only line (route) geometry — station data is not needed.
+"""
 
 import json
 import sys
@@ -54,7 +57,6 @@ def fetch_tokyo_polygon() -> list[list[float]]:
         if coords:
             segments.append(coords)
 
-    # Chain segments into rings
     rings = []
     while segments:
         ring = list(segments.pop(0))
@@ -77,7 +79,6 @@ def fetch_tokyo_polygon() -> list[list[float]]:
                 break
         rings.append(ring)
 
-    # Find mainland ring (largest, lat ~35)
     mainland = max(
         (r for r in rings if any(35.0 < c[1] < 36.0 for c in r)),
         key=len,
@@ -97,7 +98,6 @@ def get_tokyo_polygon() -> list[list[float]]:
         return mainland
 
     mainland = fetch_tokyo_polygon()
-    # Cache all rings
     BOUNDARY_CACHE.write_text(json.dumps([mainland]), encoding="utf-8")
     print(f"Fetched and cached Tokyo polygon ({len(mainland)} points)")
     return mainland
@@ -121,28 +121,25 @@ def point_in_polygon(lon: float, lat: float, polygon: list) -> bool:
 
 
 # ---------------------------------------------------------------------------
-# Build GeoJSON
+# Build GeoJSON (lines only)
 # ---------------------------------------------------------------------------
 
 def r5(v: float) -> float:
     return round(v, 5)
 
 
-# Relation names that indicate through-service (直通運転), not the line itself
 THROUGH_SERVICE_PATTERNS = ["直通", "アクセス"]
 
 
-def is_own_relation(el: dict, line_name: str) -> bool:
-    """Return True if this relation belongs to the line itself, not through-service."""
+def is_own_relation(el: dict) -> bool:
     name = el.get("tags", {}).get("name", "")
     return not any(p in name for p in THROUGH_SERVICE_PATTERNS)
 
 
-def build_line(elements: list, line_name: str, polygon: list):
-    # Filter out through-service relations and their exclusive members
+def build_line(elements: list, line_name: str, polygon: list) -> list[dict]:
     own_relations = [
         el for el in elements
-        if el["type"] == "relation" and is_own_relation(el, line_name)
+        if el["type"] == "relation" and is_own_relation(el)
     ]
     own_member_ids = set()
     for rel in own_relations:
@@ -150,18 +147,10 @@ def build_line(elements: list, line_name: str, polygon: list):
             own_member_ids.add(m["ref"])
 
     nodes = {}
-    stop_ids = set()
-
-    for rel in own_relations:
-        for m in rel.get("members", []):
-            if m["type"] == "node" and m.get("role", "").startswith("stop"):
-                stop_ids.add(m["ref"])
-
     for el in elements:
         if el["type"] == "node" and "lat" in el and "lon" in el:
             nodes[el["id"]] = (el["lon"], el["lat"])
 
-    # First pass: collect segments with at least one point in Tokyo
     way_coords: list[list[tuple[float, float]]] = []
     in_tokyo_endpoints: set[tuple[float, float]] = set()
 
@@ -175,7 +164,6 @@ def build_line(elements: list, line_name: str, polygon: list):
                 in_tokyo_endpoints.add(coords[0])
                 in_tokyo_endpoints.add(coords[-1])
 
-    # Second pass: include segments that touch a Tokyo endpoint (bridges gaps)
     lines = []
     for coords in way_coords:
         touches_tokyo = (
@@ -193,32 +181,7 @@ def build_line(elements: list, line_name: str, polygon: list):
                 },
             })
 
-    stations = []
-    for el in elements:
-        if el["type"] != "node" or "lat" not in el:
-            continue
-        if el["id"] not in own_member_ids:
-            continue
-        tags = el.get("tags", {})
-        name = tags.get("name")
-        if not name:
-            continue
-        is_stop = el["id"] in stop_ids
-        is_station = tags.get("railway") in ("station", "halt", "stop")
-        if not (is_stop or is_station):
-            continue
-        if not point_in_polygon(el["lon"], el["lat"], polygon):
-            continue
-        stations.append({
-            "type": "Feature",
-            "properties": {"name": name, "lines": [line_name]},
-            "geometry": {
-                "type": "Point",
-                "coordinates": [r5(el["lon"]), r5(el["lat"])],
-            },
-        })
-
-    return lines, stations
+    return lines
 
 
 def main():
@@ -231,24 +194,13 @@ def main():
         raw = json.load(f)
 
     all_lines = []
-    station_map: dict[str, dict] = {}
-
     for name, elements in raw.items():
-        lines, stations = build_line(elements, name, polygon)
+        lines = build_line(elements, name, polygon)
         all_lines.extend(lines)
-        for s in stations:
-            key = json.dumps(s["geometry"]["coordinates"])
-            if key in station_map:
-                station_map[key]["properties"]["lines"].append(name)
-            else:
-                station_map[key] = s
-        print(f"  {name}: {len(lines)} segments, {len(stations)} stations")
-
-    all_stations = list(station_map.values())
+        print(f"  {name}: {len(lines)} segments")
 
     result = {
         "lines": {"type": "FeatureCollection", "features": all_lines},
-        "stations": {"type": "FeatureCollection", "features": all_stations},
     }
 
     OUT.write_text(
@@ -256,7 +208,7 @@ def main():
         encoding="utf-8",
     )
     size_kb = OUT.stat().st_size / 1024
-    print(f"\n{len(all_stations)} unique stations, {len(all_lines)} segments, {size_kb:.0f} KB → {OUT}")
+    print(f"\n{len(all_lines)} segments, {size_kb:.0f} KB → {OUT}")
 
 
 if __name__ == "__main__":
