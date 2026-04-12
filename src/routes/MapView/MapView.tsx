@@ -56,12 +56,10 @@ export default function MapView(props: Props) {
 
     pulseTimer = setInterval(() => {
       if (!map) return;
-      const positions = gateway.getPositions();
-      for (const p of positions) {
-        if (Math.random() < PULSE_CHANCE) {
-          triggerPulse(map, p);
-        }
-      }
+      gateway
+        .getPositions()
+        .filter(() => Math.random() < PULSE_CHANCE)
+        .forEach((p) => triggerPulse(map!, p));
     }, 100);
   };
 

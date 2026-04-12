@@ -12,13 +12,11 @@ export const MAP_STYLES = {
   dark: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
 } as const;
 
-// 初期表示: 路線の周囲に余白あり
 const DEFAULT_BOUNDS: [[number, number], [number, number]] = [
   [139.56, 35.53],
   [139.92, 35.82],
 ];
 
-// スクロール制限: より広い範囲
 const MAX_BOUNDS: [[number, number], [number, number]] = [
   [139.2, 35.3],
   [140.2, 36.0],
@@ -44,12 +42,16 @@ const TYPE_OPACITY: Record<string, string[]> = {
 };
 
 function dimLayout(layout: Record<string, unknown> = {}): Record<string, unknown> {
-  const out = { ...layout };
-  const size = out["text-size"];
-  if (typeof size === "number") {
-    out["text-size"] = size * 0.7;
-  }
-  return out;
+  const size = layout["text-size"];
+  return typeof size === "number" ? { ...layout, "text-size": size * 0.7 } : layout;
+}
+
+function applyOpacity(
+  paint: Record<string, unknown>,
+  keys: string[],
+  value: number,
+): Record<string, unknown> {
+  return keys.reduce((acc, key) => ({ ...acc, [key]: value }), { ...paint });
 }
 
 function transformStyle(
@@ -63,10 +65,7 @@ function transformStyle(
       if (RAILWAY_LAYER_IDS.has(layer.id)) return layer;
       const keys = TYPE_OPACITY[layer.type];
       if (!keys) return layer;
-      const paint = { ...(layer.paint as Record<string, unknown>) };
-      for (const key of keys) {
-        paint[key] = hide ? 0 : DIM;
-      }
+      const paint = applyOpacity(layer.paint as Record<string, unknown>, keys, hide ? 0 : DIM);
       const result = { ...layer, paint };
       if (!hide && layer.layout) {
         result.layout = dimLayout(layer.layout as Record<string, unknown>);
@@ -77,14 +76,14 @@ function transformStyle(
 }
 
 export function prefetchStyles() {
-  for (const url of Object.values(MAP_STYLES)) {
+  Object.values(MAP_STYLES).forEach((url) => {
     const link = document.createElement("link");
     link.rel = "prefetch";
     link.href = url;
     link.as = "fetch";
     link.crossOrigin = "anonymous";
     document.head.appendChild(link);
-  }
+  });
 }
 
 export function createMap(options: MapOptions): maplibregl.Map {
@@ -115,15 +114,15 @@ export function changeMapStyle(
 }
 
 export function setBaseLayersVisible(map: maplibregl.Map, visible: boolean) {
-  const style = map.getStyle();
-  for (const layer of style.layers) {
-    if (RAILWAY_LAYER_IDS.has(layer.id)) continue;
-    const keys = TYPE_OPACITY[layer.type];
-    if (!keys) continue;
-    for (const key of keys) {
-      map.setPaintProperty(layer.id, key, visible ? DIM : 0);
-    }
-  }
+  map
+    .getStyle()
+    .layers.filter((layer) => !RAILWAY_LAYER_IDS.has(layer.id))
+    .forEach((layer) => {
+      const keys = TYPE_OPACITY[layer.type];
+      keys?.forEach((key) => {
+        map.setPaintProperty(layer.id, key, visible ? DIM : 0);
+      });
+    });
 }
 
 export function destroyMap(map: maplibregl.Map | undefined) {

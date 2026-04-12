@@ -133,16 +133,7 @@ function animatePulses() {
 
   const now = performance.now();
 
-  let expiredCount = 0;
-  while (
-    expiredCount < activePulses.length &&
-    now - activePulses[expiredCount].startTime > PULSE_DURATION
-  ) {
-    expiredCount++;
-  }
-  if (expiredCount > 0) {
-    activePulses = activePulses.slice(expiredCount);
-  }
+  activePulses = activePulses.filter((p) => now - p.startTime <= PULSE_DURATION);
 
   if (activePulses.length === 0) {
     source.setData({ type: "FeatureCollection", features: [] });

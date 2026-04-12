@@ -331,26 +331,20 @@ const LINES: LineConfig[] = [
   },
 ];
 
-function generateTrains(): OdptTrainResponse {
-  const trains: OdptTrainResponse = [];
-
-  for (const line of LINES) {
-    for (let i = 0; i < line.trainCount; i++) {
+const generateTrains = (): OdptTrainResponse =>
+  LINES.flatMap((line) => {
+    const prefix = line.railway.split(".").pop()?.slice(0, 2) ?? "XX";
+    return Array.from({ length: line.trainCount }, (_, i) => {
       const pair = line.stationPairs[i % line.stationPairs.length];
-      const dirIdx = i % 2;
-      const prefix = line.railway.split(".").pop()?.slice(0, 2) ?? "XX";
-      trains.push({
+      return {
         railway: line.railway,
         fromStation: `${line.railway}.${pair[0]}`,
         toStation: `${line.railway}.${pair[1]}`,
-        railDirection: line.directions[dirIdx],
+        railDirection: line.directions[i % 2],
         trainNumber: `${prefix}${String(i + 1).padStart(4, "0")}`,
         date: new Date().toISOString(),
-      });
-    }
-  }
-
-  return trains;
-}
+      };
+    });
+  });
 
 export const mockTrains = generateTrains();

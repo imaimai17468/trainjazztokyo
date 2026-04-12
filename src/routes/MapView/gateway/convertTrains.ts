@@ -31,8 +31,7 @@ const RAILWAY_TO_LINE: Record<string, string> = {
 };
 
 type LineGeometry = {
-  segments: [number, number][][];
-  centroid: [number, number];
+  coords: [number, number][];
 };
 
 let lineGeometries: Map<string, LineGeometry> | undefined;
@@ -40,71 +39,43 @@ let lineGeometries: Map<string, LineGeometry> | undefined;
 function getLineGeometries(): Map<string, LineGeometry> {
   if (lineGeometries) return lineGeometries;
 
-  lineGeometries = new Map();
-  for (const f of railwayData.lines.features) {
+  const grouped = railwayData.lines.features.reduce((acc, f) => {
     const name = f.properties.line as string;
     const coords = f.geometry.coordinates as [number, number][];
-    if (!lineGeometries.has(name)) {
-      lineGeometries.set(name, { segments: [], centroid: [0, 0] });
-    }
-    lineGeometries.get(name)!.segments.push(coords);
-  }
+    return acc.set(name, [...(acc.get(name) ?? []), ...coords]);
+  }, new Map<string, [number, number][]>());
 
-  for (const [, geo] of lineGeometries) {
-    let totalLon = 0;
-    let totalLat = 0;
-    let count = 0;
-    for (const seg of geo.segments) {
-      for (const c of seg) {
-        totalLon += c[0];
-        totalLat += c[1];
-        count++;
-      }
-    }
-    if (count > 0) {
-      geo.centroid = [totalLon / count, totalLat / count];
-    }
-  }
+  lineGeometries = new Map([...grouped.entries()].map(([name, coords]) => [name, { coords }]));
 
   return lineGeometries;
 }
 
 function pickPositionOnLine(lineName: string, trainIndex: number): [number, number] {
-  const geos = getLineGeometries();
-  const geo = geos.get(lineName);
-  if (!geo || geo.segments.length === 0) return [139.7671, 35.6812];
+  const geo = getLineGeometries().get(lineName);
+  if (!geo || geo.coords.length === 0) return [139.7671, 35.6812];
 
-  const allCoords: [number, number][] = [];
-  for (const seg of geo.segments) {
-    for (const c of seg) {
-      allCoords.push(c);
-    }
-  }
-
-  const idx = (((trainIndex * 137) % allCoords.length) + allCoords.length) % allCoords.length;
-  return allCoords[idx];
+  const idx = (((trainIndex * 137) % geo.coords.length) + geo.coords.length) % geo.coords.length;
+  return geo.coords[idx];
 }
 
 export function convertTrains(odptTrains: OdptTrain[]): TrainPosition[] {
-  const positions: TrainPosition[] = [];
   const lineCounters = new Map<string, number>();
 
-  for (const train of odptTrains) {
+  return odptTrains.reduce<TrainPosition[]>((positions, train) => {
     const lineName = RAILWAY_TO_LINE[train.railway];
-    if (!lineName) continue;
+    if (!lineName) return positions;
 
     const count = lineCounters.get(lineName) ?? 0;
     lineCounters.set(lineName, count + 1);
 
-    const coordinates = pickPositionOnLine(lineName, count);
-
-    positions.push({
-      coordinates,
-      line: lineName,
-      color: LINE_COLORS[lineName] ?? RAILWAY_COLOR,
-      instrument: LINE_INSTRUMENTS[lineName] ?? "percussion",
-    });
-  }
-
-  return positions;
+    return [
+      ...positions,
+      {
+        coordinates: pickPositionOnLine(lineName, count),
+        line: lineName,
+        color: LINE_COLORS[lineName] ?? RAILWAY_COLOR,
+        instrument: LINE_INSTRUMENTS[lineName] ?? "percussion",
+      },
+    ];
+  }, []);
 }

@@ -78,6 +78,24 @@ export default function Home() {
 }
 ```
 
+## Coding Style
+
+### Functional programming
+
+Use `map`, `filter`, `reduce`, `flatMap` etc. instead of `for` / `while` loops. If needed, [Remeda](https://remedajs.com/) may be used for functional utilities.
+
+```tsx
+// Good
+const names = items.map((item) => item.name);
+const total = values.reduce((sum, v) => sum + v, 0);
+
+// Bad
+const names = [];
+for (const item of items) {
+  names.push(item.name);
+}
+```
+
 ## Tooling
 
 ### Formatter / Linter
