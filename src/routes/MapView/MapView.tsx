@@ -32,6 +32,7 @@ type Props = {
 };
 
 export default function MapView(props: Props) {
+  // eslint-disable-next-line no-unassigned-vars -- SolidJS ref pattern
   let container!: HTMLDivElement;
   let map: maplibregl.Map | undefined;
   let snapshotTimer: ReturnType<typeof setInterval> | undefined;

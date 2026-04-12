@@ -51,7 +51,7 @@ function applyOpacity(
   keys: string[],
   value: number,
 ): Record<string, unknown> {
-  return keys.reduce((acc, key) => ({ ...acc, [key]: value }), { ...paint });
+  return Object.assign({ ...paint }, ...keys.map((key) => ({ [key]: value })));
 }
 
 function transformStyle(

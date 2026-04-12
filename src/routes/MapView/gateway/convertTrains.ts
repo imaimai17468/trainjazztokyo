@@ -61,15 +61,14 @@ function pickPositionOnLine(lineName: string, trainIndex: number): [number, numb
 export function convertTrains(odptTrains: OdptTrain[]): TrainPosition[] {
   const lineCounters = new Map<string, number>();
 
-  return odptTrains.reduce<TrainPosition[]>((positions, train) => {
+  return odptTrains.flatMap((train) => {
     const lineName = RAILWAY_TO_LINE[train.railway];
-    if (!lineName) return positions;
+    if (!lineName) return [];
 
     const count = lineCounters.get(lineName) ?? 0;
     lineCounters.set(lineName, count + 1);
 
     return [
-      ...positions,
       {
         coordinates: pickPositionOnLine(lineName, count),
         line: lineName,
@@ -77,5 +76,5 @@ export function convertTrains(odptTrains: OdptTrain[]): TrainPosition[] {
         instrument: LINE_INSTRUMENTS[lineName] ?? "percussion",
       },
     ];
-  }, []);
+  });
 }
