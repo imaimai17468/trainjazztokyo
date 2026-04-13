@@ -2,6 +2,7 @@ import type maplibregl from "maplibre-gl";
 import type { TrainPosition } from "./entity/train";
 import { createTrainGateway } from "./gateway/trainGateway";
 import { updateTrainPositions, triggerPulse } from "./MapView.railway";
+import { getMorphProgress, interpolateFeatures } from "./MapView.morph";
 
 const PULSE_CHANCE = 0.015;
 
@@ -18,7 +19,14 @@ export function createTicker(callbacks: TickerCallbacks) {
   const sync = (pos: TrainPosition[]) => {
     callbacks.onPositions(pos);
     const map = callbacks.getMap();
-    if (map) updateTrainPositions(map, pos);
+    if (!map) return;
+    updateTrainPositions(map, pos);
+
+    const mp = getMorphProgress();
+    if (mp > 0) {
+      const lineSource = map.getSource("railway-lines") as maplibregl.GeoJSONSource | undefined;
+      if (lineSource) lineSource.setData(interpolateFeatures(mp));
+    }
   };
 
   const start = async () => {

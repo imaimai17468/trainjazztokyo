@@ -2,6 +2,7 @@ import type maplibregl from "maplibre-gl";
 import railwayData from "./tokyo-railway.json";
 import { RAILWAY_COLOR, LINE_COLORS } from "./MapView.lines";
 import type { TrainPosition } from "./entity/train";
+import { getMorphProgress, morphTrainCoordinate } from "./MapView.morph";
 
 export function addRailwayLayers(map: maplibregl.Map) {
   if (map.getSource("railway-lines")) return;
@@ -73,11 +74,15 @@ export function updateTrainPositions(map: maplibregl.Map, positions: TrainPositi
   const source = map.getSource("railway-trains") as maplibregl.GeoJSONSource | undefined;
   if (!source) return;
 
-  const features = positions.map((p) => ({
-    type: "Feature" as const,
-    properties: { color: p.color, line: p.line },
-    geometry: { type: "Point" as const, coordinates: p.coordinates },
-  }));
+  const mp = getMorphProgress();
+  const features = positions.map((p) => {
+    const coords = mp > 0 ? morphTrainCoordinate(p.line, p.coordinates, p.progress) : p.coordinates;
+    return {
+      type: "Feature" as const,
+      properties: { color: p.color, line: p.line },
+      geometry: { type: "Point" as const, coordinates: coords },
+    };
+  });
 
   source.setData({ type: "FeatureCollection", features });
 }
@@ -87,6 +92,7 @@ type PulseEntry = {
   coordinates: [number, number];
   startTime: number;
   line: string;
+  trainProgress: number;
 };
 
 const MAX_PULSES = 200;
@@ -112,6 +118,7 @@ export function triggerPulse(map: maplibregl.Map, position: TrainPosition) {
     coordinates: position.coordinates,
     startTime: performance.now(),
     line: position.line,
+    trainProgress: position.progress,
   });
 
   if (activePulses.length > MAX_PULSES) {
@@ -145,14 +152,18 @@ function animatePulses() {
     ? activePulses.filter((p) => highlightedLines!.has(p.line))
     : activePulses;
 
+  const mp = getMorphProgress();
+
   const features = visiblePulses.map((p) => {
     const progress = (now - p.startTime) / PULSE_DURATION;
     const opacity = 1 - progress;
     const radius = 3 + progress * 15;
+    const coords =
+      mp > 0 ? morphTrainCoordinate(p.line, p.coordinates, p.trainProgress) : p.coordinates;
     return {
       type: "Feature" as const,
       properties: { color: p.color, opacity, radius },
-      geometry: { type: "Point" as const, coordinates: p.coordinates },
+      geometry: { type: "Point" as const, coordinates: coords },
     };
   });
 
