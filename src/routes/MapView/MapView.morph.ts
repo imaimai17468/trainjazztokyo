@@ -34,28 +34,47 @@ const MARGIN_LEFT = 0.06;
 const MARGIN_RIGHT = 0.06;
 const ANIMATION_DURATION = 900;
 
-type OriginalFeature = {
-  line: string;
-  coordinates: [number, number][];
-};
-
 type BarTarget = {
-  rowIndex: number;
   lat: number;
   lonStart: number;
   lonEnd: number;
 };
 
-let originalFeatures: OriginalFeature[] = [];
+type OriginalSegment = {
+  line: string;
+  coordinates: [number, number][];
+};
+
+type LineRange = {
+  minLon: number;
+  maxLon: number;
+};
+
+let originalSegments: OriginalSegment[] = [];
+let lineRanges: Map<string, LineRange> = new Map();
 let barTargets: Map<string, BarTarget> = new Map();
 let animationId: number | undefined;
 let currentProgress = 0;
 
-function buildOriginalFeatures() {
-  originalFeatures = railwayData.lines.features.map((f) => ({
+function buildOriginalData() {
+  originalSegments = railwayData.lines.features.map((f) => ({
     line: f.properties.line as string,
     coordinates: f.geometry.coordinates as [number, number][],
   }));
+
+  const ranges = new Map<string, { min: number; max: number }>();
+  originalSegments.forEach((seg) => {
+    const existing = ranges.get(seg.line) ?? { min: Infinity, max: -Infinity };
+    seg.coordinates.forEach(([lon]) => {
+      existing.min = Math.min(existing.min, lon);
+      existing.max = Math.max(existing.max, lon);
+    });
+    ranges.set(seg.line, existing);
+  });
+
+  lineRanges = new Map(
+    [...ranges.entries()].map(([name, r]) => [name, { minLon: r.min, maxLon: r.max }]),
+  );
 }
 
 function buildBarTargets(map: maplibregl.Map) {
@@ -74,15 +93,7 @@ function buildBarTargets(map: maplibregl.Map) {
   const lonEnd = bounds.getEast() - lonRange * MARGIN_RIGHT;
 
   barTargets = new Map(
-    LINE_ORDER.map((name, i) => [
-      name,
-      {
-        rowIndex: i,
-        lat: topLat - (i + 0.5) * rowLatSpan,
-        lonStart,
-        lonEnd,
-      },
-    ]),
+    LINE_ORDER.map((name, i) => [name, { lat: topLat - (i + 0.5) * rowLatSpan, lonStart, lonEnd }]),
   );
 }
 
@@ -94,20 +105,26 @@ function easeInOutCubic(t: number): number {
   return t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2;
 }
 
+function coordToBarLon(lon: number, range: LineRange, target: BarTarget): number {
+  const span = range.maxLon - range.minLon;
+  const fraction = span > 0 ? (lon - range.minLon) / span : 0.5;
+  return lerp(target.lonStart, target.lonEnd, fraction);
+}
+
 export function interpolateFeatures(progress: number): GeoJSON.FeatureCollection {
-  const features = originalFeatures.map((feat) => {
-    const target = barTargets.get(feat.line);
-    if (!target) {
+  const features = originalSegments.map((seg) => {
+    const target = barTargets.get(seg.line);
+    const range = lineRanges.get(seg.line);
+    if (!target || !range) {
       return {
         type: "Feature" as const,
-        properties: { line: feat.line },
-        geometry: { type: "LineString" as const, coordinates: feat.coordinates },
+        properties: { line: seg.line },
+        geometry: { type: "LineString" as const, coordinates: seg.coordinates },
       };
     }
 
-    const coords = feat.coordinates.map((coord, i) => {
-      const fraction = feat.coordinates.length > 1 ? i / (feat.coordinates.length - 1) : 0.5;
-      const barLon = lerp(target.lonStart, target.lonEnd, fraction);
+    const coords = seg.coordinates.map((coord) => {
+      const barLon = coordToBarLon(coord[0], range, target);
       const barLat = target.lat;
       return [lerp(coord[0], barLon, progress), lerp(coord[1], barLat, progress)] as [
         number,
@@ -117,7 +134,7 @@ export function interpolateFeatures(progress: number): GeoJSON.FeatureCollection
 
     return {
       type: "Feature" as const,
-      properties: { line: feat.line },
+      properties: { line: seg.line },
       geometry: { type: "LineString" as const, coordinates: coords },
     };
   });
@@ -143,12 +160,8 @@ function interpolateTrains(positions: TrainPosition[], progress: number): TrainP
   });
 }
 
-export function morphToBars(
-  map: maplibregl.Map,
-  positions: TrainPosition[],
-  onFrame?: (progress: number) => void,
-) {
-  if (originalFeatures.length === 0) buildOriginalFeatures();
+export function morphToBars(map: maplibregl.Map, positions: TrainPosition[]) {
+  if (originalSegments.length === 0) buildOriginalData();
   buildBarTargets(map);
   cancelMorph();
 
@@ -176,20 +189,14 @@ export function morphToBars(
       });
     }
 
-    onFrame?.(p);
-
     if (t < 1) animationId = requestAnimationFrame(animate);
   };
 
   animationId = requestAnimationFrame(animate);
 }
 
-export function morphToMap(
-  map: maplibregl.Map,
-  positions: TrainPosition[],
-  onFrame?: (progress: number) => void,
-) {
-  if (originalFeatures.length === 0) buildOriginalFeatures();
+export function morphToMap(map: maplibregl.Map, positions: TrainPosition[]) {
+  if (originalSegments.length === 0) buildOriginalData();
   cancelMorph();
 
   const start = performance.now();
@@ -216,8 +223,6 @@ export function morphToMap(
       });
     }
 
-    onFrame?.(p);
-
     if (t < 1) animationId = requestAnimationFrame(animate);
     else {
       const lineSource2 = map.getSource("railway-lines") as maplibregl.GeoJSONSource | undefined;
@@ -237,19 +242,6 @@ export function cancelMorph() {
 
 export function getMorphProgress(): number {
   return currentProgress;
-}
-
-export function morphCoordinate(
-  line: string,
-  coord: [number, number],
-  progress: number,
-): [number, number] {
-  const target = barTargets.get(line);
-  if (!target || progress === 0) return coord;
-
-  const barLon = lerp(target.lonStart, target.lonEnd, 0.5);
-  const barLat = target.lat;
-  return [lerp(coord[0], barLon, progress), lerp(coord[1], barLat, progress)];
 }
 
 export function morphTrainCoordinate(
