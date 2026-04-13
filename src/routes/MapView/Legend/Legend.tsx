@@ -1,4 +1,5 @@
 import { createSignal } from "solid-js";
+import { Music, Map } from "lucide-solid";
 import type { Instrument } from "../MapView.lines";
 
 type LineEntry = {
@@ -195,6 +196,8 @@ const ROWS: LineEntry[][] = [
 
 type Props = {
   visible: boolean;
+  mode: "map" | "bars";
+  onToggleMode: () => void;
   onHighlight: (lineNames: string[] | null) => void;
 };
 
@@ -243,14 +246,35 @@ export default function Legend(props: Props) {
           </div>
         ))}
       </div>
-      {active() !== null && (
-        <div
-          class="fixed bottom-4 left-1/2 z-50 -translate-x-1/2 max-w-80 text-center italic tracking-wide leading-relaxed text-gray-400 dark:text-gray-600"
-          style={{ "font-size": "10px" }}
+      <div
+        class="fixed bottom-4 left-1/2 z-50 -translate-x-1/2 flex flex-col items-center gap-2 transition-opacity duration-700"
+        classList={{
+          "opacity-100 pointer-events-auto": props.visible,
+          "opacity-0 pointer-events-none": !props.visible,
+        }}
+      >
+        {active() !== null && (
+          <div
+            class="max-w-80 text-center italic tracking-wide leading-relaxed text-gray-400 dark:text-gray-600"
+            style={{ "font-size": "10px" }}
+          >
+            {active()!.flavor}
+          </div>
+        )}
+        <button
+          type="button"
+          onClick={props.onToggleMode}
+          class="flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs tracking-widest transition-colors duration-700"
+          classList={{
+            "bg-gray-200 text-gray-500 dark:bg-gray-800 dark:text-gray-400": props.mode === "map",
+            "bg-gray-800 text-white dark:bg-gray-200 dark:text-gray-900": props.mode === "bars",
+          }}
+          aria-label={props.mode === "map" ? "楽譜モード" : "地図モード"}
         >
-          {active()!.flavor}
-        </div>
-      )}
+          {props.mode === "map" ? <Music size={14} /> : <Map size={14} />}
+          {props.mode === "map" ? "BARS" : "MAP"}
+        </button>
+      </div>
     </>
   );
 }
