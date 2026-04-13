@@ -50,12 +50,15 @@ function getLineGeometries(): Map<string, LineGeometry> {
   return lineGeometries;
 }
 
-function pickPositionOnLine(lineName: string, trainIndex: number): [number, number] {
+function pickPositionOnLine(
+  lineName: string,
+  trainIndex: number,
+): { coordinates: [number, number]; progress: number } {
   const geo = getLineGeometries().get(lineName);
-  if (!geo || geo.coords.length === 0) return [139.7671, 35.6812];
+  if (!geo || geo.coords.length === 0) return { coordinates: [139.7671, 35.6812], progress: 0 };
 
   const idx = (((trainIndex * 137) % geo.coords.length) + geo.coords.length) % geo.coords.length;
-  return geo.coords[idx];
+  return { coordinates: geo.coords[idx], progress: idx / geo.coords.length };
 }
 
 export function convertTrains(odptTrains: OdptTrain[]): TrainPosition[] {
@@ -68,9 +71,10 @@ export function convertTrains(odptTrains: OdptTrain[]): TrainPosition[] {
     const count = lineCounters.get(lineName) ?? 0;
     lineCounters.set(lineName, count + 1);
 
+    const pos = pickPositionOnLine(lineName, count);
     return [
       {
-        coordinates: pickPositionOnLine(lineName, count),
+        ...pos,
         line: lineName,
         color: LINE_COLORS[lineName] ?? RAILWAY_COLOR,
         instrument: LINE_INSTRUMENTS[lineName] ?? "percussion",

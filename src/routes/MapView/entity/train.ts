@@ -6,6 +6,7 @@ export const TrainPositionSchema = object({
   line: string(),
   color: string(),
   instrument: string() as ReturnType<typeof string> & { __output: Instrument },
+  progress: number(),
 });
 
 export type TrainPosition = Omit<InferOutput<typeof TrainPositionSchema>, "instrument"> & {
