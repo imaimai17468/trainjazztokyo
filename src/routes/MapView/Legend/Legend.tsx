@@ -197,12 +197,22 @@ const ROWS: LineEntry[][] = [
 type Props = {
   visible: boolean;
   mode: "map" | "bars";
+  barsHighlight: string | null;
   onToggleMode: () => void;
   onHighlight: (lineNames: string[] | null) => void;
 };
 
+const ALL_LINES: LineEntry[] = ROWS.flat();
+
 export default function Legend(props: Props) {
   const [active, setActive] = createSignal<LineEntry | null>(null);
+
+  const activeLine = () => {
+    if (props.mode === "bars" && props.barsHighlight) {
+      return ALL_LINES.find((l) => l.name === props.barsHighlight) ?? null;
+    }
+    return active();
+  };
 
   const handleEnter = (line: LineEntry) => {
     setActive(line);
@@ -246,21 +256,15 @@ export default function Legend(props: Props) {
           </div>
         ))}
       </div>
-      <div
-        class="fixed bottom-4 left-1/2 z-50 -translate-x-1/2 flex flex-col items-center gap-2 transition-opacity duration-700"
-        classList={{
-          "opacity-100 pointer-events-auto": props.visible,
-          "opacity-0 pointer-events-none": !props.visible,
-        }}
-      >
-        {active() !== null && (
-          <div
-            class="max-w-80 text-center italic tracking-wide leading-relaxed text-gray-400 dark:text-gray-600"
-            style={{ "font-size": "10px" }}
-          >
-            {active()!.flavor}
-          </div>
-        )}
+      {activeLine() !== null && (
+        <div
+          class="fixed bottom-12 left-1/2 z-50 -translate-x-1/2 max-w-80 text-center italic tracking-wide leading-relaxed text-gray-400 dark:text-gray-600"
+          style={{ "font-size": "10px" }}
+        >
+          {activeLine()!.flavor}
+        </div>
+      )}
+      <div class="fixed bottom-4 left-1/2 z-50 -translate-x-1/2">
         <button
           type="button"
           onClick={props.onToggleMode}

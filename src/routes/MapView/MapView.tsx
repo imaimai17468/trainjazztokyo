@@ -11,11 +11,20 @@ import {
 } from "./MapView.logic";
 import { addRailwayLayers, highlightLines, resetPulseState } from "./MapView.railway";
 import { createTicker } from "./MapView.ticker";
+import { morphToBars, morphToMap, cancelMorph } from "./MapView.morph";
 import type { TrainPosition } from "./entity/train";
 import AboutContainer from "./About/About.container";
 import Intro from "./Intro/Intro";
 import Legend from "./Legend/Legend";
-import Bars from "./Bars/Bars";
+import Bars, { LINE_ORDER, ROW_HEIGHT } from "./Bars/Bars";
+
+function getLineFromY(y: number, containerHeight: number): string | null {
+  const totalH = LINE_ORDER.length * ROW_HEIGHT;
+  const topY = (containerHeight - totalH) / 2;
+  const row = Math.floor((y - topY) / ROW_HEIGHT);
+  if (row < 0 || row >= LINE_ORDER.length) return null;
+  return LINE_ORDER[row].name;
+}
 
 type Props = {
   center: [number, number];
@@ -34,11 +43,31 @@ export default function MapView(props: Props) {
   const [aboutOpen, setAboutOpen] = createSignal(false);
   const [mode, setMode] = createSignal<"map" | "bars">("map");
   const [positions, setPositions] = createSignal<TrainPosition[]>([]);
+  const [barsHighlight, setBarsHighlight] = createSignal<string | null>(null);
 
   const ticker = createTicker({
     getMap: () => map,
     onPositions: setPositions,
   });
+
+  const toggleMode = () => {
+    if (!map) return;
+    const next = mode() === "map" ? "bars" : "map";
+    setMode(next);
+    if (next === "bars") {
+      map.dragPan.disable();
+      map.scrollZoom.disable();
+      map.doubleClickZoom.disable();
+      map.touchZoomRotate.disable();
+      morphToBars(map, positions());
+    } else {
+      morphToMap(map, positions());
+      map.dragPan.enable();
+      map.scrollZoom.enable();
+      map.doubleClickZoom.enable();
+      map.touchZoomRotate.enable();
+    }
+  };
 
   onMount(() => {
     prefetchStyles();
@@ -47,6 +76,19 @@ export default function MapView(props: Props) {
       if (props.railwayOnly) setBaseLayersVisible(map!, false);
       addRailwayLayers(map!);
       ticker.start();
+    });
+
+    map.on("mousemove", (e) => {
+      if (mode() !== "bars") return;
+      const line = getLineFromY(e.point.y, map!.getContainer().clientHeight);
+      setBarsHighlight(line);
+      if (line) highlightLines(map!, [line]);
+      else highlightLines(map!, null);
+    });
+    map.on("click", (e) => {
+      if (mode() !== "bars") return;
+      const line = getLineFromY(e.point.y, map!.getContainer().clientHeight);
+      if (line) highlightLines(map!, [line]);
     });
   });
 
@@ -70,6 +112,7 @@ export default function MapView(props: Props) {
   });
 
   onCleanup(() => {
+    cancelMorph();
     ticker.stop();
     resetPulseState();
     destroyMap(map);
@@ -77,35 +120,27 @@ export default function MapView(props: Props) {
 
   return (
     <div class="relative w-full h-dvh bg-white transition-colors duration-700 dark:bg-gray-950">
-      <div
-        ref={container}
-        class="w-full h-full transition-opacity duration-700"
-        classList={{
-          "opacity-100": mode() === "map",
-          "opacity-0 pointer-events-none": mode() === "bars",
-        }}
-      />
-      <Bars positions={positions()} visible={mode() === "bars"} />
+      <div ref={container} class="w-full h-full" />
+      <Bars visible={mode() === "bars"} />
       {!props.introOpen && (
-        <>
-          <button
-            type="button"
-            onClick={props.onToggleRailwayOnly}
-            class="fixed bottom-4 right-14 z-50 rounded-full p-1.5 transition-colors duration-700"
-            classList={{
-              "bg-gray-200 text-gray-500 dark:bg-gray-800 dark:text-gray-400": props.railwayOnly,
-              "bg-gray-800 text-white dark:bg-gray-200 dark:text-gray-900": !props.railwayOnly,
-            }}
-            aria-label={props.railwayOnly ? "地図を表示" : "線路のみ表示"}
-          >
-            <Globe size={16} />
-          </button>
-        </>
+        <button
+          type="button"
+          onClick={props.onToggleRailwayOnly}
+          class="fixed bottom-4 right-14 z-50 rounded-full p-1.5 transition-colors duration-700"
+          classList={{
+            "bg-gray-200 text-gray-500 dark:bg-gray-800 dark:text-gray-400": props.railwayOnly,
+            "bg-gray-800 text-white dark:bg-gray-200 dark:text-gray-900": !props.railwayOnly,
+          }}
+          aria-label={props.railwayOnly ? "地図を表示" : "線路のみ表示"}
+        >
+          <Globe size={16} />
+        </button>
       )}
       <Legend
-        visible={!props.introOpen && !aboutOpen()}
+        visible={!props.introOpen && !aboutOpen() && mode() !== "bars"}
         mode={mode()}
-        onToggleMode={() => setMode((m) => (m === "map" ? "bars" : "map"))}
+        barsHighlight={barsHighlight()}
+        onToggleMode={toggleMode}
         onHighlight={(lines) => {
           if (map && map.isStyleLoaded()) highlightLines(map, lines);
         }}

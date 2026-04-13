@@ -1,6 +1,3 @@
-import type { TrainPosition } from "../entity/train";
-import { LINE_COLORS, RAILWAY_COLOR } from "../MapView.lines";
-
 const LINE_ORDER: { name: string; code: string }[] = [
   { name: "山手線", code: "JY" },
   { name: "中央線快速", code: "JC" },
@@ -31,57 +28,37 @@ const LINE_ORDER: { name: string; code: string }[] = [
 const ROW_HEIGHT = 16;
 
 type Props = {
-  positions: TrainPosition[];
   visible: boolean;
 };
 
 export default function Bars(props: Props) {
-  const trainsByLine = () =>
-    props.positions.reduce((acc, p) => {
-      const arr = acc.get(p.line) ?? [];
-      arr.push(p);
-      return acc.set(p.line, arr);
-    }, new Map<string, TrainPosition[]>());
+  const totalH = LINE_ORDER.length * ROW_HEIGHT;
 
   return (
     <div
-      class="fixed inset-0 z-30 flex items-center justify-center transition-opacity duration-700"
+      class="fixed inset-0 z-30 flex items-center transition-opacity duration-300"
       classList={{
-        "opacity-100 pointer-events-auto": props.visible,
+        "opacity-100 pointer-events-none": props.visible,
         "opacity-0 pointer-events-none": !props.visible,
       }}
     >
-      <div class="w-full px-12" style={{ height: `${LINE_ORDER.length * ROW_HEIGHT}px` }}>
-        {LINE_ORDER.map(({ name, code }) => {
-          const color = LINE_COLORS[name] ?? RAILWAY_COLOR;
-          return (
-            <div class="relative flex items-center" style={{ height: `${ROW_HEIGHT}px` }}>
-              <img src={`/icons/lines/${code}.svg`} alt={name} class="h-3 w-3 shrink-0" />
-              <div class="relative ml-1.5 flex-1 h-full">
-                <div
-                  class="absolute top-1/2 left-0 right-0 -translate-y-1/2"
-                  style={{
-                    height: "1px",
-                    "background-color": color,
-                    opacity: "0.3",
-                  }}
-                />
-                {(trainsByLine().get(name) ?? []).map((train) => (
-                  <div
-                    class="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
-                    style={{
-                      left: `${train.progress * 100}%`,
-                      width: "5px",
-                      height: "5px",
-                      "background-color": RAILWAY_COLOR,
-                    }}
-                  />
-                ))}
-              </div>
-            </div>
-          );
-        })}
+      <div
+        class="flex flex-col"
+        style={{
+          height: `${totalH}px`,
+          "margin-top": "auto",
+          "margin-bottom": "auto",
+          "padding-left": "24px",
+        }}
+      >
+        {LINE_ORDER.map(({ code, name }) => (
+          <div class="flex items-center" style={{ height: `${ROW_HEIGHT}px` }}>
+            <img src={`/icons/lines/${code}.svg`} alt={name} class="h-3 w-3" />
+          </div>
+        ))}
       </div>
     </div>
   );
 }
+
+export { LINE_ORDER, ROW_HEIGHT };
