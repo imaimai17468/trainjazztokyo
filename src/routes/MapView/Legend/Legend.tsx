@@ -258,7 +258,7 @@ export default function Legend(props: Props) {
       </div>
       {activeLine() !== null && (
         <div
-          class="fixed bottom-12 left-1/2 z-50 -translate-x-1/2 max-w-80 text-center italic tracking-wide leading-relaxed text-gray-400 dark:text-gray-600"
+          class="fixed bottom-14 left-1/2 z-50 -translate-x-1/2 max-w-80 text-center italic tracking-wide leading-relaxed text-gray-400 dark:text-gray-600"
           style={{ "font-size": "10px" }}
         >
           {activeLine()!.flavor}
