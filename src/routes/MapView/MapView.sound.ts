@@ -16,7 +16,29 @@ const INSTRUMENT_MIDI: Record<Instrument, { program: number; channel: number }> 
   percussion: { program: 0, channel: 9 },
 };
 
-const SCALE = [48, 50, 52, 53, 55, 57, 59, 60, 62, 64, 65, 67, 69, 71, 72, 74, 76];
+// Cm7 - Fm7 - Bb7 - Ebmaj7 のジャズ進行に基づく音階
+// 楽器ごとに音域と使う音を変える
+const INSTRUMENT_SCALES: Record<Instrument, number[]> = {
+  // ベース: 低音域、ルート・5度・7度中心のウォーキングベースライン
+  bass: [36, 39, 41, 43, 46, 48, 51, 53],
+  // ピアノ: 中音域、Cm9 / Fm9 コードトーン
+  piano: [60, 63, 65, 67, 70, 72, 74, 75],
+  // ヴィブラフォン: 中高音域、ペンタトニック的
+  vibraphone: [67, 70, 72, 75, 77, 79, 82],
+  // トロンボーン: 中低音域、ブルーノート含む
+  trombone: [48, 51, 53, 54, 55, 58, 60, 63],
+  // サックス: 中高音域、ブルーススケール
+  saxophone: [58, 60, 63, 65, 66, 67, 70, 72, 75],
+  // チェレスタ: 高音域、澄んだ音
+  celesta: [72, 75, 77, 79, 82, 84, 87],
+  // ギター: 中音域、コードトーン
+  guitar: [55, 58, 60, 63, 65, 67, 70, 72],
+  // ドラム系は別処理
+  maracas: [],
+  hihat: [],
+  rimshot: [],
+  percussion: [],
+};
 
 const DRUM_NOTES: Record<string, number> = {
   maracas: 70,
@@ -25,7 +47,20 @@ const DRUM_NOTES: Record<string, number> = {
   percussion: 38,
 };
 
-const NOTE_DURATION = 600;
+// 楽器ごとのノート長（ジャズらしいリズム感）
+const INSTRUMENT_DURATION: Record<Instrument, number> = {
+  bass: 800,
+  piano: 1200,
+  vibraphone: 1500,
+  trombone: 1000,
+  saxophone: 900,
+  celesta: 1800,
+  guitar: 600,
+  maracas: 100,
+  hihat: 80,
+  rimshot: 50,
+  percussion: 100,
+};
 
 let synth: WorkletSynthesizer | undefined;
 let initialized = false;
@@ -80,9 +115,13 @@ function ensurePrograms() {
     });
 }
 
-function progressToNote(progress: number): number {
-  const idx = Math.floor(progress * (SCALE.length - 1));
-  return SCALE[Math.max(0, Math.min(idx, SCALE.length - 1))];
+function progressToNote(progress: number, instrument: Instrument): number {
+  const scale = INSTRUMENT_SCALES[instrument];
+  if (scale.length === 0) return 60;
+  // progress をハッシュして音階内で散らす（単調に上がらない）
+  const hash = Math.sin(progress * 9999.7) * 10000;
+  const idx = Math.abs(Math.floor(hash)) % scale.length;
+  return scale[idx];
 }
 
 export function playNote(position: TrainPosition): void {
@@ -94,14 +133,17 @@ export function playNote(position: TrainPosition): void {
   if (!inst) return;
 
   const isDrum = inst.channel === 9;
-  const note = isDrum ? (DRUM_NOTES[position.instrument] ?? 38) : progressToNote(position.progress);
+  const note = isDrum
+    ? (DRUM_NOTES[position.instrument] ?? 38)
+    : progressToNote(position.progress, position.instrument);
 
-  const velocity = 60 + Math.floor(Math.random() * 30);
+  const velocity = 40 + Math.floor(Math.random() * 35);
+  const duration = INSTRUMENT_DURATION[position.instrument];
 
   synth.noteOn(inst.channel, note, velocity);
   setTimeout(() => {
     synth?.noteOff(inst.channel, note);
-  }, NOTE_DURATION);
+  }, duration);
 }
 
 export function stopSound(): void {
