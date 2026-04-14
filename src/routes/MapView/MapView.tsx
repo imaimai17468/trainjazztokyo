@@ -1,7 +1,7 @@
 import { onMount, onCleanup, createEffect, untrack, createSignal } from "solid-js";
 import type maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { Globe } from "lucide-solid";
+import Controls from "./Controls/Controls";
 import {
   createMap,
   changeMapStyle,
@@ -12,6 +12,7 @@ import {
 import { addRailwayLayers, highlightLines, resetPulseState } from "./MapView.railway";
 import { createTicker } from "./MapView.ticker";
 import { morphToBars, morphToMap, cancelMorph } from "./MapView.morph";
+import { initSound, stopSound } from "./MapView.sound";
 import type { TrainPosition } from "./entity/train";
 import AboutContainer from "./About/About.container";
 import Intro from "./Intro/Intro";
@@ -114,6 +115,7 @@ export default function MapView(props: Props) {
   onCleanup(() => {
     cancelMorph();
     ticker.stop();
+    stopSound();
     resetPulseState();
     destroyMap(map);
   });
@@ -123,18 +125,7 @@ export default function MapView(props: Props) {
       <div ref={container} class="w-full h-full" />
       <Bars visible={mode() === "bars"} />
       {!props.introOpen && (
-        <button
-          type="button"
-          onClick={props.onToggleRailwayOnly}
-          class="fixed bottom-4 right-14 z-50 rounded-full p-1.5 transition-colors duration-700"
-          classList={{
-            "bg-gray-200 text-gray-500 dark:bg-gray-800 dark:text-gray-400": props.railwayOnly,
-            "bg-gray-800 text-white dark:bg-gray-200 dark:text-gray-900": !props.railwayOnly,
-          }}
-          aria-label={props.railwayOnly ? "地図を表示" : "線路のみ表示"}
-        >
-          <Globe size={16} />
-        </button>
+        <Controls railwayOnly={props.railwayOnly} onToggleRailwayOnly={props.onToggleRailwayOnly} />
       )}
       <Legend
         visible={!props.introOpen && !aboutOpen() && mode() !== "bars"}
@@ -146,7 +137,13 @@ export default function MapView(props: Props) {
         }}
       />
       {!props.introOpen && <AboutContainer onOpenChange={setAboutOpen} />}
-      <Intro open={props.introOpen} onClose={props.onCloseIntro} />
+      <Intro
+        open={props.introOpen}
+        onClose={() => {
+          initSound();
+          props.onCloseIntro();
+        }}
+      />
     </div>
   );
 }

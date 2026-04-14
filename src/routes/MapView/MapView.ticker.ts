@@ -3,6 +3,7 @@ import type { TrainPosition } from "./entity/train";
 import { createTrainGateway } from "./gateway/trainGateway";
 import { updateTrainPositions, triggerPulse } from "./MapView.railway";
 import { getMorphProgress, interpolateFeatures } from "./MapView.morph";
+import { playNote } from "./MapView.sound";
 
 const PULSE_CHANCE = 0.015;
 
@@ -45,7 +46,10 @@ export function createTicker(callbacks: TickerCallbacks) {
       gateway
         .getPositions()
         .filter(() => Math.random() < PULSE_CHANCE)
-        .forEach((p) => triggerPulse(map, p));
+        .forEach((p) => {
+          triggerPulse(map, p);
+          playNote(p);
+        });
     }, 100);
   };
 

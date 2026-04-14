@@ -41,7 +41,7 @@ export default function About(props: Props) {
       <button
         type="button"
         onClick={() => (props.open ? props.onClose() : props.onOpen())}
-        class="fixed bottom-4 right-24 z-50 rounded-full p-1.5 transition-colors duration-700"
+        class="fixed bottom-4 right-34 z-50 rounded-full p-1.5 transition-colors duration-700"
         classList={{
           "bg-gray-200 text-gray-500 dark:bg-gray-800 dark:text-gray-400": !props.open,
           "bg-gray-800 text-white dark:bg-gray-200 dark:text-gray-900": props.open,
