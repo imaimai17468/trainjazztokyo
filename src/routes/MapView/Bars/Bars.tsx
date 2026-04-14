@@ -58,8 +58,8 @@ export default function Bars(props: Props) {
           height: `${totalH}px`,
           "margin-top": "auto",
           "margin-bottom": "auto",
-          "padding-left": "24px",
-          "padding-right": "24px",
+          "padding-left": "3vw",
+          "padding-right": "3vw",
           width: "100%",
         }}
       >
@@ -78,7 +78,7 @@ export default function Bars(props: Props) {
               left: `${6 + props.scanProgress * 88}vw`,
               height: `${totalH}px`,
               width: "1px",
-              "background-color": "rgba(255, 255, 255, 0.3)",
+              "background-color": "rgba(128, 128, 128, 0.4)",
             }}
           />
         )}
