@@ -1,3 +1,5 @@
+import type { TrainPosition } from "../entity/train";
+
 const LINE_ORDER: { name: string; code: string }[] = [
   { name: "山手線", code: "JY" },
   { name: "中央線快速", code: "JC" },
@@ -30,10 +32,17 @@ const ROW_HEIGHT = 16;
 type Props = {
   visible: boolean;
   scanProgress: number;
+  positions: TrainPosition[];
 };
 
 export default function Bars(props: Props) {
   const totalH = LINE_ORDER.length * ROW_HEIGHT;
+
+  const countByLine = () =>
+    props.positions.reduce(
+      (acc, p) => acc.set(p.line, (acc.get(p.line) ?? 0) + 1),
+      new Map<string, number>(),
+    );
 
   return (
     <div
@@ -50,12 +59,16 @@ export default function Bars(props: Props) {
           "margin-top": "auto",
           "margin-bottom": "auto",
           "padding-left": "24px",
+          "padding-right": "24px",
           width: "100%",
         }}
       >
         {LINE_ORDER.map(({ code, name }) => (
-          <div class="flex items-center" style={{ height: `${ROW_HEIGHT}px` }}>
+          <div class="flex items-center justify-between" style={{ height: `${ROW_HEIGHT}px` }}>
             <img src={`/icons/lines/${code}.svg`} alt={name} class="h-3 w-3" />
+            <span class="text-gray-500 dark:text-gray-600" style={{ "font-size": "8px" }}>
+              {countByLine().get(name) ?? 0}
+            </span>
           </div>
         ))}
         {props.visible && (

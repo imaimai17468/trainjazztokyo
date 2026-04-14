@@ -126,7 +126,15 @@ export default function MapView(props: Props) {
   return (
     <div class="relative w-full h-dvh bg-white transition-colors duration-700 dark:bg-gray-950">
       <div ref={container} class="w-full h-full" />
-      <Bars visible={mode() === "bars"} scanProgress={scanProgress()} />
+      {!props.introOpen && positions().length > 0 && (
+        <div class="fixed top-4 left-1/2 z-50 -translate-x-1/2 flex items-center gap-1.5">
+          <div class="h-2 w-2 rounded-full bg-red-500 animate-pulse" />
+          <span class="text-xs text-gray-400 dark:text-gray-500 tracking-wide">
+            {positions().length} trains running
+          </span>
+        </div>
+      )}
+      <Bars visible={mode() === "bars"} scanProgress={scanProgress()} positions={positions()} />
       {!props.introOpen && (
         <Controls railwayOnly={props.railwayOnly} onToggleRailwayOnly={props.onToggleRailwayOnly} />
       )}
