@@ -37,7 +37,7 @@ export default function Bars(props: Props) {
 
   return (
     <div
-      class="fixed inset-0 z-30 flex items-center transition-opacity duration-300"
+      class="fixed inset-0 z-35 flex items-center transition-opacity duration-300"
       classList={{
         "opacity-100 pointer-events-none": props.visible,
         "opacity-0 pointer-events-none": !props.visible,
@@ -60,9 +60,10 @@ export default function Bars(props: Props) {
         ))}
         {props.visible && (
           <div
-            class="absolute top-0 bottom-0 pointer-events-none"
+            class="absolute top-0 pointer-events-none"
             style={{
-              left: `${props.scanProgress * 100}%`,
+              left: `${6 + props.scanProgress * 88}vw`,
+              height: `${totalH}px`,
               width: "1px",
               "background-color": "rgba(255, 255, 255, 0.3)",
             }}
