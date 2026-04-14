@@ -12,7 +12,7 @@ import {
 import { addRailwayLayers, highlightLines, resetPulseState } from "./MapView.railway";
 import { createTicker } from "./MapView.ticker";
 import { morphToBars, morphToMap, cancelMorph } from "./MapView.morph";
-import { initSound, stopSound } from "./MapView.sound";
+import { initSound, stopSound, setSoloLine } from "./MapView.sound";
 import type { TrainPosition } from "./entity/train";
 import AboutContainer from "./About/About.container";
 import Intro from "./Intro/Intro";
@@ -85,6 +85,7 @@ export default function MapView(props: Props) {
       if (mode() !== "bars") return;
       const line = getLineFromY(e.point.y, map!.getContainer().clientHeight);
       setBarsHighlight(line);
+      setSoloLine(line);
       if (line) highlightLines(map!, [line]);
       else highlightLines(map!, null);
     });
@@ -135,6 +136,7 @@ export default function MapView(props: Props) {
         barsHighlight={barsHighlight()}
         onToggleMode={toggleMode}
         onHighlight={(lines) => {
+          setSoloLine(lines?.[0] ?? null);
           if (map && map.isStyleLoaded()) highlightLines(map, lines);
         }}
       />

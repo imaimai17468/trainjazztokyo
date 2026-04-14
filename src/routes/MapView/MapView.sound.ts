@@ -31,6 +31,7 @@ let synth: WorkletSynthesizer | undefined;
 let initialized = false;
 let programsSet = false;
 let muted = false;
+let soloLine: string | null = null;
 
 export function isMuted(): boolean {
   return muted;
@@ -38,6 +39,10 @@ export function isMuted(): boolean {
 
 export function setMuted(value: boolean): void {
   muted = value;
+}
+
+export function setSoloLine(line: string | null): void {
+  soloLine = line;
 }
 
 export async function initSound(): Promise<void> {
@@ -82,6 +87,7 @@ function progressToNote(progress: number): number {
 
 export function playNote(position: TrainPosition): void {
   if (!synth || muted) return;
+  if (soloLine && position.line !== soloLine) return;
   ensurePrograms();
 
   const inst = INSTRUMENT_MIDI[position.instrument];
