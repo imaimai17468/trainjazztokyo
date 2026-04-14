@@ -29,6 +29,7 @@ const ROW_HEIGHT = 16;
 
 type Props = {
   visible: boolean;
+  scanProgress: number;
 };
 
 export default function Bars(props: Props) {
@@ -43,12 +44,13 @@ export default function Bars(props: Props) {
       }}
     >
       <div
-        class="flex flex-col"
+        class="relative flex flex-col"
         style={{
           height: `${totalH}px`,
           "margin-top": "auto",
           "margin-bottom": "auto",
           "padding-left": "24px",
+          width: "100%",
         }}
       >
         {LINE_ORDER.map(({ code, name }) => (
@@ -56,6 +58,16 @@ export default function Bars(props: Props) {
             <img src={`/icons/lines/${code}.svg`} alt={name} class="h-3 w-3" />
           </div>
         ))}
+        {props.visible && (
+          <div
+            class="absolute top-0 bottom-0 pointer-events-none"
+            style={{
+              left: `${props.scanProgress * 100}%`,
+              width: "1px",
+              "background-color": "rgba(255, 255, 255, 0.3)",
+            }}
+          />
+        )}
       </div>
     </div>
   );

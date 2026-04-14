@@ -5,17 +5,20 @@ import { updateTrainPositions, triggerPulse } from "./MapView.railway";
 import { getMorphProgress, interpolateFeatures } from "./MapView.morph";
 import { playNote } from "./MapView.sound";
 
-const PULSE_CHANCE = 0.015;
+const SCAN_WINDOW = 0.03;
 
 type TickerCallbacks = {
   getMap: () => maplibregl.Map | undefined;
   onPositions: (positions: TrainPosition[]) => void;
+  onScanProgress: (progress: number) => void;
 };
 
 export function createTicker(callbacks: TickerCallbacks) {
   const gateway = createTrainGateway();
   let snapshotTimer: ReturnType<typeof setInterval> | undefined;
   let pulseTimer: ReturnType<typeof setInterval> | undefined;
+  let snapshotStart = 0;
+  const firedThisCycle = new Set<number>();
 
   const sync = (pos: TrainPosition[]) => {
     callbacks.onPositions(pos);
@@ -34,23 +37,33 @@ export function createTicker(callbacks: TickerCallbacks) {
     stop();
     await gateway.init();
     sync(gateway.getPositions());
+    snapshotStart = performance.now();
+    firedThisCycle.clear();
 
     snapshotTimer = setInterval(async () => {
       await gateway.refresh();
       sync(gateway.getPositions());
+      snapshotStart = performance.now();
+      firedThisCycle.clear();
     }, gateway.snapshotInterval);
 
     pulseTimer = setInterval(() => {
       const map = callbacks.getMap();
       if (!map) return;
-      gateway
-        .getPositions()
-        .filter(() => Math.random() < PULSE_CHANCE)
-        .forEach((p) => {
+
+      const elapsed = performance.now() - snapshotStart;
+      const scanPos = Math.min(elapsed / gateway.snapshotInterval, 1);
+      callbacks.onScanProgress(scanPos);
+
+      gateway.getPositions().forEach((p, i) => {
+        if (firedThisCycle.has(i)) return;
+        if (p.progress >= scanPos - SCAN_WINDOW && p.progress <= scanPos) {
+          firedThisCycle.add(i);
           triggerPulse(map, p);
           playNote(p);
-        });
-    }, 100);
+        }
+      });
+    }, 50);
   };
 
   const stop = () => {

@@ -45,10 +45,12 @@ export default function MapView(props: Props) {
   const [mode, setMode] = createSignal<"map" | "bars">("map");
   const [positions, setPositions] = createSignal<TrainPosition[]>([]);
   const [barsHighlight, setBarsHighlight] = createSignal<string | null>(null);
+  const [scanProgress, setScanProgress] = createSignal(0);
 
   const ticker = createTicker({
     getMap: () => map,
     onPositions: setPositions,
+    onScanProgress: setScanProgress,
   });
 
   const toggleMode = () => {
@@ -123,7 +125,7 @@ export default function MapView(props: Props) {
   return (
     <div class="relative w-full h-dvh bg-white transition-colors duration-700 dark:bg-gray-950">
       <div ref={container} class="w-full h-full" />
-      <Bars visible={mode() === "bars"} />
+      <Bars visible={mode() === "bars"} scanProgress={scanProgress()} />
       {!props.introOpen && (
         <Controls railwayOnly={props.railwayOnly} onToggleRailwayOnly={props.onToggleRailwayOnly} />
       )}
