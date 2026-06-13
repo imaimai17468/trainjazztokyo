@@ -16,8 +16,8 @@
   "dependencies": {
     "@fontsource-variable/m-plus-1-code": "^5.2.9",
     "@solidjs/router": "^0.15.0",
-    "@solidjs/start": "2.0.0-alpha.2",
-    "@solidjs/vite-plugin-nitro-2": "^0.1.0",
+    "@solidjs/start": "2.0.0-alpha.3",
+    "@solidjs/vite-plugin-nitro-2": "^0.3.0",
     "lucide-solid": "^1.8.0",
     "maplibre-gl": "^5.22.0",
     "solid-js": "^1.9.5",

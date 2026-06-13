@@ -4,7 +4,17 @@ import { solidStart } from "@solidjs/start/config";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  plugins: [solidStart(), tailwindcss(), nitro({ preset: "cloudflare_module" })],
+  plugins: [
+    solidStart(),
+    tailwindcss(),
+    nitro({
+      preset: "cloudflare_module",
+      compatibilityDate: "2024-09-23",
+      rollupConfig: {
+        external: ["__STATIC_CONTENT_MANIFEST", "node:async_hooks"],
+      },
+    }),
+  ],
   server: {
     allowedHosts: true,
   },
