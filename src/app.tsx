@@ -12,13 +12,6 @@ export default function App() {
       root={(props) => (
         <>
           <ThemeToggle />
-          <link rel="preload" href="/soundfont.sf3" as="fetch" crossorigin="anonymous" />
-          <link
-            rel="preload"
-            href="https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json"
-            as="fetch"
-            crossorigin="anonymous"
-          />
           <Suspense>{props.children}</Suspense>
         </>
       )}

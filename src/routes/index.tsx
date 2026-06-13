@@ -1,42 +1,9 @@
-import { createSignal } from "solid-js";
-import { clientOnly } from "@solidjs/start";
-import { AboutText } from "./MapView/About/About";
-
-const MapViewContainer = clientOnly(() => import("./MapView/MapView.container"));
+import MapView from "./MapView/MapView.container";
 
 export default function Home() {
-  const [introOpen, setIntroOpen] = createSignal(true);
-
   return (
     <main>
-      <MapViewContainer introOpen={introOpen()} onCloseIntro={() => setIntroOpen(false)} />
-      <div
-        role="button"
-        tabIndex={0}
-        class="fixed inset-0 z-60 flex items-center justify-center bg-white transition-[opacity,background-color] duration-700 ease-in-out dark:bg-gray-950"
-        classList={{
-          "opacity-100 pointer-events-auto": introOpen(),
-          "opacity-0 pointer-events-none": !introOpen(),
-        }}
-        onClick={() => setIntroOpen(false)}
-        onKeyDown={(e) => e.key === "Escape" && setIntroOpen(false)}
-      >
-        <div
-          role="presentation"
-          class="px-6 max-w-lg text-sm leading-relaxed text-gray-700 transition-colors duration-700 dark:text-gray-300"
-          onClick={(e) => e.stopPropagation()}
-          onKeyDown={(e) => e.stopPropagation()}
-        >
-          <AboutText />
-          <button
-            type="button"
-            onClick={() => setIntroOpen(false)}
-            class="mx-auto mt-8 block rounded-full border border-gray-300 px-6 py-2.5 text-sm tracking-widest text-gray-600 transition-colors duration-700 hover:bg-gray-100 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-900"
-          >
-            体験をはじめる
-          </button>
-        </div>
-      </div>
+      <MapView />
     </main>
   );
 }
