@@ -10,6 +10,7 @@ export default defineConfig({
     nitro({
       preset: "cloudflare_module",
       compatibilityDate: "2024-09-23",
+      minify: false,
       rollupConfig: {
         external: ["__STATIC_CONTENT_MANIFEST", "node:async_hooks"],
       },
