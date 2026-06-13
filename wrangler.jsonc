@@ -1,0 +1,7 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "trainjazztokyo",
+  "pages_build_output_dir": "dist",
+  "compatibility_date": "2024-11-19",
+  "compatibility_flags": ["nodejs_compat"]
+}
