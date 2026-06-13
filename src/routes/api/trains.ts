@@ -1,6 +1,8 @@
 import type { APIEvent } from "@solidjs/start/server";
+import { generateSimulatedTrains } from "./simulate";
 
 const ODPT_API_BASE = "https://api.odpt.org/api/v4";
+const CACHE_TTL = 30_000;
 
 const TIMETABLE_RAILWAYS = [
   "odpt.Railway:TokyoMetro.Ginza",
@@ -12,17 +14,6 @@ const TIMETABLE_RAILWAYS = [
   "odpt.Railway:TokyoMetro.Hanzomon",
   "odpt.Railway:TokyoMetro.Namboku",
   "odpt.Railway:TokyoMetro.Fukutoshin",
-  "odpt.Railway:JR-East.Yamanote",
-  "odpt.Railway:JR-East.ChuoRapid",
-  "odpt.Railway:JR-East.ChuoSobuLocal",
-  "odpt.Railway:JR-East.KeihinTohoku",
-  "odpt.Railway:JR-East.Saikyo",
-  "odpt.Railway:JR-East.ShonanShinjuku",
-  "odpt.Railway:JR-East.UenoTokyo",
-  "odpt.Railway:Tokyu.Toyoko",
-  "odpt.Railway:Tokyu.DenEnToshi",
-  "odpt.Railway:Odakyu.Odawara",
-  "odpt.Railway:Keio.Keio",
 ];
 
 type NormalizedTrain = {
@@ -31,8 +22,13 @@ type NormalizedTrain = {
   toStation?: string;
   railDirection: string;
   trainNumber: string;
+  departureTime?: string;
+  progress?: number;
   date: string;
 };
+
+let cachedOdpt: { data: NormalizedTrain[]; time: number } | undefined;
+let fetchingPromise: Promise<NormalizedTrain[]> | undefined;
 
 function strip(prefix: string, val: string): string {
   return val.replace(prefix, "");
@@ -122,6 +118,7 @@ async function fetchTimetableTrains(apiKey: string): Promise<NormalizedTrain[]> 
             toStation: undefined,
             railDirection: direction,
             trainNumber: trainNum,
+            departureTime: depTime,
             date: new Date().toISOString(),
           });
         });
@@ -136,14 +133,7 @@ async function fetchTimetableTrains(apiKey: string): Promise<NormalizedTrain[]> 
   return results;
 }
 
-export async function GET(_event: APIEvent) {
-  const apiKey = import.meta.env.VITE_ODPT_API_KEY;
-  if (!apiKey) {
-    return new Response(JSON.stringify([]), {
-      headers: { "Content-Type": "application/json" },
-    });
-  }
-
+async function fetchOdptTrains(apiKey: string): Promise<NormalizedTrain[]> {
   const [realtime, timetable] = await Promise.all([
     fetchRealtimeTrains(apiKey),
     fetchTimetableTrains(apiKey),
@@ -152,7 +142,44 @@ export async function GET(_event: APIEvent) {
   const realtimeRailways = new Set(realtime.map((t) => t.railway));
   const timetableFiltered = timetable.filter((t) => !realtimeRailways.has(t.railway));
 
-  const all = [...realtime, ...timetableFiltered];
+  return [...realtime, ...timetableFiltered];
+}
+
+async function getOdptTrains(apiKey: string): Promise<NormalizedTrain[]> {
+  if (cachedOdpt && Date.now() - cachedOdpt.time < CACHE_TTL) {
+    return cachedOdpt.data;
+  }
+
+  if (fetchingPromise) return fetchingPromise;
+
+  fetchingPromise = fetchOdptTrains(apiKey)
+    .then((data) => {
+      cachedOdpt = { data, time: Date.now() };
+      return data;
+    })
+    .finally(() => {
+      fetchingPromise = undefined;
+    });
+
+  if (cachedOdpt) return cachedOdpt.data;
+
+  return fetchingPromise;
+}
+
+export async function GET(_event: APIEvent) {
+  const apiKey = import.meta.env.VITE_ODPT_API_KEY;
+  if (!apiKey) {
+    return new Response(JSON.stringify([]), {
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+
+  const odptTrains = await getOdptTrains(apiKey);
+
+  const coveredRailways = new Set(odptTrains.map((t) => t.railway));
+  const simulated = generateSimulatedTrains(coveredRailways);
+
+  const all = [...odptTrains, ...simulated];
 
   return new Response(JSON.stringify(all), {
     headers: { "Content-Type": "application/json" },
