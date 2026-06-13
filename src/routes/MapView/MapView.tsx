@@ -12,12 +12,46 @@ import {
 import { addRailwayLayers, highlightLines, resetPulseState } from "./MapView.railway";
 import { createTicker } from "./MapView.ticker";
 import { morphToBars, morphToMap, cancelMorph } from "./MapView.morph";
-import { initSound, stopSound, setSoloLine } from "./MapView.sound";
+import { stopSound, setSoloLine } from "./MapView.sound";
+import { groupTrains } from "./gateway/groupTrains";
 import type { TrainPosition } from "./entity/train";
 import AboutContainer from "./About/About.container";
-import Intro from "./Intro/Intro";
 import Legend from "./Legend/Legend";
 import Bars, { LINE_ORDER, ROW_HEIGHT } from "./Bars/Bars";
+
+function updateUserLocation(map: maplibregl.Map | undefined, coords: [number, number] | null) {
+  if (!map) return;
+  let source = map.getSource("user-location") as maplibregl.GeoJSONSource | undefined;
+  if (!source) {
+    map.addSource("user-location", {
+      type: "geojson",
+      data: { type: "FeatureCollection", features: [] },
+    });
+    map.addLayer({
+      id: "user-location",
+      type: "circle",
+      source: "user-location",
+      paint: {
+        "circle-color": "#3b82f6",
+        "circle-radius": 6,
+        "circle-opacity": 0.9,
+        "circle-stroke-color": "#ffffff",
+        "circle-stroke-width": 2,
+      },
+    });
+    source = map.getSource("user-location") as maplibregl.GeoJSONSource;
+  }
+  const features = coords
+    ? [
+        {
+          type: "Feature" as const,
+          properties: {},
+          geometry: { type: "Point" as const, coordinates: coords },
+        },
+      ]
+    : [];
+  source.setData({ type: "FeatureCollection", features });
+}
 
 function getLineFromY(y: number, containerHeight: number): string | null {
   const totalH = LINE_ORDER.length * ROW_HEIGHT;
@@ -57,14 +91,15 @@ export default function MapView(props: Props) {
     if (!map) return;
     const next = mode() === "map" ? "bars" : "map";
     setMode(next);
+    const groups = groupTrains(positions());
     if (next === "bars") {
       map.dragPan.disable();
       map.scrollZoom.disable();
       map.doubleClickZoom.disable();
       map.touchZoomRotate.disable();
-      morphToBars(map, positions());
+      morphToBars(map, positions(), groups, positions());
     } else {
-      morphToMap(map, positions());
+      morphToMap(map, positions(), groups, positions());
       map.dragPan.enable();
       map.scrollZoom.enable();
       map.doubleClickZoom.enable();
@@ -92,7 +127,13 @@ export default function MapView(props: Props) {
     map.on("click", (e) => {
       if (mode() !== "bars") return;
       const line = getLineFromY(e.point.y, map!.getContainer().clientHeight);
-      if (line) highlightLines(map!, [line]);
+      if (line) {
+        highlightLines(map!, [line]);
+        setSoloLine(line);
+      } else {
+        highlightLines(map!, null);
+        setSoloLine(null);
+      }
     });
   });
 
@@ -136,7 +177,11 @@ export default function MapView(props: Props) {
       )}
       <Bars visible={mode() === "bars"} scanProgress={scanProgress()} positions={positions()} />
       {!props.introOpen && (
-        <Controls railwayOnly={props.railwayOnly} onToggleRailwayOnly={props.onToggleRailwayOnly} />
+        <Controls
+          railwayOnly={props.railwayOnly}
+          onToggleRailwayOnly={props.onToggleRailwayOnly}
+          onLocationChange={(coords) => updateUserLocation(map, coords)}
+        />
       )}
       <Legend
         visible={!props.introOpen && !aboutOpen() && mode() !== "bars"}
@@ -149,13 +194,6 @@ export default function MapView(props: Props) {
         }}
       />
       {!props.introOpen && <AboutContainer onOpenChange={setAboutOpen} />}
-      <Intro
-        open={props.introOpen}
-        onClose={() => {
-          initSound();
-          props.onCloseIntro();
-        }}
-      />
     </div>
   );
 }

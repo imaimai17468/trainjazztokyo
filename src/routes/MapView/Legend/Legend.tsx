@@ -264,7 +264,7 @@ export default function Legend(props: Props) {
           {activeLine()!.flavor}
         </div>
       )}
-      <div class="fixed bottom-4 left-1/2 z-50 -translate-x-1/2">
+      <div class="fixed bottom-4 left-4 z-50 sm:left-1/2 sm:-translate-x-1/2">
         <button
           type="button"
           onClick={props.onToggleMode}

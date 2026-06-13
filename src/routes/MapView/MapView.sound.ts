@@ -1,6 +1,6 @@
 import { WorkletSynthesizer } from "spessasynth_lib";
 import type { Instrument } from "./MapView.lines";
-import type { TrainPosition } from "./entity/train";
+import type { TrainGroup } from "./gateway/groupTrains";
 
 const INSTRUMENT_MIDI: Record<Instrument, { program: number; channel: number }> = {
   bass: { program: 32, channel: 0 },
@@ -16,28 +16,53 @@ const INSTRUMENT_MIDI: Record<Instrument, { program: number; channel: number }> 
   percussion: { program: 0, channel: 9 },
 };
 
-// Cm7 - Fm7 - Bb7 - Ebmaj7 のジャズ進行に基づく音階
-// 楽器ごとに音域と使う音を変える
-const INSTRUMENT_SCALES: Record<Instrument, number[]> = {
-  // ベース: 低音域、ルート・5度・7度中心のウォーキングベースライン
-  bass: [36, 39, 41, 43, 46, 48, 51, 53],
-  // ピアノ: 中音域、Cm9 / Fm9 コードトーン
-  piano: [60, 63, 65, 67, 70, 72, 74, 75],
-  // ヴィブラフォン: 中高音域、ペンタトニック的
-  vibraphone: [67, 70, 72, 75, 77, 79, 82],
-  // トロンボーン: 中低音域、ブルーノート含む
-  trombone: [48, 51, 53, 54, 55, 58, 60, 63],
-  // サックス: 中高音域、ブルーススケール
-  saxophone: [58, 60, 63, 65, 66, 67, 70, 72, 75],
-  // チェレスタ: 高音域、澄んだ音
-  celesta: [72, 75, 77, 79, 82, 84, 87],
-  // ギター: 中音域、コードトーン
-  guitar: [55, 58, 60, 63, 65, 67, 70, 72],
-  // ドラム系は別処理
-  maracas: [],
-  hihat: [],
-  rimshot: [],
-  percussion: [],
+// Cm diatonic minor progression (darker):
+//   0.00–0.25: Cm9      (C Eb G Bb D)
+//   0.25–0.50: Fm9      (F Ab C Eb G)
+//   0.50–0.75: Abmaj7   (Ab C Eb G)
+//   0.75–1.00: Gm7b5    (G Bb Db F)
+type ChordTones = { roots: number[]; tones: number[] };
+
+const CHORDS: ChordTones[] = [
+  { roots: [36, 48], tones: [0, 3, 7, 10] }, // Cm: C=0, Eb=3, G=7, Bb=10
+  { roots: [41, 53], tones: [5, 8, 0, 3] }, // Fm: F=5, Ab=8, C=0, Eb=3
+  { roots: [44, 56], tones: [8, 0, 3, 7] }, // Ab: Ab=8, C=0, Eb=3, G=7
+  { roots: [43, 55], tones: [7, 10, 1, 5] }, // Gm7b5: G=7, Bb=10, Db=1, F=5
+];
+
+function getChord(scanPos: number): ChordTones {
+  const idx = Math.min(Math.floor(scanPos * 4), 3);
+  return CHORDS[idx];
+}
+
+type InstrumentRange = { low: number; high: number };
+
+const INSTRUMENT_RANGE: Record<Instrument, InstrumentRange> = {
+  bass: { low: 36, high: 55 }, // C2–G3
+  piano: { low: 63, high: 82 }, // Eb4–Bb5
+  vibraphone: { low: 70, high: 89 }, // Bb4–F6
+  trombone: { low: 51, high: 70 }, // Eb3–Bb4
+  saxophone: { low: 58, high: 77 }, // Bb3–F5
+  celesta: { low: 75, high: 94 }, // Eb5–Bb6
+  guitar: { low: 58, high: 75 }, // Bb3–Eb5
+  maracas: { low: 0, high: 0 },
+  hihat: { low: 0, high: 0 },
+  rimshot: { low: 0, high: 0 },
+  percussion: { low: 0, high: 0 },
+};
+
+const VELOCITY_RANGE: Record<Instrument, [number, number]> = {
+  bass: [30, 48],
+  piano: [20, 38],
+  vibraphone: [18, 35],
+  trombone: [25, 40],
+  saxophone: [25, 42],
+  celesta: [15, 28],
+  guitar: [20, 35],
+  maracas: [15, 25],
+  hihat: [12, 22],
+  rimshot: [15, 25],
+  percussion: [15, 25],
 };
 
 const DRUM_NOTES: Record<string, number> = {
@@ -47,26 +72,17 @@ const DRUM_NOTES: Record<string, number> = {
   percussion: 38,
 };
 
-// 楽器ごとのノート長（ジャズらしいリズム感）
-const INSTRUMENT_DURATION: Record<Instrument, number> = {
-  bass: 800,
-  piano: 1200,
-  vibraphone: 1500,
-  trombone: 1000,
-  saxophone: 900,
-  celesta: 1800,
-  guitar: 600,
-  maracas: 100,
-  hihat: 80,
-  rimshot: 50,
-  percussion: 100,
-};
+const SCAN_DURATION = 15_000;
 
 let synth: WorkletSynthesizer | undefined;
 let initialized = false;
 let programsSet = false;
 let muted = false;
 let soloLine: string | null = null;
+let userLocation: [number, number] | null = null;
+
+const PROXIMITY_MAX_KM = 8;
+const PROXIMITY_MIN_KM = 0.5;
 
 export function isMuted(): boolean {
   return muted;
@@ -78,6 +94,30 @@ export function setMuted(value: boolean): void {
 
 export function setSoloLine(line: string | null): void {
   soloLine = line;
+}
+
+export function setUserLocation(coords: [number, number] | null): void {
+  userLocation = coords;
+}
+
+const toRad = (d: number) => (d * Math.PI) / 180;
+
+function haversineKm(a: [number, number], b: [number, number]): number {
+  const dLat = toRad(b[1] - a[1]);
+  const dLon = toRad(b[0] - a[0]);
+  const lat1 = toRad(a[1]);
+  const lat2 = toRad(b[1]);
+  const h = Math.sin(dLat / 2) ** 2 + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon / 2) ** 2;
+  return 6371 * 2 * Math.atan2(Math.sqrt(h), Math.sqrt(1 - h));
+}
+
+function proximityVelocityScale(groupCoords: [number, number]): number {
+  if (!userLocation) return 1;
+  const km = haversineKm(userLocation, groupCoords);
+  if (km <= PROXIMITY_MIN_KM) return 1;
+  if (km >= PROXIMITY_MAX_KM) return 0.15;
+  const t = (km - PROXIMITY_MIN_KM) / (PROXIMITY_MAX_KM - PROXIMITY_MIN_KM);
+  return 1 - t * 0.85;
 }
 
 export async function initSound(): Promise<void> {
@@ -97,9 +137,7 @@ export async function initSound(): Promise<void> {
     s.connect(ctx.destination);
 
     synth = s;
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.error("Sound init failed:", e);
+  } catch {
     initialized = false;
   }
 }
@@ -115,35 +153,65 @@ function ensurePrograms() {
     });
 }
 
-function progressToNote(progress: number, instrument: Instrument): number {
-  const scale = INSTRUMENT_SCALES[instrument];
-  if (scale.length === 0) return 60;
-  // progress をハッシュして音階内で散らす（単調に上がらない）
+function selectNote(scanPos: number, progress: number, instrument: Instrument): number {
+  const chord = getChord(scanPos);
+  const range = INSTRUMENT_RANGE[instrument];
+
+  if (instrument === "bass") {
+    const hash = Math.sin(progress * 7919.3) * 10000;
+    const useRoot = Math.abs(hash) % 100 < 70;
+    const candidates = useRoot ? chord.roots : chord.roots.map((r) => r + 7);
+    const inRange = candidates.filter((n) => n >= range.low && n <= range.high);
+    if (inRange.length > 0) {
+      return inRange[Math.abs(Math.floor(hash)) % inRange.length];
+    }
+    return chord.roots[0];
+  }
+
+  const allNotes: number[] = [];
+  for (let octave = 0; octave < 10; octave++) {
+    for (const tone of chord.tones) {
+      const note = octave * 12 + tone;
+      if (note >= range.low && note <= range.high) {
+        allNotes.push(note);
+      }
+    }
+  }
+
+  if (allNotes.length === 0) return 60;
+
   const hash = Math.sin(progress * 9999.7) * 10000;
-  const idx = Math.abs(Math.floor(hash)) % scale.length;
-  return scale[idx];
+  const idx = Math.abs(Math.floor(hash)) % allNotes.length;
+  return allNotes[idx];
 }
 
-export function playNote(position: TrainPosition): void {
+export function playGroupNote(group: TrainGroup, coords: [number, number], scanPos: number): void {
   if (!synth || muted) return;
-  if (soloLine && position.line !== soloLine) return;
+  if (soloLine && group.line !== soloLine) return;
   ensurePrograms();
 
-  const inst = INSTRUMENT_MIDI[position.instrument];
+  const inst = INSTRUMENT_MIDI[group.instrument];
   if (!inst) return;
 
   const isDrum = inst.channel === 9;
+  const midProgress = (group.startProgress + group.endProgress) / 2;
   const note = isDrum
-    ? (DRUM_NOTES[position.instrument] ?? 38)
-    : progressToNote(position.progress, position.instrument);
+    ? (DRUM_NOTES[group.instrument] ?? 38)
+    : selectNote(scanPos, midProgress, group.instrument);
 
-  const velocity = 40 + Math.floor(Math.random() * 35);
-  const duration = INSTRUMENT_DURATION[position.instrument];
+  const [vLow, vHigh] = VELOCITY_RANGE[group.instrument];
+  const baseVelocity = vLow + Math.floor(Math.random() * (vHigh - vLow));
+  const scale = proximityVelocityScale(coords);
+  const velocity = Math.max(5, Math.floor(baseVelocity * scale));
+
+  const groupWidth = group.endProgress - group.startProgress;
+  const sustainMs = groupWidth * SCAN_DURATION;
 
   synth.noteOn(inst.channel, note, velocity);
+
   setTimeout(() => {
     synth?.noteOff(inst.channel, note);
-  }, duration);
+  }, sustainMs + 200);
 }
 
 export function stopSound(): void {

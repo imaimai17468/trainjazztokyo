@@ -1,9 +1,15 @@
 import type maplibregl from "maplibre-gl";
 import type { TrainPosition } from "./entity/train";
 import { createTrainGateway } from "./gateway/trainGateway";
-import { updateTrainPositions, triggerPulse } from "./MapView.railway";
+import { groupTrains } from "./gateway/groupTrains";
+import {
+  updateTrainGroups,
+  triggerGroupPulse,
+  setScanPosition,
+  getGroupCoords,
+} from "./MapView.railway";
 import { getMorphProgress, interpolateFeatures } from "./MapView.morph";
-import { playNote } from "./MapView.sound";
+import { playGroupNote } from "./MapView.sound";
 
 const SCAN_WINDOW = 0.03;
 
@@ -20,11 +26,18 @@ export function createTicker(callbacks: TickerCallbacks) {
   let snapshotStart = 0;
   const firedThisCycle = new Set<number>();
 
+  let currentGroups = groupTrains([]);
+
+  let currentPositions: TrainPosition[] = [];
+
   const sync = (pos: TrainPosition[]) => {
     callbacks.onPositions(pos);
+    currentPositions = pos;
+    currentGroups = groupTrains(pos);
+
     const map = callbacks.getMap();
     if (!map) return;
-    updateTrainPositions(map, pos);
+    updateTrainGroups(map, currentGroups, currentPositions);
 
     const mp = getMorphProgress();
     if (mp > 0) {
@@ -42,9 +55,12 @@ export function createTicker(callbacks: TickerCallbacks) {
 
     snapshotTimer = setInterval(async () => {
       await gateway.refresh();
-      sync(gateway.getPositions());
-      snapshotStart = performance.now();
-      firedThisCycle.clear();
+      const pos = gateway.getPositions();
+      if (pos.length > 0) {
+        sync(pos);
+        snapshotStart = performance.now();
+        firedThisCycle.clear();
+      }
     }, gateway.snapshotInterval);
 
     pulseTimer = setInterval(() => {
@@ -54,13 +70,15 @@ export function createTicker(callbacks: TickerCallbacks) {
       const elapsed = performance.now() - snapshotStart;
       const scanPos = Math.min(elapsed / gateway.snapshotInterval, 1);
       callbacks.onScanProgress(scanPos);
+      setScanPosition(scanPos);
+      updateTrainGroups(map, currentGroups, currentPositions);
 
-      gateway.getPositions().forEach((p, i) => {
+      currentGroups.forEach((g, i) => {
         if (firedThisCycle.has(i)) return;
-        if (p.progress >= scanPos - SCAN_WINDOW && p.progress <= scanPos) {
+        if (g.startProgress >= scanPos - SCAN_WINDOW && g.startProgress <= scanPos) {
           firedThisCycle.add(i);
-          triggerPulse(map, p);
-          playNote(p);
+          triggerGroupPulse(map, g);
+          playGroupNote(g, getGroupCoords(g), scanPos);
         }
       });
     }, 50);

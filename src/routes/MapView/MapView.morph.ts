@@ -1,6 +1,8 @@
 import type maplibregl from "maplibre-gl";
 import railwayData from "./tokyo-railway.json";
 import type { TrainPosition } from "./entity/train";
+import type { TrainGroup } from "./gateway/groupTrains";
+import { updateTrainGroups } from "./MapView.railway";
 
 const LINE_ORDER = [
   "山手線",
@@ -203,23 +205,12 @@ export function interpolateFeatures(progress: number): GeoJSON.FeatureCollection
   return { type: "FeatureCollection", features };
 }
 
-function interpolateTrains(positions: TrainPosition[], progress: number): TrainPosition[] {
-  return positions.map((p) => {
-    const target = barTargets.get(p.line);
-    if (!target) return p;
-
-    const barLon = lerp(target.lonStart, target.lonEnd, p.progress);
-    return {
-      ...p,
-      coordinates: [
-        lerp(p.coordinates[0], barLon, progress),
-        lerp(p.coordinates[1], target.lat, progress),
-      ] as [number, number],
-    };
-  });
-}
-
-export function morphToBars(map: maplibregl.Map, positions: TrainPosition[]) {
+export function morphToBars(
+  map: maplibregl.Map,
+  _positions: TrainPosition[],
+  groups: TrainGroup[],
+  allPositions: TrainPosition[] = _positions,
+) {
   if (morphSegments.length === 0) buildOriginalData();
   buildBarTargets(map);
   cancelMorph();
@@ -234,25 +225,19 @@ export function morphToBars(map: maplibregl.Map, positions: TrainPosition[]) {
     const lineSource = map.getSource("railway-lines") as maplibregl.GeoJSONSource | undefined;
     if (lineSource) lineSource.setData(interpolateFeatures(p));
 
-    const trainSource = map.getSource("railway-trains") as maplibregl.GeoJSONSource | undefined;
-    if (trainSource) {
-      const morphed = interpolateTrains(positions, p);
-      trainSource.setData({
-        type: "FeatureCollection",
-        features: morphed.map((pos) => ({
-          type: "Feature" as const,
-          properties: { color: pos.color, line: pos.line },
-          geometry: { type: "Point" as const, coordinates: pos.coordinates },
-        })),
-      });
-    }
+    updateTrainGroups(map, groups, allPositions);
 
     if (t < 1) animationId = requestAnimationFrame(animate);
   };
   animationId = requestAnimationFrame(animate);
 }
 
-export function morphToMap(map: maplibregl.Map, positions: TrainPosition[]) {
+export function morphToMap(
+  map: maplibregl.Map,
+  _positions: TrainPosition[],
+  groups: TrainGroup[],
+  allPositions: TrainPosition[] = _positions,
+) {
   if (morphSegments.length === 0) buildOriginalData();
   cancelMorph();
 
@@ -266,18 +251,7 @@ export function morphToMap(map: maplibregl.Map, positions: TrainPosition[]) {
     const lineSource = map.getSource("railway-lines") as maplibregl.GeoJSONSource | undefined;
     if (lineSource) lineSource.setData(interpolateFeatures(p));
 
-    const trainSource = map.getSource("railway-trains") as maplibregl.GeoJSONSource | undefined;
-    if (trainSource) {
-      const morphed = interpolateTrains(positions, p);
-      trainSource.setData({
-        type: "FeatureCollection",
-        features: morphed.map((pos) => ({
-          type: "Feature" as const,
-          properties: { color: pos.color, line: pos.line },
-          geometry: { type: "Point" as const, coordinates: pos.coordinates },
-        })),
-      });
-    }
+    updateTrainGroups(map, groups, allPositions);
 
     if (t < 1) animationId = requestAnimationFrame(animate);
     else {
