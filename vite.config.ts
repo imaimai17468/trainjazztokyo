@@ -20,6 +20,9 @@ export default defineConfig({
     noExternal: [],
     external: ["maplibre-gl", "spessasynth_lib", "spessasynth_core"],
   },
+  build: {
+    sourcemap: false,
+  },
   server: {
     allowedHosts: true,
   },
