@@ -16,6 +16,10 @@ export default defineConfig({
       },
     }),
   ],
+  ssr: {
+    noExternal: [],
+    external: ["maplibre-gl", "spessasynth_lib", "spessasynth_core"],
+  },
   server: {
     allowedHosts: true,
   },
