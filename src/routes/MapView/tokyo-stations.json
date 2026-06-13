@@ -1,0 +1,2620 @@
+{
+  "JR-East.Yamanote": [
+    {
+      "id": "JR-East.Yamanote.Meguro",
+      "name": "目黒",
+      "fraction": 0.0245
+    },
+    {
+      "id": "JR-East.Yamanote.Ebisu",
+      "name": "恵比寿",
+      "fraction": 0.045
+    },
+    {
+      "id": "JR-East.Yamanote.Shibuya",
+      "name": "渋谷",
+      "fraction": 0.0668
+    },
+    {
+      "id": "JR-East.Yamanote.Harajuku",
+      "name": "原宿",
+      "fraction": 0.0853
+    },
+    {
+      "id": "JR-East.Yamanote.Yoyogi",
+      "name": "代々木",
+      "fraction": 0.1067
+    },
+    {
+      "id": "JR-East.Yamanote.Shinjuku",
+      "name": "新宿",
+      "fraction": 0.1148
+    },
+    {
+      "id": "JR-East.Yamanote.Takadanobaba",
+      "name": "高田馬場",
+      "fraction": 0.1514
+    },
+    {
+      "id": "JR-East.Yamanote.Ikebukuro",
+      "name": "池袋",
+      "fraction": 0.1801
+    },
+    {
+      "id": "JR-East.Yamanote.Otsuka",
+      "name": "大塚",
+      "fraction": 0.2102
+    },
+    {
+      "id": "JR-East.Yamanote.Sugamo",
+      "name": "巣鴨",
+      "fraction": 0.2273
+    },
+    {
+      "id": "JR-East.Yamanote.Komagome",
+      "name": "駒込",
+      "fraction": 0.2399
+    },
+    {
+      "id": "JR-East.Yamanote.NishiNippori",
+      "name": "西日暮里",
+      "fraction": 0.2753
+    },
+    {
+      "id": "JR-East.Yamanote.Nippori",
+      "name": "日暮里",
+      "fraction": 0.2838
+    },
+    {
+      "id": "JR-East.Yamanote.Ueno",
+      "name": "上野",
+      "fraction": 0.3136
+    },
+    {
+      "id": "JR-East.Yamanote.Okachimachi",
+      "name": "御徒町",
+      "fraction": 0.3242
+    },
+    {
+      "id": "JR-East.Yamanote.Akihabara",
+      "name": "秋葉原",
+      "fraction": 0.3373
+    },
+    {
+      "id": "JR-East.Yamanote.Kanda",
+      "name": "神田",
+      "fraction": 0.3477
+    },
+    {
+      "id": "JR-East.Yamanote.Tokyo",
+      "name": "東京",
+      "fraction": 0.3649
+    },
+    {
+      "id": "JR-East.Yamanote.Yurakucho",
+      "name": "有楽町",
+      "fraction": 0.3761
+    },
+    {
+      "id": "JR-East.Yamanote.Shimbashi",
+      "name": "新橋",
+      "fraction": 0.3919
+    },
+    {
+      "id": "JR-East.Yamanote.Hamamatsucho",
+      "name": "浜松町",
+      "fraction": 0.4089
+    },
+    {
+      "id": "JR-East.Yamanote.Tamachi",
+      "name": "田町",
+      "fraction": 0.43
+    },
+    {
+      "id": "JR-East.Yamanote.TakanawaGateway",
+      "name": "高輪ゲートウェイ",
+      "fraction": 0.4497
+    },
+    {
+      "id": "JR-East.Yamanote.Osaki",
+      "name": "大崎",
+      "fraction": 0.4905
+    },
+    {
+      "id": "JR-East.Yamanote.Gotanda",
+      "name": "五反田",
+      "fraction": 0.5032
+    }
+  ],
+  "JR-East.ChuoRapid": [
+    {
+      "id": "JR-East.ChuoRapid.Tachikawa",
+      "name": "立川",
+      "fraction": 0.1771
+    },
+    {
+      "id": "JR-East.ChuoRapid.Yotsuya",
+      "name": "四ツ谷",
+      "fraction": 0.5001
+    },
+    {
+      "id": "JR-East.ChuoRapid.Ochanomizu",
+      "name": "御茶ノ水",
+      "fraction": 0.5001
+    },
+    {
+      "id": "JR-East.ChuoRapid.Tokyo",
+      "name": "東京",
+      "fraction": 0.5001
+    },
+    {
+      "id": "JR-East.ChuoRapid.Kanda",
+      "name": "神田",
+      "fraction": 0.5001
+    },
+    {
+      "id": "JR-East.ChuoRapid.Shinjuku",
+      "name": "新宿",
+      "fraction": 0.5001
+    },
+    {
+      "id": "JR-East.ChuoRapid.Nakano",
+      "name": "中野",
+      "fraction": 0.5459
+    },
+    {
+      "id": "JR-East.ChuoRapid.Ogikubo",
+      "name": "荻窪",
+      "fraction": 0.5958
+    }
+  ],
+  "JR-East.ChuoSobuLocal": [
+    {
+      "id": "JR-East.ChuoSobuLocal.Tsudanuma",
+      "name": "津田沼",
+      "fraction": 0.3448
+    },
+    {
+      "id": "JR-East.ChuoSobuLocal.MotoYawata",
+      "name": "本八幡",
+      "fraction": 0.3448
+    },
+    {
+      "id": "JR-East.ChuoSobuLocal.NishiFunabashi",
+      "name": "西船橋",
+      "fraction": 0.3448
+    },
+    {
+      "id": "JR-East.ChuoSobuLocal.Kinshicho",
+      "name": "錦糸町",
+      "fraction": 0.474
+    },
+    {
+      "id": "JR-East.ChuoSobuLocal.Ryogoku",
+      "name": "両国",
+      "fraction": 0.5009
+    },
+    {
+      "id": "JR-East.ChuoSobuLocal.Asakusabashi",
+      "name": "浅草橋",
+      "fraction": 0.5117
+    },
+    {
+      "id": "JR-East.ChuoSobuLocal.Akihabara",
+      "name": "秋葉原",
+      "fraction": 0.5266
+    },
+    {
+      "id": "JR-East.ChuoSobuLocal.Ochanomizu",
+      "name": "御茶ノ水",
+      "fraction": 0.537
+    },
+    {
+      "id": "JR-East.ChuoSobuLocal.Suidobashi",
+      "name": "水道橋",
+      "fraction": 0.552
+    },
+    {
+      "id": "JR-East.ChuoSobuLocal.Iidabashi",
+      "name": "飯田橋",
+      "fraction": 0.5652
+    },
+    {
+      "id": "JR-East.ChuoSobuLocal.Ichigaya",
+      "name": "市ケ谷",
+      "fraction": 0.5815
+    },
+    {
+      "id": "JR-East.ChuoSobuLocal.Yotsuya",
+      "name": "四ツ谷",
+      "fraction": 0.5914
+    },
+    {
+      "id": "JR-East.ChuoSobuLocal.Yoyogi",
+      "name": "代々木",
+      "fraction": 0.6329
+    },
+    {
+      "id": "JR-East.ChuoSobuLocal.Shinjuku",
+      "name": "新宿",
+      "fraction": 0.6398
+    },
+    {
+      "id": "JR-East.ChuoSobuLocal.HigashiNakano",
+      "name": "東中野",
+      "fraction": 0.6737
+    },
+    {
+      "id": "JR-East.ChuoSobuLocal.Nakano",
+      "name": "中野",
+      "fraction": 0.6984
+    },
+    {
+      "id": "JR-East.ChuoSobuLocal.Ogikubo",
+      "name": "荻窪",
+      "fraction": 0.7572
+    },
+    {
+      "id": "JR-East.ChuoSobuLocal.Mitaka",
+      "name": "三鷹",
+      "fraction": 0.8298
+    }
+  ],
+  "JR-East.KeihinTohoku": [
+    {
+      "id": "JR-East.KeihinTohoku.川崎",
+      "name": "川崎",
+      "fraction": 0
+    },
+    {
+      "id": "JR-East.KeihinTohoku.鶴見",
+      "name": "鶴見",
+      "fraction": 0
+    },
+    {
+      "id": "JR-East.KeihinTohoku.新子安",
+      "name": "新子安",
+      "fraction": 0
+    },
+    {
+      "id": "JR-East.KeihinTohoku.東神奈川",
+      "name": "東神奈川",
+      "fraction": 0
+    },
+    {
+      "id": "JR-East.KeihinTohoku.横浜",
+      "name": "横浜",
+      "fraction": 0
+    },
+    {
+      "id": "JR-East.KeihinTohoku.横浜",
+      "name": "横浜",
+      "fraction": 0
+    },
+    {
+      "id": "JR-East.KeihinTohoku.東神奈川",
+      "name": "東神奈川",
+      "fraction": 0
+    },
+    {
+      "id": "JR-East.KeihinTohoku.新子安",
+      "name": "新子安",
+      "fraction": 0
+    },
+    {
+      "id": "JR-East.KeihinTohoku.鶴見",
+      "name": "鶴見",
+      "fraction": 0
+    },
+    {
+      "id": "JR-East.KeihinTohoku.川崎",
+      "name": "川崎",
+      "fraction": 0
+    },
+    {
+      "id": "JR-East.KeihinTohoku.蒲田",
+      "name": "蒲田",
+      "fraction": 0.0526
+    },
+    {
+      "id": "JR-East.KeihinTohoku.大森",
+      "name": "大森",
+      "fraction": 0.099
+    },
+    {
+      "id": "JR-East.KeihinTohoku.大井町",
+      "name": "大井町",
+      "fraction": 0.1302
+    },
+    {
+      "id": "JR-East.KeihinTohoku.品川",
+      "name": "品川",
+      "fraction": 0.1664
+    },
+    {
+      "id": "JR-East.KeihinTohoku.高輪ゲートウェイ",
+      "name": "高輪ゲートウェイ",
+      "fraction": 0.1777
+    },
+    {
+      "id": "JR-East.KeihinTohoku.田町",
+      "name": "田町",
+      "fraction": 0.1985
+    },
+    {
+      "id": "JR-East.KeihinTohoku.浜松町",
+      "name": "浜松町",
+      "fraction": 0.221
+    },
+    {
+      "id": "JR-East.KeihinTohoku.新橋",
+      "name": "新橋",
+      "fraction": 0.2389
+    },
+    {
+      "id": "JR-East.KeihinTohoku.有楽町",
+      "name": "有楽町",
+      "fraction": 0.2557
+    },
+    {
+      "id": "JR-East.KeihinTohoku.東京",
+      "name": "東京",
+      "fraction": 0.2676
+    },
+    {
+      "id": "JR-East.KeihinTohoku.神田",
+      "name": "神田",
+      "fraction": 0.2857
+    },
+    {
+      "id": "JR-East.KeihinTohoku.秋葉原",
+      "name": "秋葉原",
+      "fraction": 0.2968
+    },
+    {
+      "id": "JR-East.KeihinTohoku.御徒町",
+      "name": "御徒町",
+      "fraction": 0.3107
+    },
+    {
+      "id": "JR-East.KeihinTohoku.上野",
+      "name": "上野",
+      "fraction": 0.3219
+    },
+    {
+      "id": "JR-East.KeihinTohoku.鶯谷",
+      "name": "鶯谷",
+      "fraction": 0.3379
+    },
+    {
+      "id": "JR-East.KeihinTohoku.日暮里",
+      "name": "日暮里",
+      "fraction": 0.3535
+    },
+    {
+      "id": "JR-East.KeihinTohoku.西日暮里",
+      "name": "西日暮里",
+      "fraction": 0.3624
+    },
+    {
+      "id": "JR-East.KeihinTohoku.田端",
+      "name": "田端",
+      "fraction": 0.3739
+    },
+    {
+      "id": "JR-East.KeihinTohoku.上中里",
+      "name": "上中里",
+      "fraction": 0.4017
+    },
+    {
+      "id": "JR-East.KeihinTohoku.王子",
+      "name": "王子",
+      "fraction": 0.4184
+    },
+    {
+      "id": "JR-East.KeihinTohoku.東十条",
+      "name": "東十条",
+      "fraction": 0.4444
+    },
+    {
+      "id": "JR-East.KeihinTohoku.赤羽",
+      "name": "赤羽",
+      "fraction": 0.4696
+    },
+    {
+      "id": "JR-East.KeihinTohoku.大宮",
+      "name": "大宮",
+      "fraction": 0.5
+    },
+    {
+      "id": "JR-East.KeihinTohoku.さいたま新都心",
+      "name": "さいたま新都心",
+      "fraction": 0.5
+    },
+    {
+      "id": "JR-East.KeihinTohoku.与野",
+      "name": "与野",
+      "fraction": 0.5
+    },
+    {
+      "id": "JR-East.KeihinTohoku.北浦和",
+      "name": "北浦和",
+      "fraction": 0.5
+    },
+    {
+      "id": "JR-East.KeihinTohoku.浦和",
+      "name": "浦和",
+      "fraction": 0.5
+    },
+    {
+      "id": "JR-East.KeihinTohoku.南浦和",
+      "name": "南浦和",
+      "fraction": 0.5
+    },
+    {
+      "id": "JR-East.KeihinTohoku.蕨",
+      "name": "蕨",
+      "fraction": 0.5
+    },
+    {
+      "id": "JR-East.KeihinTohoku.西川口",
+      "name": "西川口",
+      "fraction": 0.5
+    },
+    {
+      "id": "JR-East.KeihinTohoku.川口",
+      "name": "川口",
+      "fraction": 0.5
+    },
+    {
+      "id": "JR-East.KeihinTohoku.川口",
+      "name": "川口",
+      "fraction": 0.5
+    },
+    {
+      "id": "JR-East.KeihinTohoku.西川口",
+      "name": "西川口",
+      "fraction": 0.5
+    },
+    {
+      "id": "JR-East.KeihinTohoku.蕨",
+      "name": "蕨",
+      "fraction": 0.5
+    },
+    {
+      "id": "JR-East.KeihinTohoku.南浦和",
+      "name": "南浦和",
+      "fraction": 0.5
+    },
+    {
+      "id": "JR-East.KeihinTohoku.浦和",
+      "name": "浦和",
+      "fraction": 0.5
+    },
+    {
+      "id": "JR-East.KeihinTohoku.北浦和",
+      "name": "北浦和",
+      "fraction": 0.5
+    },
+    {
+      "id": "JR-East.KeihinTohoku.与野",
+      "name": "与野",
+      "fraction": 0.5
+    },
+    {
+      "id": "JR-East.KeihinTohoku.さいたま新都心",
+      "name": "さいたま新都心",
+      "fraction": 0.5
+    },
+    {
+      "id": "JR-East.KeihinTohoku.大宮",
+      "name": "大宮",
+      "fraction": 0.5
+    },
+    {
+      "id": "JR-East.KeihinTohoku.赤羽",
+      "name": "赤羽",
+      "fraction": 0.5305
+    },
+    {
+      "id": "JR-East.KeihinTohoku.東十条",
+      "name": "東十条",
+      "fraction": 0.5556
+    },
+    {
+      "id": "JR-East.KeihinTohoku.王子",
+      "name": "王子",
+      "fraction": 0.5817
+    },
+    {
+      "id": "JR-East.KeihinTohoku.上中里",
+      "name": "上中里",
+      "fraction": 0.5985
+    },
+    {
+      "id": "JR-East.KeihinTohoku.田端",
+      "name": "田端",
+      "fraction": 0.6261
+    },
+    {
+      "id": "JR-East.KeihinTohoku.西日暮里",
+      "name": "西日暮里",
+      "fraction": 0.6375
+    },
+    {
+      "id": "JR-East.KeihinTohoku.日暮里",
+      "name": "日暮里",
+      "fraction": 0.6466
+    },
+    {
+      "id": "JR-East.KeihinTohoku.鶯谷",
+      "name": "鶯谷",
+      "fraction": 0.6622
+    },
+    {
+      "id": "JR-East.KeihinTohoku.上野",
+      "name": "上野",
+      "fraction": 0.678
+    },
+    {
+      "id": "JR-East.KeihinTohoku.御徒町",
+      "name": "御徒町",
+      "fraction": 0.6893
+    },
+    {
+      "id": "JR-East.KeihinTohoku.秋葉原",
+      "name": "秋葉原",
+      "fraction": 0.7032
+    },
+    {
+      "id": "JR-East.KeihinTohoku.神田",
+      "name": "神田",
+      "fraction": 0.7143
+    },
+    {
+      "id": "JR-East.KeihinTohoku.東京",
+      "name": "東京",
+      "fraction": 0.7324
+    },
+    {
+      "id": "JR-East.KeihinTohoku.有楽町",
+      "name": "有楽町",
+      "fraction": 0.7443
+    },
+    {
+      "id": "JR-East.KeihinTohoku.新橋",
+      "name": "新橋",
+      "fraction": 0.7612
+    },
+    {
+      "id": "JR-East.KeihinTohoku.浜松町",
+      "name": "浜松町",
+      "fraction": 0.7791
+    },
+    {
+      "id": "JR-East.KeihinTohoku.田町",
+      "name": "田町",
+      "fraction": 0.8014
+    },
+    {
+      "id": "JR-East.KeihinTohoku.高輪ゲートウェイ",
+      "name": "高輪ゲートウェイ",
+      "fraction": 0.8224
+    },
+    {
+      "id": "JR-East.KeihinTohoku.品川",
+      "name": "品川",
+      "fraction": 0.8337
+    },
+    {
+      "id": "JR-East.KeihinTohoku.大井町",
+      "name": "大井町",
+      "fraction": 0.8698
+    },
+    {
+      "id": "JR-East.KeihinTohoku.大森",
+      "name": "大森",
+      "fraction": 0.9011
+    },
+    {
+      "id": "JR-East.KeihinTohoku.蒲田",
+      "name": "蒲田",
+      "fraction": 0.9475
+    }
+  ],
+  "JR-East.Saikyo": [
+    {
+      "id": "JR-East.Saikyo.戸田公園",
+      "name": "戸田公園",
+      "fraction": 0.0061
+    },
+    {
+      "id": "JR-East.Saikyo.浮間舟渡",
+      "name": "浮間舟渡",
+      "fraction": 0.0539
+    },
+    {
+      "id": "JR-East.Saikyo.北赤羽",
+      "name": "北赤羽",
+      "fraction": 0.0872
+    },
+    {
+      "id": "JR-East.Saikyo.赤羽",
+      "name": "赤羽",
+      "fraction": 0.1253
+    },
+    {
+      "id": "JR-East.Saikyo.十条",
+      "name": "十条",
+      "fraction": 0.1646
+    },
+    {
+      "id": "JR-East.Saikyo.板橋",
+      "name": "板橋",
+      "fraction": 0.1976
+    },
+    {
+      "id": "JR-East.Saikyo.池袋",
+      "name": "池袋",
+      "fraction": 0.2344
+    },
+    {
+      "id": "JR-East.Saikyo.新宿",
+      "name": "新宿",
+      "fraction": 0.3271
+    },
+    {
+      "id": "JR-East.Saikyo.渋谷",
+      "name": "渋谷",
+      "fraction": 0.3951
+    },
+    {
+      "id": "JR-East.Saikyo.恵比寿",
+      "name": "恵比寿",
+      "fraction": 0.4259
+    },
+    {
+      "id": "JR-East.Saikyo.大崎",
+      "name": "大崎",
+      "fraction": 0.4982
+    },
+    {
+      "id": "JR-East.Saikyo.大崎",
+      "name": "大崎",
+      "fraction": 0.5007
+    },
+    {
+      "id": "JR-East.Saikyo.恵比寿",
+      "name": "恵比寿",
+      "fraction": 0.573
+    },
+    {
+      "id": "JR-East.Saikyo.渋谷",
+      "name": "渋谷",
+      "fraction": 0.604
+    },
+    {
+      "id": "JR-East.Saikyo.新宿",
+      "name": "新宿",
+      "fraction": 0.6719
+    },
+    {
+      "id": "JR-East.Saikyo.池袋",
+      "name": "池袋",
+      "fraction": 0.7646
+    },
+    {
+      "id": "JR-East.Saikyo.板橋",
+      "name": "板橋",
+      "fraction": 0.8015
+    },
+    {
+      "id": "JR-East.Saikyo.十条",
+      "name": "十条",
+      "fraction": 0.8345
+    },
+    {
+      "id": "JR-East.Saikyo.赤羽",
+      "name": "赤羽",
+      "fraction": 0.8737
+    },
+    {
+      "id": "JR-East.Saikyo.北赤羽",
+      "name": "北赤羽",
+      "fraction": 0.9119
+    },
+    {
+      "id": "JR-East.Saikyo.浮間舟渡",
+      "name": "浮間舟渡",
+      "fraction": 0.945
+    },
+    {
+      "id": "JR-East.Saikyo.戸田公園",
+      "name": "戸田公園",
+      "fraction": 0.993
+    },
+    {
+      "id": "JR-East.Saikyo.大宮",
+      "name": "大宮",
+      "fraction": 1
+    },
+    {
+      "id": "JR-East.Saikyo.北与野",
+      "name": "北与野",
+      "fraction": 1
+    },
+    {
+      "id": "JR-East.Saikyo.与野本町",
+      "name": "与野本町",
+      "fraction": 1
+    },
+    {
+      "id": "JR-East.Saikyo.中浦和",
+      "name": "中浦和",
+      "fraction": 1
+    },
+    {
+      "id": "JR-East.Saikyo.武蔵浦和",
+      "name": "武蔵浦和",
+      "fraction": 1
+    },
+    {
+      "id": "JR-East.Saikyo.北戸田",
+      "name": "北戸田",
+      "fraction": 1
+    },
+    {
+      "id": "JR-East.Saikyo.戸田",
+      "name": "戸田",
+      "fraction": 1
+    },
+    {
+      "id": "JR-East.Saikyo.戸田",
+      "name": "戸田",
+      "fraction": 1
+    },
+    {
+      "id": "JR-East.Saikyo.北戸田",
+      "name": "北戸田",
+      "fraction": 1
+    },
+    {
+      "id": "JR-East.Saikyo.武蔵浦和",
+      "name": "武蔵浦和",
+      "fraction": 1
+    },
+    {
+      "id": "JR-East.Saikyo.中浦和",
+      "name": "中浦和",
+      "fraction": 1
+    },
+    {
+      "id": "JR-East.Saikyo.与野本町",
+      "name": "与野本町",
+      "fraction": 1
+    },
+    {
+      "id": "JR-East.Saikyo.北与野",
+      "name": "北与野",
+      "fraction": 1
+    },
+    {
+      "id": "JR-East.Saikyo.大宮",
+      "name": "大宮",
+      "fraction": 1
+    }
+  ],
+  "JR-East.ShonanShinjuku": [
+    {
+      "id": "JR-East.ShonanShinjuku.Ikebukuro",
+      "name": "池袋",
+      "fraction": 0.6848
+    },
+    {
+      "id": "JR-East.ShonanShinjuku.Shinjuku",
+      "name": "新宿",
+      "fraction": 0.751
+    },
+    {
+      "id": "JR-East.ShonanShinjuku.Shibuya",
+      "name": "渋谷",
+      "fraction": 0.7995
+    },
+    {
+      "id": "JR-East.ShonanShinjuku.Ebisu",
+      "name": "恵比寿",
+      "fraction": 0.8216
+    },
+    {
+      "id": "JR-East.ShonanShinjuku.Osaki",
+      "name": "大崎",
+      "fraction": 0.8732
+    },
+    {
+      "id": "JR-East.ShonanShinjuku.Totsuka",
+      "name": "戸塚",
+      "fraction": 1
+    },
+    {
+      "id": "JR-East.ShonanShinjuku.Yokohama",
+      "name": "横浜",
+      "fraction": 1
+    }
+  ],
+  "JR-East.UenoTokyo": [
+    {
+      "id": "JR-East.UenoTokyo.新橋",
+      "name": "新橋",
+      "fraction": 0.0248
+    },
+    {
+      "id": "JR-East.UenoTokyo.品川",
+      "name": "品川",
+      "fraction": 0.0967
+    },
+    {
+      "id": "JR-East.UenoTokyo.川崎",
+      "name": "川崎",
+      "fraction": 0.2561
+    },
+    {
+      "id": "JR-East.UenoTokyo.横浜",
+      "name": "横浜",
+      "fraction": 0.2561
+    },
+    {
+      "id": "JR-East.UenoTokyo.戸塚",
+      "name": "戸塚",
+      "fraction": 0.2561
+    },
+    {
+      "id": "JR-East.UenoTokyo.大船",
+      "name": "大船",
+      "fraction": 0.2561
+    },
+    {
+      "id": "JR-East.UenoTokyo.大船",
+      "name": "大船",
+      "fraction": 0.2561
+    },
+    {
+      "id": "JR-East.UenoTokyo.戸塚",
+      "name": "戸塚",
+      "fraction": 0.2561
+    },
+    {
+      "id": "JR-East.UenoTokyo.横浜",
+      "name": "横浜",
+      "fraction": 0.2561
+    },
+    {
+      "id": "JR-East.UenoTokyo.川崎",
+      "name": "川崎",
+      "fraction": 0.2561
+    },
+    {
+      "id": "JR-East.UenoTokyo.品川",
+      "name": "品川",
+      "fraction": 0.4154
+    },
+    {
+      "id": "JR-East.UenoTokyo.新橋",
+      "name": "新橋",
+      "fraction": 0.4874
+    },
+    {
+      "id": "JR-East.UenoTokyo.東京",
+      "name": "東京",
+      "fraction": 0.5159
+    },
+    {
+      "id": "JR-East.UenoTokyo.上野",
+      "name": "上野",
+      "fraction": 0.5698
+    },
+    {
+      "id": "JR-East.UenoTokyo.尾久",
+      "name": "尾久",
+      "fraction": 0.6428
+    },
+    {
+      "id": "JR-East.UenoTokyo.赤羽",
+      "name": "赤羽",
+      "fraction": 0.7202
+    },
+    {
+      "id": "JR-East.UenoTokyo.大宮",
+      "name": "大宮",
+      "fraction": 0.7505
+    },
+    {
+      "id": "JR-East.UenoTokyo.さいたま新都心",
+      "name": "さいたま新都心",
+      "fraction": 0.7505
+    },
+    {
+      "id": "JR-East.UenoTokyo.浦和",
+      "name": "浦和",
+      "fraction": 0.7505
+    },
+    {
+      "id": "JR-East.UenoTokyo.浦和",
+      "name": "浦和",
+      "fraction": 0.7505
+    },
+    {
+      "id": "JR-East.UenoTokyo.さいたま新都心",
+      "name": "さいたま新都心",
+      "fraction": 0.7505
+    },
+    {
+      "id": "JR-East.UenoTokyo.大宮",
+      "name": "大宮",
+      "fraction": 0.7505
+    },
+    {
+      "id": "JR-East.UenoTokyo.赤羽",
+      "name": "赤羽",
+      "fraction": 0.7809
+    },
+    {
+      "id": "JR-East.UenoTokyo.尾久",
+      "name": "尾久",
+      "fraction": 0.8582
+    },
+    {
+      "id": "JR-East.UenoTokyo.上野",
+      "name": "上野",
+      "fraction": 0.9317
+    },
+    {
+      "id": "JR-East.UenoTokyo.東京",
+      "name": "東京",
+      "fraction": 0.9856
+    },
+    {
+      "id": "JR-East.UenoTokyo.東京",
+      "name": "東京",
+      "fraction": 0.9928
+    },
+    {
+      "id": "JR-East.UenoTokyo.東京",
+      "name": "東京",
+      "fraction": 1
+    }
+  ],
+  "TokyoMetro.Ginza": [
+    {
+      "id": "TokyoMetro.Ginza.Shibuya",
+      "name": "渋谷",
+      "fraction": 0.9972
+    },
+    {
+      "id": "TokyoMetro.Ginza.OmoteSando",
+      "name": "表参道",
+      "fraction": 0.9491
+    },
+    {
+      "id": "TokyoMetro.Ginza.Gaiemmae",
+      "name": "外苑前",
+      "fraction": 0.9228
+    },
+    {
+      "id": "TokyoMetro.Ginza.AoyamaItchome",
+      "name": "青山一丁目",
+      "fraction": 0.0903
+    },
+    {
+      "id": "TokyoMetro.Ginza.AkasakaMitsuke",
+      "name": "赤坂見附",
+      "fraction": 0.1388
+    },
+    {
+      "id": "TokyoMetro.Ginza.TameikeSanno",
+      "name": "溜池山王",
+      "fraction": 0.8263
+    },
+    {
+      "id": "TokyoMetro.Ginza.Toranomon",
+      "name": "虎ノ門",
+      "fraction": 0.1926
+    },
+    {
+      "id": "TokyoMetro.Ginza.Shimbashi",
+      "name": "新橋",
+      "fraction": 0.2229
+    },
+    {
+      "id": "TokyoMetro.Ginza.Ginza",
+      "name": "銀座",
+      "fraction": 0.7366
+    },
+    {
+      "id": "TokyoMetro.Ginza.Kyobashi",
+      "name": "京橋",
+      "fraction": 0.7124
+    },
+    {
+      "id": "TokyoMetro.Ginza.Nihombashi",
+      "name": "日本橋",
+      "fraction": 0.6915
+    },
+    {
+      "id": "TokyoMetro.Ginza.Mitsukoshimae",
+      "name": "三越前",
+      "fraction": 0.6718
+    },
+    {
+      "id": "TokyoMetro.Ginza.Kanda",
+      "name": "神田",
+      "fraction": 0.6476
+    },
+    {
+      "id": "TokyoMetro.Ginza.Suehirocho",
+      "name": "末広町",
+      "fraction": 0.6156
+    },
+    {
+      "id": "TokyoMetro.Ginza.UenoHirokoji",
+      "name": "上野広小路",
+      "fraction": 0.5977
+    },
+    {
+      "id": "TokyoMetro.Ginza.Ueno",
+      "name": "上野",
+      "fraction": 0.4101
+    },
+    {
+      "id": "TokyoMetro.Ginza.Inaricho",
+      "name": "稲荷町",
+      "fraction": 0.5563
+    },
+    {
+      "id": "TokyoMetro.Ginza.Tawaramachi",
+      "name": "田原町",
+      "fraction": 0.5281
+    },
+    {
+      "id": "TokyoMetro.Ginza.Asakusa",
+      "name": "浅草",
+      "fraction": 0.4991
+    }
+  ],
+  "TokyoMetro.Marunouchi": [
+    {
+      "id": "TokyoMetro.Marunouchi.Ogikubo",
+      "name": "荻窪",
+      "fraction": 0.5006
+    },
+    {
+      "id": "TokyoMetro.Marunouchi.MinamiAsagaya",
+      "name": "南阿佐ケ谷",
+      "fraction": 0.5332
+    },
+    {
+      "id": "TokyoMetro.Marunouchi.ShinKoenji",
+      "name": "新高円寺",
+      "fraction": 0.559
+    },
+    {
+      "id": "TokyoMetro.Marunouchi.HigashiKoenji",
+      "name": "東高円寺",
+      "fraction": 0.5782
+    },
+    {
+      "id": "TokyoMetro.Marunouchi.ShinNakano",
+      "name": "新中野",
+      "fraction": 0.401
+    },
+    {
+      "id": "TokyoMetro.Marunouchi.NakanoSakaue",
+      "name": "中野坂上",
+      "fraction": 0.6252
+    },
+    {
+      "id": "TokyoMetro.Marunouchi.NishiShinjuku",
+      "name": "西新宿",
+      "fraction": 0.6462
+    },
+    {
+      "id": "TokyoMetro.Marunouchi.Shinjuku",
+      "name": "新宿",
+      "fraction": 0.6629
+    },
+    {
+      "id": "TokyoMetro.Marunouchi.ShinjukuSanchome",
+      "name": "新宿三丁目",
+      "fraction": 0.6705
+    },
+    {
+      "id": "TokyoMetro.Marunouchi.ShinjukuGyoemmae",
+      "name": "新宿御苑前",
+      "fraction": 0.3167
+    },
+    {
+      "id": "TokyoMetro.Marunouchi.YotsuyaSanchome",
+      "name": "四谷三丁目",
+      "fraction": 0.3
+    },
+    {
+      "id": "TokyoMetro.Marunouchi.Yotsuya",
+      "name": "四ツ谷",
+      "fraction": 0.7254
+    },
+    {
+      "id": "TokyoMetro.Marunouchi.AkasakaMitsuke",
+      "name": "赤坂見附",
+      "fraction": 0.7479
+    },
+    {
+      "id": "TokyoMetro.Marunouchi.KokkaiGijidomae",
+      "name": "国会議事堂前",
+      "fraction": 0.7678
+    },
+    {
+      "id": "TokyoMetro.Marunouchi.Kasumigaseki",
+      "name": "霞ケ関",
+      "fraction": 0.2183
+    },
+    {
+      "id": "TokyoMetro.Marunouchi.Ginza",
+      "name": "銀座",
+      "fraction": 0.8058
+    },
+    {
+      "id": "TokyoMetro.Marunouchi.Tokyo",
+      "name": "東京",
+      "fraction": 0.8249
+    },
+    {
+      "id": "TokyoMetro.Marunouchi.Otemachi",
+      "name": "大手町",
+      "fraction": 0.8349
+    },
+    {
+      "id": "TokyoMetro.Marunouchi.Awajicho",
+      "name": "淡路町",
+      "fraction": 0.8509
+    },
+    {
+      "id": "TokyoMetro.Marunouchi.Ochanomizu",
+      "name": "御茶ノ水",
+      "fraction": 0.8651
+    },
+    {
+      "id": "TokyoMetro.Marunouchi.HongoSanchome",
+      "name": "本郷三丁目",
+      "fraction": 0.1203
+    },
+    {
+      "id": "TokyoMetro.Marunouchi.Korakuen",
+      "name": "後楽園",
+      "fraction": 0.8991
+    },
+    {
+      "id": "TokyoMetro.Marunouchi.Myogadani",
+      "name": "茗荷谷",
+      "fraction": 0.9342
+    },
+    {
+      "id": "TokyoMetro.Marunouchi.ShinOtsuka",
+      "name": "新大塚",
+      "fraction": 0.9578
+    },
+    {
+      "id": "TokyoMetro.Marunouchi.Ikebukuro",
+      "name": "池袋",
+      "fraction": 0.0004
+    }
+  ],
+  "TokyoMetro.Hibiya": [
+    {
+      "id": "TokyoMetro.Hibiya.NakaMeguro",
+      "name": "中目黒",
+      "fraction": 0.5099
+    },
+    {
+      "id": "TokyoMetro.Hibiya.Ebisu",
+      "name": "恵比寿",
+      "fraction": 0.5376
+    },
+    {
+      "id": "TokyoMetro.Hibiya.HiroO",
+      "name": "広尾",
+      "fraction": 0.5756
+    },
+    {
+      "id": "TokyoMetro.Hibiya.Roppongi",
+      "name": "六本木",
+      "fraction": 0.616
+    },
+    {
+      "id": "TokyoMetro.Hibiya.Kamiyacho",
+      "name": "神谷町",
+      "fraction": 0.6539
+    },
+    {
+      "id": "TokyoMetro.Hibiya.ToranomonHills",
+      "name": "虎ノ門ヒルズ",
+      "fraction": 0.6678
+    },
+    {
+      "id": "TokyoMetro.Hibiya.Kasumigaseki",
+      "name": "霞ケ関",
+      "fraction": 0.686
+    },
+    {
+      "id": "TokyoMetro.Hibiya.Hibiya",
+      "name": "日比谷",
+      "fraction": 0.7157
+    },
+    {
+      "id": "TokyoMetro.Hibiya.Ginza",
+      "name": "銀座",
+      "fraction": 0.2945
+    },
+    {
+      "id": "TokyoMetro.Hibiya.HigashiGinza",
+      "name": "東銀座",
+      "fraction": 0.7372
+    },
+    {
+      "id": "TokyoMetro.Hibiya.Tsukiji",
+      "name": "築地",
+      "fraction": 0.2682
+    },
+    {
+      "id": "TokyoMetro.Hibiya.Hatchobori",
+      "name": "八丁堀",
+      "fraction": 0.2455
+    },
+    {
+      "id": "TokyoMetro.Hibiya.Kayabacho",
+      "name": "茅場町",
+      "fraction": 0.7853
+    },
+    {
+      "id": "TokyoMetro.Hibiya.Ningyocho",
+      "name": "人形町",
+      "fraction": 0.8084
+    },
+    {
+      "id": "TokyoMetro.Hibiya.Kodemmacho",
+      "name": "小伝馬町",
+      "fraction": 0.198
+    },
+    {
+      "id": "TokyoMetro.Hibiya.Akihabara",
+      "name": "秋葉原",
+      "fraction": 0.1773
+    },
+    {
+      "id": "TokyoMetro.Hibiya.NakaOkachimachi",
+      "name": "仲御徒町",
+      "fraction": 0.8643
+    },
+    {
+      "id": "TokyoMetro.Hibiya.Ueno",
+      "name": "上野",
+      "fraction": 0.8767
+    },
+    {
+      "id": "TokyoMetro.Hibiya.Iriya",
+      "name": "入谷",
+      "fraction": 0.1145
+    },
+    {
+      "id": "TokyoMetro.Hibiya.Minowa",
+      "name": "三ノ輪",
+      "fraction": 0.0873
+    },
+    {
+      "id": "TokyoMetro.Hibiya.MinamiSenju",
+      "name": "南千住",
+      "fraction": 0.0659
+    },
+    {
+      "id": "TokyoMetro.Hibiya.KitaSenju",
+      "name": "北千住",
+      "fraction": 0.0161
+    }
+  ],
+  "TokyoMetro.Tozai": [
+    {
+      "id": "TokyoMetro.Tozai.Nakano",
+      "name": "中野",
+      "fraction": 0.9905
+    },
+    {
+      "id": "TokyoMetro.Tozai.Ochiai",
+      "name": "落合",
+      "fraction": 0.953
+    },
+    {
+      "id": "TokyoMetro.Tozai.Takadanobaba",
+      "name": "高田馬場",
+      "fraction": 0.9184
+    },
+    {
+      "id": "TokyoMetro.Tozai.Waseda",
+      "name": "早稲田",
+      "fraction": 0.8844
+    },
+    {
+      "id": "TokyoMetro.Tozai.Kagurazaka",
+      "name": "神楽坂",
+      "fraction": 0.8623
+    },
+    {
+      "id": "TokyoMetro.Tozai.Iidabashi",
+      "name": "飯田橋",
+      "fraction": 0.1504
+    },
+    {
+      "id": "TokyoMetro.Tozai.Kudanshita",
+      "name": "九段下",
+      "fraction": 0.1631
+    },
+    {
+      "id": "TokyoMetro.Tozai.Takebashi",
+      "name": "竹橋",
+      "fraction": 0.8118
+    },
+    {
+      "id": "TokyoMetro.Tozai.Otemachi",
+      "name": "大手町",
+      "fraction": 0.1987
+    },
+    {
+      "id": "TokyoMetro.Tozai.Nihombashi",
+      "name": "日本橋",
+      "fraction": 0.7772
+    },
+    {
+      "id": "TokyoMetro.Tozai.Kayabacho",
+      "name": "茅場町",
+      "fraction": 0.2232
+    },
+    {
+      "id": "TokyoMetro.Tozai.MonzenNakacho",
+      "name": "門前仲町",
+      "fraction": 0.2566
+    },
+    {
+      "id": "TokyoMetro.Tozai.Kiba",
+      "name": "木場",
+      "fraction": 0.7139
+    },
+    {
+      "id": "TokyoMetro.Tozai.Toyocho",
+      "name": "東陽町",
+      "fraction": 0.6953
+    },
+    {
+      "id": "TokyoMetro.Tozai.MinamiSunamachi",
+      "name": "南砂町",
+      "fraction": 0.3205
+    },
+    {
+      "id": "TokyoMetro.Tozai.NishiKasai",
+      "name": "西葛西",
+      "fraction": 0.3702
+    },
+    {
+      "id": "TokyoMetro.Tozai.Kasai",
+      "name": "葛西",
+      "fraction": 0.5976
+    },
+    {
+      "id": "TokyoMetro.Tozai.Urayasu",
+      "name": "浦安",
+      "fraction": 0.5604
+    },
+    {
+      "id": "TokyoMetro.Tozai.MinamiGyotoku",
+      "name": "南行徳",
+      "fraction": 0.5405
+    },
+    {
+      "id": "TokyoMetro.Tozai.Gyotoku",
+      "name": "行徳",
+      "fraction": 0.4773
+    },
+    {
+      "id": "TokyoMetro.Tozai.Myoden",
+      "name": "妙典",
+      "fraction": 0.4953
+    },
+    {
+      "id": "TokyoMetro.Tozai.BarakiNakayama",
+      "name": "原木中山",
+      "fraction": 0.4953
+    },
+    {
+      "id": "TokyoMetro.Tozai.NishiFunabashi",
+      "name": "西船橋",
+      "fraction": 0.4953
+    }
+  ],
+  "TokyoMetro.Chiyoda": [
+    {
+      "id": "TokyoMetro.Chiyoda.YoyogiUehara",
+      "name": "代々木上原",
+      "fraction": 0.4728
+    },
+    {
+      "id": "TokyoMetro.Chiyoda.YoyogiKoen",
+      "name": "代々木公園",
+      "fraction": 0.4994
+    },
+    {
+      "id": "TokyoMetro.Chiyoda.MeijiJingumae",
+      "name": "明治神宮前〈原宿〉",
+      "fraction": 0.4226
+    },
+    {
+      "id": "TokyoMetro.Chiyoda.OmoteSando",
+      "name": "表参道",
+      "fraction": 0.4058
+    },
+    {
+      "id": "TokyoMetro.Chiyoda.Nogizaka",
+      "name": "乃木坂",
+      "fraction": 0.5797
+    },
+    {
+      "id": "TokyoMetro.Chiyoda.Akasaka",
+      "name": "赤坂",
+      "fraction": 0.3472
+    },
+    {
+      "id": "TokyoMetro.Chiyoda.KokkaiGijidomae",
+      "name": "国会議事堂前",
+      "fraction": 0.3326
+    },
+    {
+      "id": "TokyoMetro.Chiyoda.Kasumigaseki",
+      "name": "霞ケ関",
+      "fraction": 0.637
+    },
+    {
+      "id": "TokyoMetro.Chiyoda.Hibiya",
+      "name": "日比谷",
+      "fraction": 0.2968
+    },
+    {
+      "id": "TokyoMetro.Chiyoda.Nijubashimae",
+      "name": "二重橋前〈丸の内〉",
+      "fraction": 0.2818
+    },
+    {
+      "id": "TokyoMetro.Chiyoda.Otemachi",
+      "name": "大手町",
+      "fraction": 0.2716
+    },
+    {
+      "id": "TokyoMetro.Chiyoda.ShinOchanomizu",
+      "name": "新御茶ノ水",
+      "fraction": 0.247
+    },
+    {
+      "id": "TokyoMetro.Chiyoda.Yushima",
+      "name": "湯島",
+      "fraction": 0.2238
+    },
+    {
+      "id": "TokyoMetro.Chiyoda.Nezu",
+      "name": "根津",
+      "fraction": 0.7512
+    },
+    {
+      "id": "TokyoMetro.Chiyoda.Sendagi",
+      "name": "千駄木",
+      "fraction": 0.7716
+    },
+    {
+      "id": "TokyoMetro.Chiyoda.NishiNippori",
+      "name": "西日暮里",
+      "fraction": 0.7892
+    },
+    {
+      "id": "TokyoMetro.Chiyoda.Machiya",
+      "name": "町屋",
+      "fraction": 0.1273
+    },
+    {
+      "id": "TokyoMetro.Chiyoda.KitaSenju",
+      "name": "北千住",
+      "fraction": 0.0713
+    },
+    {
+      "id": "TokyoMetro.Chiyoda.Ayase",
+      "name": "綾瀬",
+      "fraction": 0.9349
+    },
+    {
+      "id": "TokyoMetro.Chiyoda.KitaAyase",
+      "name": "北綾瀬",
+      "fraction": 0.9759
+    }
+  ],
+  "TokyoMetro.Yurakucho": [
+    {
+      "id": "TokyoMetro.Yurakucho.Wakoshi",
+      "name": "和光市",
+      "fraction": 0.4978
+    },
+    {
+      "id": "TokyoMetro.Yurakucho.ChikatetsuNarimasu",
+      "name": "地下鉄成増",
+      "fraction": 0.5125
+    },
+    {
+      "id": "TokyoMetro.Yurakucho.ChikatetsuAkatsuka",
+      "name": "地下鉄赤塚",
+      "fraction": 0.4568
+    },
+    {
+      "id": "TokyoMetro.Yurakucho.Heiwadai",
+      "name": "平和台",
+      "fraction": 0.4248
+    },
+    {
+      "id": "TokyoMetro.Yurakucho.Hikawadai",
+      "name": "氷川台",
+      "fraction": 0.4005
+    },
+    {
+      "id": "TokyoMetro.Yurakucho.KotakeMukaihara",
+      "name": "小竹向原",
+      "fraction": 0.6222
+    },
+    {
+      "id": "TokyoMetro.Yurakucho.Senkawa",
+      "name": "千川",
+      "fraction": 0.3534
+    },
+    {
+      "id": "TokyoMetro.Yurakucho.Kanamecho",
+      "name": "要町",
+      "fraction": 0.3348
+    },
+    {
+      "id": "TokyoMetro.Yurakucho.Ikebukuro",
+      "name": "池袋",
+      "fraction": 0.3111
+    },
+    {
+      "id": "TokyoMetro.Yurakucho.HigashiIkebukuro",
+      "name": "東池袋",
+      "fraction": 0.2955
+    },
+    {
+      "id": "TokyoMetro.Yurakucho.Gokokuji",
+      "name": "護国寺",
+      "fraction": 0.7198
+    },
+    {
+      "id": "TokyoMetro.Yurakucho.Edogawabashi",
+      "name": "江戸川橋",
+      "fraction": 0.2537
+    },
+    {
+      "id": "TokyoMetro.Yurakucho.Iidabashi",
+      "name": "飯田橋",
+      "fraction": 0.2258
+    },
+    {
+      "id": "TokyoMetro.Yurakucho.Ichigaya",
+      "name": "市ケ谷",
+      "fraction": 0.7891
+    },
+    {
+      "id": "TokyoMetro.Yurakucho.Kojimachi",
+      "name": "麴町",
+      "fraction": 0.8042
+    },
+    {
+      "id": "TokyoMetro.Yurakucho.Nagatacho",
+      "name": "永田町",
+      "fraction": 0.8195
+    },
+    {
+      "id": "TokyoMetro.Yurakucho.Sakuradamon",
+      "name": "桜田門",
+      "fraction": 0.8377
+    },
+    {
+      "id": "TokyoMetro.Yurakucho.Yurakucho",
+      "name": "有楽町",
+      "fraction": 0.8564
+    },
+    {
+      "id": "TokyoMetro.Yurakucho.GinzaItchome",
+      "name": "銀座一丁目",
+      "fraction": 0.1307
+    },
+    {
+      "id": "TokyoMetro.Yurakucho.Shintomicho",
+      "name": "新富町",
+      "fraction": 0.1166
+    },
+    {
+      "id": "TokyoMetro.Yurakucho.Tsukishima",
+      "name": "月島",
+      "fraction": 0.0943
+    },
+    {
+      "id": "TokyoMetro.Yurakucho.Toyosu",
+      "name": "豊洲",
+      "fraction": 0.9281
+    },
+    {
+      "id": "TokyoMetro.Yurakucho.Tatsumi",
+      "name": "辰巳",
+      "fraction": 0.9588
+    },
+    {
+      "id": "TokyoMetro.Yurakucho.ShinKiba",
+      "name": "新木場",
+      "fraction": 0.0069
+    }
+  ],
+  "TokyoMetro.Hanzomon": [
+    {
+      "id": "TokyoMetro.Hanzomon.Shibuya",
+      "name": "渋谷",
+      "fraction": 0.0117
+    },
+    {
+      "id": "TokyoMetro.Hanzomon.OmoteSando",
+      "name": "表参道",
+      "fraction": 0.0533
+    },
+    {
+      "id": "TokyoMetro.Hanzomon.AoyamaItchome",
+      "name": "青山一丁目",
+      "fraction": 0.0943
+    },
+    {
+      "id": "TokyoMetro.Hanzomon.Nagatacho",
+      "name": "永田町",
+      "fraction": 0.1395
+    },
+    {
+      "id": "TokyoMetro.Hanzomon.Hanzomon",
+      "name": "半蔵門",
+      "fraction": 0.8417
+    },
+    {
+      "id": "TokyoMetro.Hanzomon.Kudanshita",
+      "name": "九段下",
+      "fraction": 0.2088
+    },
+    {
+      "id": "TokyoMetro.Hanzomon.Jimbocho",
+      "name": "神保町",
+      "fraction": 0.2271
+    },
+    {
+      "id": "TokyoMetro.Hanzomon.Otemachi",
+      "name": "大手町",
+      "fraction": 0.2678
+    },
+    {
+      "id": "TokyoMetro.Hanzomon.Mitsukoshimae",
+      "name": "三越前",
+      "fraction": 0.7145
+    },
+    {
+      "id": "TokyoMetro.Hanzomon.Suitengumae",
+      "name": "水天宮前",
+      "fraction": 0.6771
+    },
+    {
+      "id": "TokyoMetro.Hanzomon.KiyosumiShirakawa",
+      "name": "清澄白河",
+      "fraction": 0.3793
+    },
+    {
+      "id": "TokyoMetro.Hanzomon.Sumiyoshi",
+      "name": "住吉",
+      "fraction": 0.5674
+    },
+    {
+      "id": "TokyoMetro.Hanzomon.Kinshicho",
+      "name": "錦糸町",
+      "fraction": 0.5426
+    },
+    {
+      "id": "TokyoMetro.Hanzomon.Oshiage",
+      "name": "押上〈スカイツリー前〉",
+      "fraction": 0.4951
+    }
+  ],
+  "TokyoMetro.Namboku": [
+    {
+      "id": "TokyoMetro.Namboku.Meguro",
+      "name": "目黒",
+      "fraction": 0.9905
+    },
+    {
+      "id": "TokyoMetro.Namboku.Shirokanedai",
+      "name": "白金台",
+      "fraction": 0.0405
+    },
+    {
+      "id": "TokyoMetro.Namboku.ShirokaneTakanawa",
+      "name": "白金高輪",
+      "fraction": 0.0659
+    },
+    {
+      "id": "TokyoMetro.Namboku.AzabuJuban",
+      "name": "麻布十番",
+      "fraction": 0.9055
+    },
+    {
+      "id": "TokyoMetro.Namboku.RoppongiItchome",
+      "name": "六本木一丁目",
+      "fraction": 0.8792
+    },
+    {
+      "id": "TokyoMetro.Namboku.TameikeSanno",
+      "name": "溜池山王",
+      "fraction": 0.8584
+    },
+    {
+      "id": "TokyoMetro.Namboku.Nagatacho",
+      "name": "永田町",
+      "fraction": 0.8433
+    },
+    {
+      "id": "TokyoMetro.Namboku.Yotsuya",
+      "name": "四ツ谷",
+      "fraction": 0.1915
+    },
+    {
+      "id": "TokyoMetro.Namboku.Ichigaya",
+      "name": "市ケ谷",
+      "fraction": 0.2152
+    },
+    {
+      "id": "TokyoMetro.Namboku.Iidabashi",
+      "name": "飯田橋",
+      "fraction": 0.7576
+    },
+    {
+      "id": "TokyoMetro.Namboku.Korakuen",
+      "name": "後楽園",
+      "fraction": 0.7267
+    },
+    {
+      "id": "TokyoMetro.Namboku.Todaimae",
+      "name": "東大前",
+      "fraction": 0.6952
+    },
+    {
+      "id": "TokyoMetro.Namboku.HonKomagome",
+      "name": "本駒込",
+      "fraction": 0.3231
+    },
+    {
+      "id": "TokyoMetro.Namboku.Komagome",
+      "name": "駒込",
+      "fraction": 0.3556
+    },
+    {
+      "id": "TokyoMetro.Namboku.Nishigahara",
+      "name": "西ケ原",
+      "fraction": 0.613
+    },
+    {
+      "id": "TokyoMetro.Namboku.Oji",
+      "name": "王子",
+      "fraction": 0.4119
+    },
+    {
+      "id": "TokyoMetro.Namboku.OjiKamiya",
+      "name": "王子神谷",
+      "fraction": 0.5611
+    },
+    {
+      "id": "TokyoMetro.Namboku.Shimo",
+      "name": "志茂",
+      "fraction": 0.4706
+    },
+    {
+      "id": "TokyoMetro.Namboku.AkabaneIwabuchi",
+      "name": "赤羽岩淵",
+      "fraction": 0.5005
+    }
+  ],
+  "TokyoMetro.Fukutoshin": [
+    {
+      "id": "TokyoMetro.Fukutoshin.Wakoshi",
+      "name": "和光市",
+      "fraction": 1
+    },
+    {
+      "id": "TokyoMetro.Fukutoshin.ChikatetsuNarimasu",
+      "name": "地下鉄成増",
+      "fraction": 0.0223
+    },
+    {
+      "id": "TokyoMetro.Fukutoshin.ChikatetsuAkatsuka",
+      "name": "地下鉄赤塚",
+      "fraction": 0.9383
+    },
+    {
+      "id": "TokyoMetro.Fukutoshin.Heiwadai",
+      "name": "平和台",
+      "fraction": 0.89
+    },
+    {
+      "id": "TokyoMetro.Fukutoshin.Hikawadai",
+      "name": "氷川台",
+      "fraction": 0.8533
+    },
+    {
+      "id": "TokyoMetro.Fukutoshin.KotakeMukaihara",
+      "name": "小竹向原",
+      "fraction": 0.1877
+    },
+    {
+      "id": "TokyoMetro.Fukutoshin.Senkawa",
+      "name": "千川",
+      "fraction": 0.7823
+    },
+    {
+      "id": "TokyoMetro.Fukutoshin.Kanamecho",
+      "name": "要町",
+      "fraction": 0.7543
+    },
+    {
+      "id": "TokyoMetro.Fukutoshin.Ikebukuro",
+      "name": "池袋",
+      "fraction": 0.2809
+    },
+    {
+      "id": "TokyoMetro.Fukutoshin.Zoshigaya",
+      "name": "雑司が谷",
+      "fraction": 0.6805
+    },
+    {
+      "id": "TokyoMetro.Fukutoshin.NishiWaseda",
+      "name": "西早稲田",
+      "fraction": 0.357
+    },
+    {
+      "id": "TokyoMetro.Fukutoshin.HigashiShinjuku",
+      "name": "東新宿",
+      "fraction": 0.6221
+    },
+    {
+      "id": "TokyoMetro.Fukutoshin.ShinjukuSanchome",
+      "name": "新宿三丁目",
+      "fraction": 0.405
+    },
+    {
+      "id": "TokyoMetro.Fukutoshin.KitaSando",
+      "name": "北参道",
+      "fraction": 0.4404
+    },
+    {
+      "id": "TokyoMetro.Fukutoshin.MeijiJingumae",
+      "name": "明治神宮前〈原宿〉",
+      "fraction": 0.472
+    },
+    {
+      "id": "TokyoMetro.Fukutoshin.Shibuya",
+      "name": "渋谷",
+      "fraction": 0.499
+    }
+  ],
+  "Toei.Asakusa": [
+    {
+      "id": "Toei.Asakusa.NishiMagome",
+      "name": "西馬込",
+      "fraction": 0.5066
+    },
+    {
+      "id": "Toei.Asakusa.Magome",
+      "name": "馬込",
+      "fraction": 0.5378
+    },
+    {
+      "id": "Toei.Asakusa.Nakanobu",
+      "name": "中延",
+      "fraction": 0.5613
+    },
+    {
+      "id": "Toei.Asakusa.Togoshi",
+      "name": "戸越",
+      "fraction": 0.5872
+    },
+    {
+      "id": "Toei.Asakusa.Gotanda",
+      "name": "五反田",
+      "fraction": 0.3716
+    },
+    {
+      "id": "Toei.Asakusa.Takanawadai",
+      "name": "高輪台",
+      "fraction": 0.6495
+    },
+    {
+      "id": "Toei.Asakusa.Sengakuji",
+      "name": "泉岳寺",
+      "fraction": 0.6855
+    },
+    {
+      "id": "Toei.Asakusa.Mita",
+      "name": "三田",
+      "fraction": 0.2844
+    },
+    {
+      "id": "Toei.Asakusa.Daimon",
+      "name": "大門",
+      "fraction": 0.7545
+    },
+    {
+      "id": "Toei.Asakusa.Shimbashi",
+      "name": "新橋",
+      "fraction": 0.7816
+    },
+    {
+      "id": "Toei.Asakusa.HigashiGinza",
+      "name": "東銀座",
+      "fraction": 0.1919
+    },
+    {
+      "id": "Toei.Asakusa.Takaracho",
+      "name": "宝町",
+      "fraction": 0.8274
+    },
+    {
+      "id": "Toei.Asakusa.Nihombashi",
+      "name": "日本橋",
+      "fraction": 0.1522
+    },
+    {
+      "id": "Toei.Asakusa.Ningyocho",
+      "name": "人形町",
+      "fraction": 0.8694
+    },
+    {
+      "id": "Toei.Asakusa.HigashiNihombashi",
+      "name": "東日本橋",
+      "fraction": 0.1102
+    },
+    {
+      "id": "Toei.Asakusa.Asakusabashi",
+      "name": "浅草橋",
+      "fraction": 0.9043
+    },
+    {
+      "id": "Toei.Asakusa.Kuramae",
+      "name": "蔵前",
+      "fraction": 0.0754
+    },
+    {
+      "id": "Toei.Asakusa.Asakusa",
+      "name": "浅草",
+      "fraction": 0.0532
+    },
+    {
+      "id": "Toei.Asakusa.HonjoAzumabashi",
+      "name": "本所吾妻橋",
+      "fraction": 0.9686
+    },
+    {
+      "id": "Toei.Asakusa.Oshiage",
+      "name": "押上",
+      "fraction": 0.9964
+    }
+  ],
+  "Toei.Mita": [
+    {
+      "id": "Toei.Mita.Meguro",
+      "name": "目黒",
+      "fraction": 0.9903
+    },
+    {
+      "id": "Toei.Mita.Shirokanedai",
+      "name": "白金台",
+      "fraction": 0.0323
+    },
+    {
+      "id": "Toei.Mita.ShirokaneTakanawa",
+      "name": "白金高輪",
+      "fraction": 0.0523
+    },
+    {
+      "id": "Toei.Mita.Mita",
+      "name": "三田",
+      "fraction": 0.0843
+    },
+    {
+      "id": "Toei.Mita.Shibakoen",
+      "name": "芝公園",
+      "fraction": 0.9051
+    },
+    {
+      "id": "Toei.Mita.Onarimon",
+      "name": "御成門",
+      "fraction": 0.1076
+    },
+    {
+      "id": "Toei.Mita.Uchisaiwaicho",
+      "name": "内幸町",
+      "fraction": 0.1253
+    },
+    {
+      "id": "Toei.Mita.Hibiya",
+      "name": "日比谷",
+      "fraction": 0.858
+    },
+    {
+      "id": "Toei.Mita.Otemachi",
+      "name": "大手町",
+      "fraction": 0.1569
+    },
+    {
+      "id": "Toei.Mita.Jimbocho",
+      "name": "神保町",
+      "fraction": 0.8159
+    },
+    {
+      "id": "Toei.Mita.Suidobashi",
+      "name": "水道橋",
+      "fraction": 0.7994
+    },
+    {
+      "id": "Toei.Mita.Kasuga",
+      "name": "春日",
+      "fraction": 0.7874
+    },
+    {
+      "id": "Toei.Mita.Hakusan",
+      "name": "白山",
+      "fraction": 0.764
+    },
+    {
+      "id": "Toei.Mita.Sengoku",
+      "name": "千石",
+      "fraction": 0.2552
+    },
+    {
+      "id": "Toei.Mita.Sugamo",
+      "name": "巣鴨",
+      "fraction": 0.7278
+    },
+    {
+      "id": "Toei.Mita.NishiSugamo",
+      "name": "西巣鴨",
+      "fraction": 0.2978
+    },
+    {
+      "id": "Toei.Mita.ShinItabashi",
+      "name": "新板橋",
+      "fraction": 0.6825
+    },
+    {
+      "id": "Toei.Mita.ItabashiKuyakushomae",
+      "name": "板橋区役所前",
+      "fraction": 0.3369
+    },
+    {
+      "id": "Toei.Mita.Itabashihoncho",
+      "name": "板橋本町",
+      "fraction": 0.6423
+    },
+    {
+      "id": "Toei.Mita.Motohasunuma",
+      "name": "本蓮沼",
+      "fraction": 0.6274
+    },
+    {
+      "id": "Toei.Mita.ShimuraSakaue",
+      "name": "志村坂上",
+      "fraction": 0.3925
+    },
+    {
+      "id": "Toei.Mita.ShimuraSanchome",
+      "name": "志村三丁目",
+      "fraction": 0.4119
+    },
+    {
+      "id": "Toei.Mita.Hasune",
+      "name": "蓮根",
+      "fraction": 0.5668
+    },
+    {
+      "id": "Toei.Mita.Nishidai",
+      "name": "西台",
+      "fraction": 0.4484
+    },
+    {
+      "id": "Toei.Mita.Takashimadaira",
+      "name": "高島平",
+      "fraction": 0.4703
+    },
+    {
+      "id": "Toei.Mita.ShinTakashimadaira",
+      "name": "新高島平",
+      "fraction": 0.4842
+    },
+    {
+      "id": "Toei.Mita.NishiTakashimadaira",
+      "name": "西高島平",
+      "fraction": 0.5001
+    }
+  ],
+  "Toei.Shinjuku": [
+    {
+      "id": "Toei.Shinjuku.Shinjuku",
+      "name": "新宿",
+      "fraction": 0.5029
+    },
+    {
+      "id": "Toei.Shinjuku.ShinjukuSanchome",
+      "name": "新宿三丁目",
+      "fraction": 0.519
+    },
+    {
+      "id": "Toei.Shinjuku.Akebonobashi",
+      "name": "曙橋",
+      "fraction": 0.4553
+    },
+    {
+      "id": "Toei.Shinjuku.Ichigaya",
+      "name": "市ヶ谷",
+      "fraction": 0.5817
+    },
+    {
+      "id": "Toei.Shinjuku.Kudanshita",
+      "name": "九段下",
+      "fraction": 0.3947
+    },
+    {
+      "id": "Toei.Shinjuku.Jimbocho",
+      "name": "神保町",
+      "fraction": 0.6237
+    },
+    {
+      "id": "Toei.Shinjuku.Ogawamachi",
+      "name": "小川町",
+      "fraction": 0.364
+    },
+    {
+      "id": "Toei.Shinjuku.Iwamotocho",
+      "name": "岩本町",
+      "fraction": 0.6594
+    },
+    {
+      "id": "Toei.Shinjuku.BakuroYokoyama",
+      "name": "馬喰横山",
+      "fraction": 0.6776
+    },
+    {
+      "id": "Toei.Shinjuku.Hamacho",
+      "name": "浜町",
+      "fraction": 0.3167
+    },
+    {
+      "id": "Toei.Shinjuku.Morishita",
+      "name": "森下",
+      "fraction": 0.2988
+    },
+    {
+      "id": "Toei.Shinjuku.Kikukawa",
+      "name": "菊川",
+      "fraction": 0.2799
+    },
+    {
+      "id": "Toei.Shinjuku.Sumiyoshi",
+      "name": "住吉",
+      "fraction": 0.7454
+    },
+    {
+      "id": "Toei.Shinjuku.NishiOjima",
+      "name": "西大島",
+      "fraction": 0.7664
+    },
+    {
+      "id": "Toei.Shinjuku.Ojima",
+      "name": "大島",
+      "fraction": 0.2225
+    },
+    {
+      "id": "Toei.Shinjuku.HigashiOjima",
+      "name": "東大島",
+      "fraction": 0.1972
+    },
+    {
+      "id": "Toei.Shinjuku.Funabori",
+      "name": "船堀",
+      "fraction": 0.1613
+    },
+    {
+      "id": "Toei.Shinjuku.Ichinoe",
+      "name": "一之江",
+      "fraction": 0.8821
+    },
+    {
+      "id": "Toei.Shinjuku.Mizue",
+      "name": "瑞江",
+      "fraction": 0.9176
+    },
+    {
+      "id": "Toei.Shinjuku.Shinozaki",
+      "name": "篠崎",
+      "fraction": 0.0597
+    },
+    {
+      "id": "Toei.Shinjuku.Motoyawata",
+      "name": "本八幡",
+      "fraction": 0.0021
+    }
+  ],
+  "Toei.Oedo": [
+    {
+      "id": "Toei.Oedo.Tochomae",
+      "name": "都庁前",
+      "fraction": 0.146
+    },
+    {
+      "id": "Toei.Oedo.ShinjukuNishiguchi",
+      "name": "新宿西口",
+      "fraction": 0.5077
+    },
+    {
+      "id": "Toei.Oedo.HigashiShinjuku",
+      "name": "東新宿",
+      "fraction": 0.5249
+    },
+    {
+      "id": "Toei.Oedo.WakamatsuKawada",
+      "name": "若松河田",
+      "fraction": 0.538
+    },
+    {
+      "id": "Toei.Oedo.UshigomeYanagicho",
+      "name": "牛込柳町",
+      "fraction": 0.4496
+    },
+    {
+      "id": "Toei.Oedo.UshigomeKagurazaka",
+      "name": "牛込神楽坂",
+      "fraction": 0.5601
+    },
+    {
+      "id": "Toei.Oedo.Iidabashi",
+      "name": "飯田橋",
+      "fraction": 0.4237
+    },
+    {
+      "id": "Toei.Oedo.Kasuga",
+      "name": "春日",
+      "fraction": 0.4116
+    },
+    {
+      "id": "Toei.Oedo.HongoSanchome",
+      "name": "本郷三丁目",
+      "fraction": 0.4016
+    },
+    {
+      "id": "Toei.Oedo.UenoOkachimachi",
+      "name": "上野御徒町",
+      "fraction": 0.3859
+    },
+    {
+      "id": "Toei.Oedo.ShinOkachimachi",
+      "name": "新御徒町",
+      "fraction": 0.3752
+    },
+    {
+      "id": "Toei.Oedo.Kuramae",
+      "name": "蔵前",
+      "fraction": 0.6334
+    },
+    {
+      "id": "Toei.Oedo.Ryogoku",
+      "name": "両国",
+      "fraction": 0.6477
+    },
+    {
+      "id": "Toei.Oedo.Morishita",
+      "name": "森下",
+      "fraction": 0.338
+    },
+    {
+      "id": "Toei.Oedo.KiyosumiShirakawa",
+      "name": "清澄白河",
+      "fraction": 0.6652
+    },
+    {
+      "id": "Toei.Oedo.MonzenNakacho",
+      "name": "門前仲町",
+      "fraction": 0.6783
+    },
+    {
+      "id": "Toei.Oedo.Tsukishima",
+      "name": "月島",
+      "fraction": 0.3007
+    },
+    {
+      "id": "Toei.Oedo.Kachidoki",
+      "name": "勝どき",
+      "fraction": 0.7059
+    },
+    {
+      "id": "Toei.Oedo.Tsukijishijo",
+      "name": "築地市場",
+      "fraction": 0.2735
+    },
+    {
+      "id": "Toei.Oedo.Shiodome",
+      "name": "汐留",
+      "fraction": 0.2624
+    },
+    {
+      "id": "Toei.Oedo.Daimon",
+      "name": "大門",
+      "fraction": 0.7452
+    },
+    {
+      "id": "Toei.Oedo.Akabanebashi",
+      "name": "赤羽橋",
+      "fraction": 0.7621
+    },
+    {
+      "id": "Toei.Oedo.AzabuJuban",
+      "name": "麻布十番",
+      "fraction": 0.7716
+    },
+    {
+      "id": "Toei.Oedo.Roppongi",
+      "name": "六本木",
+      "fraction": 0.7848
+    },
+    {
+      "id": "Toei.Oedo.AoyamaItchome",
+      "name": "青山一丁目",
+      "fraction": 0.197
+    },
+    {
+      "id": "Toei.Oedo.KokuritsuKyogijo",
+      "name": "国立競技場",
+      "fraction": 0.1819
+    },
+    {
+      "id": "Toei.Oedo.Yoyogi",
+      "name": "代々木",
+      "fraction": 0.1631
+    },
+    {
+      "id": "Toei.Oedo.Shinjuku",
+      "name": "新宿",
+      "fraction": 0.8405
+    },
+    {
+      "id": "Toei.Oedo.Tochomae",
+      "name": "都庁前",
+      "fraction": 0.146
+    },
+    {
+      "id": "Toei.Oedo.NishiShinjukuGochome",
+      "name": "西新宿五丁目",
+      "fraction": 0.136
+    },
+    {
+      "id": "Toei.Oedo.NakanoSakaue",
+      "name": "中野坂上",
+      "fraction": 0.8739
+    },
+    {
+      "id": "Toei.Oedo.HigashiNakano",
+      "name": "東中野",
+      "fraction": 0.8854
+    },
+    {
+      "id": "Toei.Oedo.Nakai",
+      "name": "中井",
+      "fraction": 0.1024
+    },
+    {
+      "id": "Toei.Oedo.OchiaiMinamiNagasaki",
+      "name": "落合南長崎",
+      "fraction": 0.9092
+    },
+    {
+      "id": "Toei.Oedo.ShinEgota",
+      "name": "新江古田",
+      "fraction": 0.0676
+    },
+    {
+      "id": "Toei.Oedo.Nerima",
+      "name": "練馬",
+      "fraction": 0.0474
+    },
+    {
+      "id": "Toei.Oedo.Toshimaen",
+      "name": "豊島園",
+      "fraction": 0.0363
+    },
+    {
+      "id": "Toei.Oedo.NerimaKasugacho",
+      "name": "練馬春日町",
+      "fraction": 0.9784
+    },
+    {
+      "id": "Toei.Oedo.Hikarigaoka",
+      "name": "光が丘",
+      "fraction": 0.9973
+    }
+  ],
+  "Tokyu.Toyoko": [
+    {
+      "id": "Tokyu.Toyoko.Motosumiyoshi",
+      "name": "元住吉",
+      "fraction": 0.0138
+    },
+    {
+      "id": "Tokyu.Toyoko.MusashiKosugi",
+      "name": "武蔵小杉",
+      "fraction": 0.0668
+    },
+    {
+      "id": "Tokyu.Toyoko.Jiyugaoka",
+      "name": "自由が丘",
+      "fraction": 0.2158
+    },
+    {
+      "id": "Tokyu.Toyoko.NakaMeguro",
+      "name": "中目黒",
+      "fraction": 0.4165
+    },
+    {
+      "id": "Tokyu.Toyoko.Shibuya",
+      "name": "渋谷",
+      "fraction": 0.4991
+    },
+    {
+      "id": "Tokyu.Toyoko.Kikuna",
+      "name": "菊名",
+      "fraction": 1
+    },
+    {
+      "id": "Tokyu.Toyoko.Yokohama",
+      "name": "横浜",
+      "fraction": 1
+    },
+    {
+      "id": "Tokyu.Toyoko.Hiyoshi",
+      "name": "日吉",
+      "fraction": 1
+    }
+  ],
+  "Tokyu.DenEnToshi": [
+    {
+      "id": "Tokyu.DenEnToshi.ChuoRinkan",
+      "name": "中央林間",
+      "fraction": 0
+    },
+    {
+      "id": "Tokyu.DenEnToshi.Nagatsuta",
+      "name": "長津田",
+      "fraction": 0
+    },
+    {
+      "id": "Tokyu.DenEnToshi.Saginuma",
+      "name": "鷺沼",
+      "fraction": 0
+    },
+    {
+      "id": "Tokyu.DenEnToshi.Azamino",
+      "name": "あざみ野",
+      "fraction": 0
+    },
+    {
+      "id": "Tokyu.DenEnToshi.FutakoTamagawa",
+      "name": "二子玉川",
+      "fraction": 0.0995
+    },
+    {
+      "id": "Tokyu.DenEnToshi.Shibuya",
+      "name": "渋谷",
+      "fraction": 0.4998
+    }
+  ],
+  "Odakyu.Odawara": [
+    {
+      "id": "Odakyu.Odawara.Shinjuku",
+      "name": "新宿",
+      "fraction": 0.5004
+    },
+    {
+      "id": "Odakyu.Odawara.YoyogiUehara",
+      "name": "代々木上原",
+      "fraction": 0.6084
+    },
+    {
+      "id": "Odakyu.Odawara.SeijogakuenMae",
+      "name": "成城学園前",
+      "fraction": 0.8817
+    },
+    {
+      "id": "Odakyu.Odawara.Ebina",
+      "name": "海老名",
+      "fraction": 1
+    },
+    {
+      "id": "Odakyu.Odawara.HonAtsugi",
+      "name": "本厚木",
+      "fraction": 1
+    },
+    {
+      "id": "Odakyu.Odawara.Isehara",
+      "name": "伊勢原",
+      "fraction": 1
+    },
+    {
+      "id": "Odakyu.Odawara.Machida",
+      "name": "町田",
+      "fraction": 1
+    },
+    {
+      "id": "Odakyu.Odawara.MukogaokaYuen",
+      "name": "向ヶ丘遊園",
+      "fraction": 1
+    },
+    {
+      "id": "Odakyu.Odawara.SagamiOno",
+      "name": "相模大野",
+      "fraction": 1
+    },
+    {
+      "id": "Odakyu.Odawara.ShinYurigaoka",
+      "name": "新百合ヶ丘",
+      "fraction": 1
+    }
+  ],
+  "Keio.Keio": [
+    {
+      "id": "Keio.Keio.Shinjuku",
+      "name": "新宿",
+      "fraction": 0.5002
+    },
+    {
+      "id": "Keio.Keio.Sakurajosui",
+      "name": "桜上水",
+      "fraction": 0.5926
+    },
+    {
+      "id": "Keio.Keio.HachimanYama",
+      "name": "八幡山",
+      "fraction": 0.6131
+    },
+    {
+      "id": "Keio.Keio.Tsutsujigaoka",
+      "name": "つつじヶ丘",
+      "fraction": 0.6663
+    },
+    {
+      "id": "Keio.Keio.Chofu",
+      "name": "調布",
+      "fraction": 0.7067
+    },
+    {
+      "id": "Keio.Keio.Takahatafudo",
+      "name": "高幡不動",
+      "fraction": 0.8934
+    },
+    {
+      "id": "Keio.Keio.KeioHachioji",
+      "name": "京王八王子",
+      "fraction": 0.9989
+    }
+  ]
+}

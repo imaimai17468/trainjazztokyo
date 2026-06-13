@@ -1,4 +1,4 @@
-import { array, object, optional, string, type InferOutput } from "valibot";
+import { array, number, object, optional, string, type InferOutput } from "valibot";
 
 export const OdptTrainSchema = object({
   railway: string(),
@@ -6,6 +6,8 @@ export const OdptTrainSchema = object({
   toStation: optional(string()),
   railDirection: string(),
   trainNumber: string(),
+  departureTime: optional(string()),
+  progress: optional(number()),
   date: string(),
 });
 
