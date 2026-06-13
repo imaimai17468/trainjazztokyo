@@ -16,10 +16,6 @@ export default defineConfig({
       },
     }),
   ],
-  ssr: {
-    noExternal: [],
-    external: ["maplibre-gl", "spessasynth_lib", "spessasynth_core"],
-  },
   build: {
     sourcemap: false,
   },

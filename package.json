@@ -3,7 +3,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "NODE_OPTIONS='--max-old-space-size=4096' vite build",
+    "build": "vite build",
     "start": "vite start",
     "preview": "vite preview",
     "lint": "oxlint --fix",
