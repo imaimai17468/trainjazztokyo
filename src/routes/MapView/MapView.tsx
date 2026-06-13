@@ -12,10 +12,11 @@ import {
 import { addRailwayLayers, highlightLines, resetPulseState } from "./MapView.railway";
 import { createTicker } from "./MapView.ticker";
 import { morphToBars, morphToMap, cancelMorph } from "./MapView.morph";
-import { stopSound, setSoloLine } from "./MapView.sound";
+import { initSound, stopSound, setSoloLine } from "./MapView.sound";
 import { groupTrains } from "./gateway/groupTrains";
 import type { TrainPosition } from "./entity/train";
 import AboutContainer from "./About/About.container";
+import Intro from "./Intro/Intro";
 import Legend from "./Legend/Legend";
 import Bars, { LINE_ORDER, ROW_HEIGHT } from "./Bars/Bars";
 
@@ -194,6 +195,13 @@ export default function MapView(props: Props) {
         }}
       />
       {!props.introOpen && <AboutContainer onOpenChange={setAboutOpen} />}
+      <Intro
+        open={props.introOpen}
+        onClose={() => {
+          initSound();
+          props.onCloseIntro();
+        }}
+      />
     </div>
   );
 }

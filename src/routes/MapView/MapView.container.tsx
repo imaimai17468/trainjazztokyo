@@ -9,17 +9,13 @@ const MapViewPresenter = clientOnly(() => import("./MapView"));
 const TOKYO_CENTER: [number, number] = [139.7671, 35.6812];
 const DEFAULT_ZOOM = 12;
 
-type Props = {
-  introOpen: boolean;
-  onCloseIntro: () => void;
-};
-
-export default function MapViewContainer(props: Props) {
+export default function MapViewContainer() {
   const theme = useTheme();
   const [railwayOnly, setRailwayOnly] = createSignal(true);
+  const [introOpen, setIntroOpen] = createSignal(true);
 
   createEffect(() => {
-    if (!props.introOpen) {
+    if (!introOpen()) {
       initSound();
     }
   });
@@ -31,8 +27,8 @@ export default function MapViewContainer(props: Props) {
       style={MAP_STYLES[theme()]}
       railwayOnly={railwayOnly()}
       onToggleRailwayOnly={() => setRailwayOnly((v) => !v)}
-      introOpen={props.introOpen}
-      onCloseIntro={props.onCloseIntro}
+      introOpen={introOpen()}
+      onCloseIntro={() => setIntroOpen(false)}
     />
   );
 }
