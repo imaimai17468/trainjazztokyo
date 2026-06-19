@@ -1,7 +1,8 @@
 import { defineConfig, type Plugin } from "vite";
-import { nitroV2Plugin as nitro } from "@solidjs/vite-plugin-nitro-2";
-import { solidStart } from "@solidjs/start/config";
+import { tanstackStart } from "@tanstack/react-start/plugin/vite";
+import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
+import { cloudflare } from "@cloudflare/vite-plugin";
 
 const CLIENT_ONLY_MODULES = [
   "maplibre-gl",
@@ -41,17 +42,16 @@ function ssrStubPlugin(): Plugin {
 }
 
 export default defineConfig({
+  resolve: {
+    tsconfigPaths: true,
+  },
   plugins: [
     ssrStubPlugin(),
-    solidStart(),
+    tanstackStart(),
+    react(),
     tailwindcss(),
-    nitro({
-      preset: "cloudflare_module",
-      compatibilityDate: "2024-09-23",
-      minify: false,
-      rollupConfig: {
-        external: ["__STATIC_CONTENT_MANIFEST", "node:async_hooks"],
-      },
+    cloudflare({
+      viteEnvironment: { name: "ssr" },
     }),
   ],
   server: {

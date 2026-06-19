@@ -1,13 +1,13 @@
-import { onMount } from "solid-js";
+import { useEffect } from "react";
 import { useTheme, applyTheme, toggleTheme } from "./ThemeToggle.logic";
 import ThemeToggle from "./ThemeToggle";
 
 export default function ThemeToggleContainer() {
   const theme = useTheme();
 
-  onMount(() => {
-    applyTheme(theme());
-  });
+  useEffect(() => {
+    applyTheme(theme);
+  }, []);
 
-  return <ThemeToggle theme={theme()} onToggle={toggleTheme} />;
+  return <ThemeToggle theme={theme} onToggle={toggleTheme} />;
 }

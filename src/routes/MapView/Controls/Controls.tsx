@@ -1,5 +1,5 @@
-import { createSignal } from "solid-js";
-import { Globe, MapPin, Volume2, VolumeOff } from "lucide-solid";
+import { useState, useRef, useCallback } from "react";
+import { Globe, MapPin, Volume2, VolumeOff } from "lucide-react";
 import { setMuted, setUserLocation } from "../MapView.sound";
 
 type Props = {
@@ -8,24 +8,25 @@ type Props = {
   onLocationChange: (coords: [number, number] | null) => void;
 };
 
-export default function Controls(props: Props) {
-  const [soundOn, setSoundOn] = createSignal(true);
-  const [locOn, setLocOn] = createSignal(false);
-  let watchId: number | undefined;
+export default function Controls({ railwayOnly, onToggleRailwayOnly, onLocationChange }: Props) {
+  const [soundOn, setSoundOn] = useState(true);
+  const [locOn, setLocOn] = useState(false);
+  const watchIdRef = useRef<number | undefined>(undefined);
 
-  const toggleSound = () => {
-    const next = !soundOn();
-    setSoundOn(next);
-    setMuted(!next);
-  };
+  const toggleSound = useCallback(() => {
+    setSoundOn((prev) => {
+      setMuted(prev);
+      return !prev;
+    });
+  }, []);
 
-  const toggleLocation = () => {
-    if (locOn()) {
-      if (watchId !== undefined) navigator.geolocation.clearWatch(watchId);
-      watchId = undefined;
+  const toggleLocation = useCallback(() => {
+    if (locOn) {
+      if (watchIdRef.current !== undefined) navigator.geolocation.clearWatch(watchIdRef.current);
+      watchIdRef.current = undefined;
       setLocOn(false);
       setUserLocation(null);
-      props.onLocationChange(null);
+      onLocationChange(null);
       return;
     }
 
@@ -34,12 +35,12 @@ export default function Controls(props: Props) {
         const coords: [number, number] = [pos.coords.longitude, pos.coords.latitude];
         setLocOn(true);
         setUserLocation(coords);
-        props.onLocationChange(coords);
-        watchId = navigator.geolocation.watchPosition(
+        onLocationChange(coords);
+        watchIdRef.current = navigator.geolocation.watchPosition(
           (p) => {
             const c: [number, number] = [p.coords.longitude, p.coords.latitude];
             setUserLocation(c);
-            props.onLocationChange(c);
+            onLocationChange(c);
           },
           () => {},
           { enableHighAccuracy: false },
@@ -48,43 +49,43 @@ export default function Controls(props: Props) {
       () => setLocOn(false),
       { enableHighAccuracy: false },
     );
-  };
+  }, [locOn, onLocationChange]);
 
   return (
     <>
       <button
         type="button"
         onClick={toggleSound}
-        class="fixed bottom-4 right-4 z-50 rounded-full p-1.5 transition-colors duration-700"
-        classList={{
-          "bg-gray-200 text-gray-500 dark:bg-gray-800 dark:text-gray-400": !soundOn(),
-          "bg-gray-800 text-white dark:bg-gray-200 dark:text-gray-900": soundOn(),
-        }}
-        aria-label={soundOn() ? "音を消す" : "音を出す"}
+        className={`fixed bottom-4 right-4 z-50 rounded-full p-1.5 transition-colors duration-700 ${
+          soundOn
+            ? "bg-gray-800 text-white dark:bg-gray-200 dark:text-gray-900"
+            : "bg-gray-200 text-gray-500 dark:bg-gray-800 dark:text-gray-400"
+        }`}
+        aria-label={soundOn ? "音を消す" : "音を出す"}
       >
-        {soundOn() ? <Volume2 size={16} /> : <VolumeOff size={16} />}
+        {soundOn ? <Volume2 size={16} /> : <VolumeOff size={16} />}
       </button>
       <button
         type="button"
-        onClick={props.onToggleRailwayOnly}
-        class="fixed bottom-4 right-14 z-50 rounded-full p-1.5 transition-colors duration-700"
-        classList={{
-          "bg-gray-200 text-gray-500 dark:bg-gray-800 dark:text-gray-400": props.railwayOnly,
-          "bg-gray-800 text-white dark:bg-gray-200 dark:text-gray-900": !props.railwayOnly,
-        }}
-        aria-label={props.railwayOnly ? "地図を表示" : "線路のみ表示"}
+        onClick={onToggleRailwayOnly}
+        className={`fixed bottom-4 right-14 z-50 rounded-full p-1.5 transition-colors duration-700 ${
+          railwayOnly
+            ? "bg-gray-200 text-gray-500 dark:bg-gray-800 dark:text-gray-400"
+            : "bg-gray-800 text-white dark:bg-gray-200 dark:text-gray-900"
+        }`}
+        aria-label={railwayOnly ? "地図を表示" : "線路のみ表示"}
       >
         <Globe size={16} />
       </button>
       <button
         type="button"
         onClick={toggleLocation}
-        class="fixed bottom-4 right-24 z-50 rounded-full p-1.5 transition-colors duration-700"
-        classList={{
-          "bg-gray-200 text-gray-500 dark:bg-gray-800 dark:text-gray-400": !locOn(),
-          "bg-blue-600 text-white": locOn(),
-        }}
-        aria-label={locOn() ? "位置情報OFF" : "位置情報ON"}
+        className={`fixed bottom-4 right-24 z-50 rounded-full p-1.5 transition-colors duration-700 ${
+          locOn
+            ? "bg-blue-600 text-white"
+            : "bg-gray-200 text-gray-500 dark:bg-gray-800 dark:text-gray-400"
+        }`}
+        aria-label={locOn ? "位置情報OFF" : "位置情報ON"}
       >
         <MapPin size={16} />
       </button>

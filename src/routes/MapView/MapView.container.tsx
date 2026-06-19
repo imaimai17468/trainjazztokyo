@@ -1,5 +1,4 @@
-import { createSignal } from "solid-js";
-import { clientOnly } from "@solidjs/start";
+import { useState, lazy, Suspense } from "react";
 import { useTheme } from "~/ThemeToggle/ThemeToggle.logic";
 
 const MAP_STYLES = {
@@ -7,25 +6,27 @@ const MAP_STYLES = {
   dark: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
 } as const;
 
-const MapViewPresenter = clientOnly(() => import("./MapView"));
+const MapViewPresenter = lazy(() => import("./MapView"));
 
 const TOKYO_CENTER: [number, number] = [139.7671, 35.6812];
 const DEFAULT_ZOOM = 12;
 
 export default function MapViewContainer() {
   const theme = useTheme();
-  const [railwayOnly, setRailwayOnly] = createSignal(true);
-  const [introOpen, setIntroOpen] = createSignal(true);
+  const [railwayOnly, setRailwayOnly] = useState(true);
+  const [introOpen, setIntroOpen] = useState(true);
 
   return (
-    <MapViewPresenter
-      center={TOKYO_CENTER}
-      zoom={DEFAULT_ZOOM}
-      style={MAP_STYLES[theme()]}
-      railwayOnly={railwayOnly()}
-      onToggleRailwayOnly={() => setRailwayOnly((v) => !v)}
-      introOpen={introOpen()}
-      onCloseIntro={() => setIntroOpen(false)}
-    />
+    <Suspense>
+      <MapViewPresenter
+        center={TOKYO_CENTER}
+        zoom={DEFAULT_ZOOM}
+        style={MAP_STYLES[theme]}
+        railwayOnly={railwayOnly}
+        onToggleRailwayOnly={() => setRailwayOnly((v) => !v)}
+        introOpen={introOpen}
+        onCloseIntro={() => setIntroOpen(false)}
+      />
+    </Suspense>
   );
 }

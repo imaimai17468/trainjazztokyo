@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import type { TrainPosition } from "../entity/train";
 
 const LINE_ORDER: { name: string; code: string }[] = [
@@ -35,50 +36,55 @@ type Props = {
   positions: TrainPosition[];
 };
 
-export default function Bars(props: Props) {
+export default function Bars({ visible, scanProgress, positions }: Props) {
   const totalH = LINE_ORDER.length * ROW_HEIGHT;
 
-  const countByLine = () =>
-    props.positions.reduce(
-      (acc, p) => acc.set(p.line, (acc.get(p.line) ?? 0) + 1),
-      new Map<string, number>(),
-    );
+  const countByLine = useMemo(
+    () =>
+      positions.reduce(
+        (acc, p) => acc.set(p.line, (acc.get(p.line) ?? 0) + 1),
+        new Map<string, number>(),
+      ),
+    [positions],
+  );
 
   return (
     <div
-      class="fixed inset-0 z-35 flex items-center transition-opacity duration-300"
-      classList={{
-        "opacity-100 pointer-events-none": props.visible,
-        "opacity-0 pointer-events-none": !props.visible,
-      }}
+      className={`fixed inset-0 z-35 flex items-center transition-opacity duration-300 ${
+        visible ? "opacity-100 pointer-events-none" : "opacity-0 pointer-events-none"
+      }`}
     >
       <div
-        class="relative flex flex-col"
+        className="relative flex flex-col"
         style={{
           height: `${totalH}px`,
-          "margin-top": "auto",
-          "margin-bottom": "auto",
-          "padding-left": "3vw",
-          "padding-right": "3vw",
+          marginTop: "auto",
+          marginBottom: "auto",
+          paddingLeft: "3vw",
+          paddingRight: "3vw",
           width: "100%",
         }}
       >
         {LINE_ORDER.map(({ code, name }) => (
-          <div class="flex items-center justify-between" style={{ height: `${ROW_HEIGHT}px` }}>
-            <img src={`/icons/lines/${code}.svg`} alt={name} class="h-3 w-3" />
-            <span class="text-gray-500 dark:text-gray-600" style={{ "font-size": "8px" }}>
-              {countByLine().get(name) ?? 0}
+          <div
+            key={code}
+            className="flex items-center justify-between"
+            style={{ height: `${ROW_HEIGHT}px` }}
+          >
+            <img src={`/icons/lines/${code}.svg`} alt={name} className="h-3 w-3" />
+            <span className="text-gray-500 dark:text-gray-600" style={{ fontSize: "8px" }}>
+              {countByLine.get(name) ?? 0}
             </span>
           </div>
         ))}
-        {props.visible && (
+        {visible && (
           <div
-            class="absolute top-0 pointer-events-none"
+            className="absolute top-0 pointer-events-none"
             style={{
-              left: `${6 + props.scanProgress * 88}vw`,
+              left: `${6 + scanProgress * 88}vw`,
               height: `${totalH}px`,
               width: "1px",
-              "background-color": "rgba(128, 128, 128, 0.4)",
+              backgroundColor: "rgba(128, 128, 128, 0.4)",
             }}
           />
         )}

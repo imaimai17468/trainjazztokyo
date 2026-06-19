@@ -1,5 +1,5 @@
-import { createSignal } from "solid-js";
-import { Music, Map } from "lucide-solid";
+import { useState, useMemo } from "react";
+import { Music, Map } from "lucide-react";
 import type { Instrument } from "../MapView.lines";
 
 type LineEntry = {
@@ -204,50 +204,49 @@ type Props = {
 
 const ALL_LINES: LineEntry[] = ROWS.flat();
 
-export default function Legend(props: Props) {
-  const [active, setActive] = createSignal<LineEntry | null>(null);
+export default function Legend({ visible, mode, barsHighlight, onToggleMode, onHighlight }: Props) {
+  const [active, setActive] = useState<LineEntry | null>(null);
 
-  const activeLine = () => {
-    if (props.mode === "bars" && props.barsHighlight) {
-      return ALL_LINES.find((l) => l.name === props.barsHighlight) ?? null;
+  const activeLine = useMemo(() => {
+    if (mode === "bars" && barsHighlight) {
+      return ALL_LINES.find((l) => l.name === barsHighlight) ?? null;
     }
-    return active();
-  };
+    return active;
+  }, [mode, barsHighlight, active]);
 
   const handleEnter = (line: LineEntry) => {
     setActive(line);
-    props.onHighlight([line.name]);
+    onHighlight([line.name]);
   };
 
   const handleLeave = () => {
     setActive(null);
-    props.onHighlight(null);
+    onHighlight(null);
   };
 
   return (
     <>
       <div
-        class="fixed top-4 left-4 z-50 flex flex-col gap-1.5 transition-opacity duration-700"
-        classList={{
-          "opacity-100 pointer-events-auto": props.visible,
-          "opacity-0 pointer-events-none": !props.visible,
-        }}
+        className={`fixed top-4 left-4 z-50 flex flex-col gap-1.5 transition-opacity duration-700 ${
+          visible ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
       >
-        {ROWS.map((row) => (
-          <div class="flex gap-0.5">
+        {ROWS.map((row, ri) => (
+          <div key={ri} className="flex gap-0.5">
             {row.map((line) => (
               <img
+                key={line.code}
                 role="button"
                 tabIndex={0}
                 src={`/icons/lines/${line.code}.svg`}
                 alt={line.name}
-                class="h-4.5 w-4.5 cursor-pointer"
+                className="h-4.5 w-4.5 cursor-pointer"
                 onMouseEnter={() => handleEnter(line)}
                 onMouseLeave={handleLeave}
-                onClick={() => (active() === line ? handleLeave() : handleEnter(line))}
+                onClick={() => (active === line ? handleLeave() : handleEnter(line))}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" || e.key === " ") {
-                    if (active() === line) handleLeave();
+                    if (active === line) handleLeave();
                     else handleEnter(line);
                   }
                 }}
@@ -256,27 +255,27 @@ export default function Legend(props: Props) {
           </div>
         ))}
       </div>
-      {activeLine() !== null && (
+      {activeLine !== null && (
         <div
-          class="fixed bottom-14 left-1/2 z-50 -translate-x-1/2 max-w-80 text-center italic tracking-wide leading-relaxed text-gray-400 dark:text-gray-600"
-          style={{ "font-size": "10px" }}
+          className="fixed bottom-14 left-1/2 z-50 -translate-x-1/2 max-w-80 text-center italic tracking-wide leading-relaxed text-gray-400 dark:text-gray-600"
+          style={{ fontSize: "10px" }}
         >
-          {activeLine()!.flavor}
+          {activeLine.flavor}
         </div>
       )}
-      <div class="fixed bottom-4 left-4 z-50 sm:left-1/2 sm:-translate-x-1/2">
+      <div className="fixed bottom-4 left-4 z-50 sm:left-1/2 sm:-translate-x-1/2">
         <button
           type="button"
-          onClick={props.onToggleMode}
-          class="flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs tracking-widest transition-colors duration-700"
-          classList={{
-            "bg-gray-200 text-gray-500 dark:bg-gray-800 dark:text-gray-400": props.mode === "map",
-            "bg-gray-800 text-white dark:bg-gray-200 dark:text-gray-900": props.mode === "bars",
-          }}
-          aria-label={props.mode === "map" ? "楽譜モード" : "地図モード"}
+          onClick={onToggleMode}
+          className={`flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs tracking-widest transition-colors duration-700 ${
+            mode === "bars"
+              ? "bg-gray-800 text-white dark:bg-gray-200 dark:text-gray-900"
+              : "bg-gray-200 text-gray-500 dark:bg-gray-800 dark:text-gray-400"
+          }`}
+          aria-label={mode === "map" ? "楽譜モード" : "地図モード"}
         >
-          {props.mode === "map" ? <Music size={14} /> : <Map size={14} />}
-          {props.mode === "map" ? "BARS" : "MAP"}
+          {mode === "map" ? <Music size={14} /> : <Map size={14} />}
+          {mode === "map" ? "BARS" : "MAP"}
         </button>
       </div>
     </>

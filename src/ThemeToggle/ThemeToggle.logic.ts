@@ -1,4 +1,4 @@
-import { createSignal } from "solid-js";
+import { useSyncExternalStore } from "react";
 
 export type Theme = "light" | "dark";
 
@@ -13,19 +13,36 @@ function getInitialTheme(): Theme {
   return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
-const [theme, setThemeSignal] = createSignal<Theme>(getInitialTheme());
+let currentTheme: Theme = getInitialTheme();
+const listeners = new Set<() => void>();
 
-export function useTheme() {
-  return theme;
+function subscribe(callback: () => void) {
+  listeners.add(callback);
+  return () => {
+    listeners.delete(callback);
+  };
+}
+
+function getSnapshot(): Theme {
+  return currentTheme;
+}
+
+function getServerSnapshot(): Theme {
+  return "light";
+}
+
+export function useTheme(): Theme {
+  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 }
 
 export function applyTheme(t: Theme) {
   document.documentElement.classList.toggle("dark", t === "dark");
   localStorage.setItem(STORAGE_KEY, t);
-  setThemeSignal(t);
+  currentTheme = t;
+  listeners.forEach((cb) => cb());
 }
 
 export function toggleTheme() {
-  const next = theme() === "light" ? "dark" : "light";
+  const next = currentTheme === "light" ? "dark" : "light";
   applyTheme(next);
 }

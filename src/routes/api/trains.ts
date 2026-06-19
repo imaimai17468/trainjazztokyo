@@ -1,5 +1,5 @@
-import type { APIEvent } from "@solidjs/start/server";
-import { generateSimulatedTrains } from "./simulate";
+import { createFileRoute } from "@tanstack/react-router";
+import { generateSimulatedTrains } from "./-simulate";
 
 const ODPT_API_BASE = "https://api.odpt.org/api/v4";
 const CACHE_TTL = 30_000;
@@ -166,22 +166,28 @@ async function getOdptTrains(apiKey: string): Promise<NormalizedTrain[]> {
   return fetchingPromise;
 }
 
-export async function GET(_event: APIEvent) {
-  const apiKey = import.meta.env.VITE_ODPT_API_KEY;
-  if (!apiKey) {
-    return new Response(JSON.stringify([]), {
-      headers: { "Content-Type": "application/json" },
-    });
-  }
+export const Route = createFileRoute("/api/trains")({
+  server: {
+    handlers: {
+      GET: async () => {
+        const apiKey = import.meta.env.VITE_ODPT_API_KEY;
+        if (!apiKey) {
+          return new Response(JSON.stringify([]), {
+            headers: { "Content-Type": "application/json" },
+          });
+        }
 
-  const odptTrains = await getOdptTrains(apiKey);
+        const odptTrains = await getOdptTrains(apiKey);
 
-  const coveredRailways = new Set(odptTrains.map((t) => t.railway));
-  const simulated = generateSimulatedTrains(coveredRailways);
+        const coveredRailways = new Set(odptTrains.map((t) => t.railway));
+        const simulated = generateSimulatedTrains(coveredRailways);
 
-  const all = [...odptTrains, ...simulated];
+        const all = [...odptTrains, ...simulated];
 
-  return new Response(JSON.stringify(all), {
-    headers: { "Content-Type": "application/json" },
-  });
-}
+        return new Response(JSON.stringify(all), {
+          headers: { "Content-Type": "application/json" },
+        });
+      },
+    },
+  },
+});
