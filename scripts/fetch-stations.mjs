@@ -183,14 +183,8 @@ function chainCoords(features) {
 
 async function main() {
   const rawPath = resolve(__dirname, "raw-railway.json");
-  const geojsonPath = resolve(
-    __dirname,
-    "../src/routes/MapView/tokyo-railway.json",
-  );
-  const outPath = resolve(
-    __dirname,
-    "../src/routes/MapView/tokyo-stations.json",
-  );
+  const geojsonPath = resolve(__dirname, "../src/routes/MapView/tokyo-railway.json");
+  const outPath = resolve(__dirname, "../src/routes/MapView/tokyo-stations.json");
 
   const rawData = JSON.parse(readFileSync(rawPath, "utf-8"));
   const geojson = JSON.parse(readFileSync(geojsonPath, "utf-8"));
@@ -220,8 +214,7 @@ async function main() {
         railway,
         name: jaName,
         en: enName,
-        coords:
-          s["geo:lat"] != null ? [s["geo:long"], s["geo:lat"]] : undefined,
+        coords: s["geo:lat"] != null ? [s["geo:long"], s["geo:lat"]] : undefined,
       });
     }
 
@@ -236,7 +229,7 @@ async function main() {
           odptStationOrder.set(
             railwayId,
             order
-              .sort((a, b) => a["odpt:index"] - b["odpt:index"])
+              .toSorted((a, b) => a["odpt:index"] - b["odpt:index"])
               .map((s) => strip("odpt.Station:", s["odpt:station"])),
           );
         }
@@ -260,9 +253,7 @@ async function main() {
     const chain = chainCoords(features);
     const lengths = cumulativeLength(chain);
 
-    const osmStations = rawData[lineName]
-      ? extractOsmStations(rawData[lineName])
-      : [];
+    const osmStations = rawData[lineName] ? extractOsmStations(rawData[lineName]) : [];
 
     const odptOrder = odptStationOrder.get(railwayId);
 

@@ -15,44 +15,45 @@ info@odpt.org
 version 4.15,
 2025-11-28
 目次
+
 1. 概要
-1.1. 概要
-1.2. 提供するデータ
-1.3. インターフェース
-1.4. データ検索API (/v4/RDF_TYPE?)
-1.5. データダンプAPI (/v4/RDF_TYPE.json?)
-1.6. データ取得API (GET /v4/datapoints/$DATA_URI)
-1.7. 地物情報検索API (/v4/places/RDF_TYPE?)
+   1.1. 概要
+   1.2. 提供するデータ
+   1.3. インターフェース
+   1.4. データ検索API (/v4/RDF_TYPE?)
+   1.5. データダンプAPI (/v4/RDF_TYPE.json?)
+   1.6. データ取得API (GET /v4/datapoints/$DATA_URI)
+   1.7. 地物情報検索API (/v4/places/RDF_TYPE?)
 2. 共通クラス
-2.1. 概要
-2.2. パス
-2.3. 定義
+   2.1. 概要
+   2.2. パス
+   2.3. 定義
 3. ODPT Train API
-3.1. 概要
-3.2. パス
-3.3. 定義
+   3.1. 概要
+   3.2. パス
+   3.3. 定義
 4. ODPT Bus API
-4.1. 概要
-4.2. パス
-4.3. 定義
+   4.1. 概要
+   4.2. パス
+   4.3. 定義
 5. ODPT Airplane API
-5.1. 概要
-5.2. パス
-5.3. 定義
+   5.1. 概要
+   5.2. パス
+   5.3. 定義
 6. ODPT File API
-6.1. 概要
-6.2. パス
+   6.1. 概要
+   6.2. パス
 7. 付録::RDF及びJSON-LDについて
-7.1. URI (Uniform Resource Identifier)
-7.2. RDF (Resource Description Framework)
-7.3. RDF Schema
-7.4. ボキャブラリ
-7.5. RDFの記述方法
-7.6. Linked Data
-7.7. JSON-LD
+   7.1. URI (Uniform Resource Identifier)
+   7.2. RDF (Resource Description Framework)
+   7.3. RDF Schema
+   7.4. ボキャブラリ
+   7.5. RDFの記述方法
+   7.6. Linked Data
+   7.7. JSON-LD
 8. 更新履歴
-1. 概要
-公共交通オープンデータセンターAPI（以下、本API）では、鉄道、バス、航空機の情報を提供する。
+9. 概要
+   公共交通オープンデータセンターAPI（以下、本API）では、鉄道、バス、航空機の情報を提供する。
 
 1.1. 概要
 本APIで扱う公共交通機関とは、不特定多数の人々が利用する交通機関を指す。 具体的に本APIではこの中の鉄道、バス、航空機の情報を提供する。
@@ -88,7 +89,7 @@ JSON-LD.org
 
 1.1.1. データ種別の名称及びその定義
 表 1. 提供するデータ種別の名称及びその定義
-種別	rdf:type	名称	詳細
+種別 rdf:type 名称 詳細
 共通
 
 odpt:Calendar
@@ -288,7 +289,7 @@ odpt:FlightStatus
 本APIで扱うRDF語彙セットの名前空間として、以下のものを利用する。
 
 表 2. 名前空間
-名前空間	Identifier	備考
+名前空間 Identifier 備考
 rdf
 
 http://www.w3.org/1999/02/22-rdf-syntax-ns#
@@ -402,7 +403,7 @@ HTTP Status Code
 
 クエリパラメータ
 
-クエリ	説明	必須
+クエリ 説明 必須
 rdf:type
 
 取得するデータの種別を指定します。rdf:type一覧を参照
@@ -425,25 +426,25 @@ PREDICATEはrdf:type毎に変化するプロパティ名である。rdf:type毎�
 curl -X GET https://api.odpt.org/api/v4/odpt:Train?acl:consumerKey=ACL_CONSUMERKEY
 レスポンス例
 [
-			      {
-			      "@context": "http://vocab.odpt.org/context_odpt_Train.jsonld",
-			      "@type": "odpt:Train",
-			      "@id": "urn:ucode:_00001C000000000000010000030FD5D6",
-			      "dc:date": "2017-11-28T11:02:15+09:00",
-			      "dct:valid": "2017-11-28T11:02:45+09:00",
-			      "odpt:frequency": 30,
-			      "odpt:railway": "odpt.Railway:TokyoMetro.Yurakucho",
-			      "owl:sameAs": "odpt.Train:TokyoMetro.Yurakucho.B1045S",
-			      "odpt:trainNumber": "B1045S",
-			      "odpt:trainType": "odpt.TrainType:TokyoMetro.Local",
-			      "odpt:delay": 0,
-			      "odpt:originStation": [ "odpt.Station:TokyoMetro.Yurakucho.ShinKiba" ],
-			      "odpt:destinationStation": [ "odpt.Station:TokyoMetro.Yurakucho.Wakoshi" ],
-			      "odpt:fromStation": "odpt.Station:TokyoMetro.Yurakucho.ChikatetsuNarimasu",
-			      "odpt:toStation": "odpt.Station:TokyoMetro.Yurakucho.Wakoshi",
-			      "odpt:railDirection": "odpt.RailDirection:TokyoMetro.Wakoshi",
-			      "odpt:operator": "odpt.Operator:TokyoMetro"
-			      }
+{
+"@context": "http://vocab.odpt.org/context_odpt_Train.jsonld",
+"@type": "odpt:Train",
+"@id": "urn:ucode:\_00001C000000000000010000030FD5D6",
+"dc:date": "2017-11-28T11:02:15+09:00",
+"dct:valid": "2017-11-28T11:02:45+09:00",
+"odpt:frequency": 30,
+"odpt:railway": "odpt.Railway:TokyoMetro.Yurakucho",
+"owl:sameAs": "odpt.Train:TokyoMetro.Yurakucho.B1045S",
+"odpt:trainNumber": "B1045S",
+"odpt:trainType": "odpt.TrainType:TokyoMetro.Local",
+"odpt:delay": 0,
+"odpt:originStation": [ "odpt.Station:TokyoMetro.Yurakucho.ShinKiba" ],
+"odpt:destinationStation": [ "odpt.Station:TokyoMetro.Yurakucho.Wakoshi" ],
+"odpt:fromStation": "odpt.Station:TokyoMetro.Yurakucho.ChikatetsuNarimasu",
+"odpt:toStation": "odpt.Station:TokyoMetro.Yurakucho.Wakoshi",
+"odpt:railDirection": "odpt.RailDirection:TokyoMetro.Wakoshi",
+"odpt:operator": "odpt.Operator:TokyoMetro"
+}
 ]
 1.4.1. フィルター処理
 パラメータに PREDICATE を指定することにより、検索結果を特定の値でフィルタリングできる。
@@ -472,7 +473,7 @@ curl 'https://api.odpt.org/api/v4/odpt:Station?dc:title=東京,五反田&acl:con
 /api/v4/RDF_TYPE.json では、指定したデータ種別（RDF_TYPE）のダンプを返す。 データダンプAPIは以下のデータ種別に対応し、それぞれに保持されている全データを返す。
 
 表 3. データダンプAPIが対応するデータ種別
-種別	rdf:type	名称	詳細
+種別 rdf:type 名称 詳細
 共通
 
 odpt:Calendar
@@ -653,7 +654,7 @@ HTTP Status Code
 
 クエリパラメータ
 
-クエリ	説明	必須
+クエリ 説明 必須
 RDF_TYPE
 
 取得するデータの種別を指定します。rdf:type一覧を参照
@@ -672,26 +673,26 @@ developerサイトにて発行されたアクセストークンを指定
 curl -X GET -L https://api.odpt.org/api/v4/odpt:Station.json?acl:consumerKey=ACL_CONSUMERKEY
 レスポンス例
 [
-			      {
-			      "@context": "http://vocab.odpt.org/context_odpt.jsonld",
-			      "@id": "urn:ucode:_00001C000000000000010000031028E6",
-			      "@type": "odpt:Station",
-			      "dc:title": "東京",
-			      "owl:sameAs": "odpt.Station:JR-East.Yamanote.Tokyo",
+{
+"@context": "http://vocab.odpt.org/context_odpt.jsonld",
+"@id": "urn:ucode:\_00001C000000000000010000031028E6",
+"@type": "odpt:Station",
+"dc:title": "東京",
+"owl:sameAs": "odpt.Station:JR-East.Yamanote.Tokyo",
 
-			      },
-			      {
-			      "@context": "http://vocab.odpt.org/context_odpt.jsonld",
-			      "@id": "urn:ucode:_00001C000000000000010000031028E7",
-			      "@type": "odpt:Station",
-			      "dc:title": "有楽町",
-			      "owl:sameAs": "odpt.Station:JR-East.Yamanote.Yurakucho",
+    		      },
+    		      {
+    		      "@context": "http://vocab.odpt.org/context_odpt.jsonld",
+    		      "@id": "urn:ucode:_00001C000000000000010000031028E7",
+    		      "@type": "odpt:Station",
+    		      "dc:title": "有楽町",
+    		      "owl:sameAs": "odpt.Station:JR-East.Yamanote.Yurakucho",
 
-			      }
+    		      }
 
 ]
 1.6. データ取得API (GET /v4/datapoints/$DATA_URI)
-/v4/datapoints/$DATA_URI では、DATA_URIで指定されたURIをIDに持つデータを取得する。 データ取得APIはデータダンプAPIと同じデータ種別に対応する。 $DATA_URIに指定できるIDとして、urn:ucode:_ から始まるucode、または各データに記載された owl:sameAs の値を指定できる。
+/v4/datapoints/$DATA*URI では、DATA_URIで指定されたURIをIDに持つデータを取得する。 データ取得APIはデータダンプAPIと同じデータ種別に対応する。 $DATA_URIに指定できるIDとして、urn:ucode:* から始まるucode、または各データに記載された owl:sameAs の値を指定できる。
 
 エンドポイント
 
@@ -723,7 +724,7 @@ HTTP Status Code
 
 クエリパラメータ
 
-クエリ	説明	必須
+クエリ 説明 必須
 $DATA_URI
 
 取得するデータのURIを指定
@@ -744,7 +745,7 @@ curl -X GET 'https://api.odpt.org/api/v4/datapoints/odpt.Station:TokyoMetro.Ginz
 /v4/places では、地理情報を用いた領域絞込が可能である。 地物情報検索APIで検索する対象となるデータを以下に挙げる。
 
 表 4. 地物情報検索APIにて対象となるデータ種別
-種別	rdf:type	名称	詳細
+種別 rdf:type 名称 詳細
 鉄道
 
 odpt:Station
@@ -764,7 +765,7 @@ odpt:BusstopPole
 以下にリクエスト時のクエリパラメータを示す。
 
 表 5. 地物情報検索APIクエリパラメータ
-クエリ	説明	必須
+クエリ 説明 必須
 RDF_TYPE
 
 取得するデータの種別を指定します。rdf:type一覧を参照
@@ -811,8 +812,7 @@ curl -X GET 'https://api.odpt.org/api/v4/places/odpt:Station?lon=139.766926&lat=
 検索条件を複数指定する際には、PREDICATEの値をコンマ "," 区切りで指定することにより、OR検索を実現できる。
 
 リクエスト例: dc:title=東京,大手町
-curl -X GET 'https://api.odpt.org/api/v4/places/odpt:Station?lon=139.766926&lat=35.681265&radius=1000&acl:consumerKey=CONSUMER_KEY&dc:title=東京,大手町'
-2. 共通クラス
+curl -X GET 'https://api.odpt.org/api/v4/places/odpt:Station?lon=139.766926&lat=35.681265&radius=1000&acl:consumerKey=CONSUMER_KEY&dc:title=東京,大手町' 2. 共通クラス
 2.1. 概要
 共通クラスでは、各種の公共交通機関に共通する以下のデータを定義する。
 
@@ -839,7 +839,7 @@ application/json
 曜日・日付区分(odpt:Calendar)の内容を取得する。
 
 パラメータ
-Type	Name	Description	Schema
+Type Name Description Schema
 Query
 
 acl:consumerKey
@@ -868,7 +868,7 @@ optional
 string (URL)
 
 レスポンス
-HTTP Code	Description	Schema
+HTTP Code Description Schema
 200
 
 正常終了
@@ -917,23 +917,23 @@ Request path
 Example HTTP response
 Response 200
 [ {
-				    "@context" : "http://vocab.odpt.org/context_odpt.jsonld",
-				    "@id" : "urn:ucode:_00001C000000000000010000030FD7E5",
-				    "@type" : "odpt:Calendar",
-				    "dc:date" : "2017-01-13T15:10:00+09:00",
-				    "owl:sameAs" : "odpt.Calendar:Weekday",
-				    "dc:title" : "平日",
-				    "odpt:calendarTitle" : {
-				    "ja" : "平日",
-				    "en" : "Weekday"
-				    }
+"@context" : "http://vocab.odpt.org/context_odpt.jsonld",
+"@id" : "urn:ucode:_00001C000000000000010000030FD7E5",
+"@type" : "odpt:Calendar",
+"dc:date" : "2017-01-13T15:10:00+09:00",
+"owl:sameAs" : "odpt.Calendar:Weekday",
+"dc:title" : "平日",
+"odpt:calendarTitle" : {
+"ja" : "平日",
+"en" : "Weekday"
+}
 } ]
 2.2.2. GET /api/v4/odpt:Operator
 説明
 公共交通機関の事業者(odpt:Operator)の内容を取得する。
 
 パラメータ
-Type	Name	Description	Schema
+Type Name Description Schema
 Query
 
 acl:consumerKey
@@ -962,7 +962,7 @@ optional
 string (URL)
 
 レスポンス
-HTTP Code	Description	Schema
+HTTP Code Description Schema
 200
 
 正常終了
@@ -1011,16 +1011,16 @@ Request path
 Example HTTP response
 Response 200
 [ {
-				    "@context" : "http://vocab.odpt.org/context_odpt.jsonld",
-				    "@id" : "urn:ucode:_00001C000000000000010000030FD7E5",
-				    "@type" : "odpt:Operator",
-				    "dc:date" : "2017-01-13T15:10:00+09:00",
-				    "owl:sameAs" : "odpt.Operator:JR-East",
-				    "dc:title" : "JR東日本",
-				    "odpt:operatorTitle" : {
-				    "ja" : "JR東日本",
-				    "en" : "JR East"
-				    }
+"@context" : "http://vocab.odpt.org/context_odpt.jsonld",
+"@id" : "urn:ucode:_00001C000000000000010000030FD7E5",
+"@type" : "odpt:Operator",
+"dc:date" : "2017-01-13T15:10:00+09:00",
+"owl:sameAs" : "odpt.Operator:JR-East",
+"dc:title" : "JR東日本",
+"odpt:operatorTitle" : {
+"ja" : "JR東日本",
+"en" : "JR East"
+}
 } ]
 2.3. 定義
 2.3.1. odpt:Calendar
@@ -1064,7 +1064,7 @@ e.g. odpt.Calendar:Specific.Toei.MarketHoliday: 市場休日
 
 複数の特定クラスが該当する場合は、その日付の時刻表は、その複数の特定クラスの時刻表をマージしたものとなる
 
-Name	Description	Schema
+Name Description Schema
 @context
 required
 
@@ -1077,7 +1077,7 @@ string (URL)
 required
 
 固有識別子(ucode)
-Example : "urn:ucode:_00001C000000000000010000030FD7E5"
+Example : "urn:ucode:\_00001C000000000000010000030FD7E5"
 
 string (URN)
 
@@ -1140,7 +1140,7 @@ string
 2.3.2. odpt:Operator
 公共交通機関の事業者を扱うクラス。
 
-Name	Description	Schema
+Name Description Schema
 @context
 required
 
@@ -1153,7 +1153,7 @@ string (URL)
 required
 
 固有識別子(ucode)
-Example : "urn:ucode:_00001C000000000000010000030FD7E5"
+Example : "urn:ucode:\_00001C000000000000010000030FD7E5"
 
 string (URN)
 
@@ -1198,8 +1198,8 @@ Example : {"ja" : "○○電鉄", "en" : "XX Railway"}
 object
 
 3. ODPT Train API
-3.1. 概要
-Train API では、鉄道に関係した以下のデータを取得できる。
+   3.1. 概要
+   Train API では、鉄道に関係した以下のデータを取得できる。
 
 odpt:PassengerSurvey
 
@@ -1240,7 +1240,7 @@ application/json
 駅の乗降人員数を取得する。
 
 パラメータ
-Type	Name	Description	Schema
+Type Name Description Schema
 Query
 
 acl:consumerKey
@@ -1296,7 +1296,7 @@ optional
 string (odpt:Railway owl:sameAs)
 
 レスポンス
-HTTP Code	Description	Schema
+HTTP Code Description Schema
 200
 
 正常終了
@@ -1345,29 +1345,29 @@ Request path
 Example HTTP response
 Response 200
 [ {
-				    "@context" : "http://vocab.odpt.org/context_odpt.jsonld",
-				    "@id" : "urn:ucode:_00001C000000000000010000030FD7E5",
-				    "@type" : "odpt:PassengerSurvey",
-				    "dc:date" : "2017-01-13T06:10:00+0000",
-				    "owl:sameAs" : "odpt.PassengerSurvey:JR-East.Tokyo",
-				    "odpt:operator" : "odpt.Operator:JR-East",
-				    "odpt:railway" : [ "odpt.Railway:JR-East.Yamanote", "odpt.Railway:JR-East.ChuoRapid" ],
-				    "odpt:station" : [ "odpt.Station:JR-East.Yamanote.Tokyo", "odpt.Station:JR-East.ChuoRapid.Tokyo" ],
-				    "odpt:includeAlighting" : false,
-				    "odpt:passengerSurveyObject" : [ {
-				    "odpt:surveyYear" : 2016,
-				    "odpt:passengerJourneys" : 12340
-				    }, {
-				    "odpt:surveyYear" : 2017,
-				    "odpt:passengerJourneys" : 12345
-				    } ]
+"@context" : "http://vocab.odpt.org/context_odpt.jsonld",
+"@id" : "urn:ucode:\_00001C000000000000010000030FD7E5",
+"@type" : "odpt:PassengerSurvey",
+"dc:date" : "2017-01-13T06:10:00+0000",
+"owl:sameAs" : "odpt.PassengerSurvey:JR-East.Tokyo",
+"odpt:operator" : "odpt.Operator:JR-East",
+"odpt:railway" : [ "odpt.Railway:JR-East.Yamanote", "odpt.Railway:JR-East.ChuoRapid" ],
+"odpt:station" : [ "odpt.Station:JR-East.Yamanote.Tokyo", "odpt.Station:JR-East.ChuoRapid.Tokyo" ],
+"odpt:includeAlighting" : false,
+"odpt:passengerSurveyObject" : [ {
+"odpt:surveyYear" : 2016,
+"odpt:passengerJourneys" : 12340
+}, {
+"odpt:surveyYear" : 2017,
+"odpt:passengerJourneys" : 12345
+} ]
 } ]
 3.2.2. GET /api/v4/odpt:RailDirection
 説明
 進行方向の定義を取得する。
 
 パラメータ
-Type	Name	Description	Schema
+Type Name Description Schema
 Query
 
 acl:consumerKey
@@ -1396,7 +1396,7 @@ optional
 string (URL)
 
 レスポンス
-HTTP Code	Description	Schema
+HTTP Code Description Schema
 200
 
 正常終了
@@ -1445,23 +1445,23 @@ Request path
 Example HTTP response
 Response 200
 [ {
-				    "@context" : "http://vocab.odpt.org/context_odpt.jsonld",
-				    "@id" : "urn:ucode:_00001C000000000000010000030FD7E5",
-				    "@type" : "odpt:RailDirection",
-				    "dc:date" : "2017-01-13T06:10:00+0000",
-				    "owl:sameAs" : "odpt.RailDirection:Inbound",
-				    "dc:title" : "上り",
-				    "odpt:railDirectionTitle" : {
-				    "ja" : "上り",
-				    "en" : "Inbound"
-				    }
+"@context" : "http://vocab.odpt.org/context_odpt.jsonld",
+"@id" : "urn:ucode:_00001C000000000000010000030FD7E5",
+"@type" : "odpt:RailDirection",
+"dc:date" : "2017-01-13T06:10:00+0000",
+"owl:sameAs" : "odpt.RailDirection:Inbound",
+"dc:title" : "上り",
+"odpt:railDirectionTitle" : {
+"ja" : "上り",
+"en" : "Inbound"
+}
 } ]
 3.2.3. GET /api/v4/odpt:Railway
 説明
 路線情報を取得する。
 
 パラメータ
-Type	Name	Description	Schema
+Type Name Description Schema
 Query
 
 acl:consumerKey
@@ -1517,7 +1517,7 @@ optional
 string
 
 レスポンス
-HTTP Code	Description	Schema
+HTTP Code Description Schema
 200
 
 正常終了
@@ -1566,48 +1566,48 @@ Request path
 Example HTTP response
 Response 200
 [ {
-				    "@context" : "http://vocab.odpt.org/context_odpt.jsonld",
-				    "@id" : "urn:ucode:_00001C000000000000010000030FD7E5",
-				    "@type" : "odpt:Railway",
-				    "dc:date" : "2017-01-13T15:10:00+09:00",
-				    "owl:sameAs" : "odpt.Railway:JR-East.ChuoRapid",
-				    "dc:title" : "中央線快速",
-				    "odpt:railwayTitle" : {
-				    "ja" : "中央線快速",
-				    "en" : "Chuo Rapid Line"
-				    },
-				    "odpt:operator" : "odpt.Operator:JR-East",
-				    "odpt:ascendingRailDirection" : "odpt.RailDirection:Outbound",
-				    "odpt:descendingRailDirection" : "odpt.RailDirection:Inbound",
-				    "odpt:stationOrder" : [ {
-				    "odpt:index" : 1,
-				    "odpt:station" : "odpt.Station:JR-East.ChuoRapid.Tokyo",
-				    "odpt:stationTitle" : {
-				    "ja" : "東京",
-				    "en" : "Tokyo"
-				    }
-				    }, {
-				    "odpt:index" : 2,
-				    "odpt:station" : "odpt.Station:JR-East.ChuoRapid.Kanda",
-				    "odpt:stationTitle" : {
-				    "ja" : "神田",
-				    "en" : "Kanda"
-				    }
-				    }, {
-				    "odpt:index" : 3,
-				    "odpt:station" : "odpt.Station:JR-East.ChuoRapid.Ochanomizu",
-				    "odpt:stationTitle" : {
-				    "ja" : "御茶ノ水",
-				    "en" : "Ochanomizu"
-				    }
-				    } ]
+"@context" : "http://vocab.odpt.org/context_odpt.jsonld",
+"@id" : "urn:ucode:\_00001C000000000000010000030FD7E5",
+"@type" : "odpt:Railway",
+"dc:date" : "2017-01-13T15:10:00+09:00",
+"owl:sameAs" : "odpt.Railway:JR-East.ChuoRapid",
+"dc:title" : "中央線快速",
+"odpt:railwayTitle" : {
+"ja" : "中央線快速",
+"en" : "Chuo Rapid Line"
+},
+"odpt:operator" : "odpt.Operator:JR-East",
+"odpt:ascendingRailDirection" : "odpt.RailDirection:Outbound",
+"odpt:descendingRailDirection" : "odpt.RailDirection:Inbound",
+"odpt:stationOrder" : [ {
+"odpt:index" : 1,
+"odpt:station" : "odpt.Station:JR-East.ChuoRapid.Tokyo",
+"odpt:stationTitle" : {
+"ja" : "東京",
+"en" : "Tokyo"
+}
+}, {
+"odpt:index" : 2,
+"odpt:station" : "odpt.Station:JR-East.ChuoRapid.Kanda",
+"odpt:stationTitle" : {
+"ja" : "神田",
+"en" : "Kanda"
+}
+}, {
+"odpt:index" : 3,
+"odpt:station" : "odpt.Station:JR-East.ChuoRapid.Ochanomizu",
+"odpt:stationTitle" : {
+"ja" : "御茶ノ水",
+"en" : "Ochanomizu"
+}
+} ]
 } ]
 3.2.4. GET /api/v4/odpt:RailwayFare
 説明
 2駅間の運賃を取得する。
 
 パラメータ
-Type	Name	Description	Schema
+Type Name Description Schema
 Query
 
 acl:consumerKey
@@ -1663,7 +1663,7 @@ optional
 string (odpt:Station owl:sameAs)
 
 レスポンス
-HTTP Code	Description	Schema
+HTTP Code Description Schema
 200
 
 正常終了
@@ -1712,25 +1712,25 @@ Request path
 Example HTTP response
 Response 200
 [ {
-				    "@context" : "http://vocab.odpt.org/context_odpt.jsonld",
-				    "@id" : "urn:ucode:_00001C000000000000010000030FD7E5",
-				    "@type" : "odpt:RailwayFare",
-				    "dc:date" : "2017-01-13T15:10:00+09:00",
-				    "owl:sameAs" : "odpt.RailwayFare:TokyoMetro.Marunouchi.Tokyo.TokyoMetro.Tozai.Nakano",
-				    "odpt:operator" : "odpt.Operator:TokyoMetro",
-				    "odpt:fromStation" : "odpt.Station:TokyoMetro.Marunouchi.Tokyo",
-				    "odpt:toStation" : "odpt.Station:TokyoMetro.Tozai.Nakano",
-				    "odpt:ticketFare" : 240,
-				    "odpt:icCardFare" : 237,
-				    "odpt:childTicketFare" : 120,
-				    "odpt:childIcCardFare" : 118
+"@context" : "http://vocab.odpt.org/context_odpt.jsonld",
+"@id" : "urn:ucode:_00001C000000000000010000030FD7E5",
+"@type" : "odpt:RailwayFare",
+"dc:date" : "2017-01-13T15:10:00+09:00",
+"owl:sameAs" : "odpt.RailwayFare:TokyoMetro.Marunouchi.Tokyo.TokyoMetro.Tozai.Nakano",
+"odpt:operator" : "odpt.Operator:TokyoMetro",
+"odpt:fromStation" : "odpt.Station:TokyoMetro.Marunouchi.Tokyo",
+"odpt:toStation" : "odpt.Station:TokyoMetro.Tozai.Nakano",
+"odpt:ticketFare" : 240,
+"odpt:icCardFare" : 237,
+"odpt:childTicketFare" : 120,
+"odpt:childIcCardFare" : 118
 } ]
 3.2.5. GET /api/v4/odpt:Station
 説明
 駅情報を取得する。
 
 パラメータ
-Type	Name	Description	Schema
+Type Name Description Schema
 Query
 
 acl:consumerKey
@@ -1795,7 +1795,7 @@ optional
 string
 
 レスポンス
-HTTP Code	Description	Schema
+HTTP Code Description Schema
 200
 
 正常終了
@@ -1844,27 +1844,27 @@ Request path
 Example HTTP response
 Response 200
 [ {
-				    "@context" : "http://vocab.odpt.org/context_odpt.jsonld",
-				    "@id" : "urn:ucode:_00001C000000000000010000030FD7E5",
-				    "@type" : "odpt:Station",
-				    "dc:date" : "2017-01-13T15:10:00+09:00",
-				    "owl:sameAs" : "odpt.Station:JR-East.Yamanote.Tokyo",
-				    "dc:title" : "東京",
-				    "odpt:stationTitle" : {
-				    "ja" : "東京",
-				    "en" : "Tokyo"
-				    },
-				    "odpt:operator" : "odpt.Operator:JR-East",
-				    "odpt:railway" : "odpt.Railway:JR-East.Yamanote",
-				    "geo:long" : 139.1234,
-				    "geo:lat" : 35.1234
+"@context" : "http://vocab.odpt.org/context_odpt.jsonld",
+"@id" : "urn:ucode:_00001C000000000000010000030FD7E5",
+"@type" : "odpt:Station",
+"dc:date" : "2017-01-13T15:10:00+09:00",
+"owl:sameAs" : "odpt.Station:JR-East.Yamanote.Tokyo",
+"dc:title" : "東京",
+"odpt:stationTitle" : {
+"ja" : "東京",
+"en" : "Tokyo"
+},
+"odpt:operator" : "odpt.Operator:JR-East",
+"odpt:railway" : "odpt.Railway:JR-East.Yamanote",
+"geo:long" : 139.1234,
+"geo:lat" : 35.1234
 } ]
 3.2.6. GET /api/v4/odpt:StationTimetable
 説明
 駅時刻表を取得する。
 
 パラメータ
-Type	Name	Description	Schema
+Type Name Description Schema
 Query
 
 acl:consumerKey
@@ -1947,7 +1947,7 @@ optional
 string (xsd:dateTime)
 
 レスポンス
-HTTP Code	Description	Schema
+HTTP Code Description Schema
 200
 
 正常終了
@@ -1996,37 +1996,37 @@ Request path
 Example HTTP response
 Response 200
 [ {
-				    "@context" : "http://vocab.odpt.org/context_odpt.jsonld",
-				    "@id" : "urn:ucode:_00001C000000000000010000030FD7E5",
-				    "@type" : "odpt:StationTimetable",
-				    "dc:date" : "2017-01-13T15:10:00+09:00",
-				    "dct:issued" : "2017-01-01",
-				    "owl:sameAs" : "odpt.StationTimetable:JR-East.ChuoRapid.Tokyo.Outbound.Weekday",
-				    "odpt:operator" : "odpt.Operator:JR-East",
-				    "odpt:railway" : "odpt.Railway:JR-East.ChuoRapid",
-				    "odpt:station" : "odpt.Station:JR-East.ChuoRapid.Tokyo",
-				    "odpt:railDirection" : "odpt.RailDirection:JR-East.Outbound",
-				    "odpt:calendar" : "odpt.Calendar:Weekday",
-				    "odpt:stationTimetableObject" : [ {
-				    "odpt:departureTime" : "06:00",
-				    "odpt:destinationStation" : [ "odpt.Station:JR-East.ChuoRapid.Takao" ],
-				    "odpt:trainType" : "odpt.TrainType:JR-East.Rapid"
-				    }, {
-				    "odpt:departureTime" : "06:10",
-				    "odpt:destinationStation" : [ "odpt.Station:JR-East.ChuoRapid.Takao" ],
-				    "odpt:trainType" : "odpt.TrainType:JR-East.Rapid"
-				    }, {
-				    "odpt:departureTime" : "06:20",
-				    "odpt:destinationStation" : [ "odpt.Station:JR-East.ChuoRapid.Takao" ],
-				    "odpt:trainType" : "odpt.TrainType:JR-East.Rapid"
-				    } ]
+"@context" : "http://vocab.odpt.org/context_odpt.jsonld",
+"@id" : "urn:ucode:\_00001C000000000000010000030FD7E5",
+"@type" : "odpt:StationTimetable",
+"dc:date" : "2017-01-13T15:10:00+09:00",
+"dct:issued" : "2017-01-01",
+"owl:sameAs" : "odpt.StationTimetable:JR-East.ChuoRapid.Tokyo.Outbound.Weekday",
+"odpt:operator" : "odpt.Operator:JR-East",
+"odpt:railway" : "odpt.Railway:JR-East.ChuoRapid",
+"odpt:station" : "odpt.Station:JR-East.ChuoRapid.Tokyo",
+"odpt:railDirection" : "odpt.RailDirection:JR-East.Outbound",
+"odpt:calendar" : "odpt.Calendar:Weekday",
+"odpt:stationTimetableObject" : [ {
+"odpt:departureTime" : "06:00",
+"odpt:destinationStation" : [ "odpt.Station:JR-East.ChuoRapid.Takao" ],
+"odpt:trainType" : "odpt.TrainType:JR-East.Rapid"
+}, {
+"odpt:departureTime" : "06:10",
+"odpt:destinationStation" : [ "odpt.Station:JR-East.ChuoRapid.Takao" ],
+"odpt:trainType" : "odpt.TrainType:JR-East.Rapid"
+}, {
+"odpt:departureTime" : "06:20",
+"odpt:destinationStation" : [ "odpt.Station:JR-East.ChuoRapid.Takao" ],
+"odpt:trainType" : "odpt.TrainType:JR-East.Rapid"
+} ]
 } ]
 3.2.7. GET /api/v4/odpt:Train
 説明
 列車情報(列車の位置情報)を取得する。
 
 パラメータ
-Type	Name	Description	Schema
+Type Name Description Schema
 Query
 
 acl:consumerKey
@@ -2064,7 +2064,7 @@ optional
 string (odpt:Railway owl:sameAs)
 
 レスポンス
-HTTP Code	Description	Schema
+HTTP Code Description Schema
 200
 
 正常終了
@@ -2113,28 +2113,28 @@ Request path
 Example HTTP response
 Response 200
 [ {
-				    "@context" : "http://vocab.odpt.org/context_odpt.jsonld",
-				    "@id" : "urn:uuid:5d7dd592-ef17-4b69-b955-5b4fe5f7e350",
-				    "@type" : "odpt:Train",
-				    "dc:date" : "2017-12-07T01:24:33+09:00",
-				    "owl:sameAs" : "odpt.Train:JR-East.Utsunomiya.565M",
-				    "odpt:operator" : "odpt.Operator:JR-East",
-				    "odpt:railway" : "odpt.Railway:JR-East.Utsunomiya",
-				    "odpt:railDirection" : "odpt.RailwayDirection:Outbound",
-				    "odpt:trainNumber" : "565M",
-				    "odpt:fromStation" : "odpt.Station:JR-East.Utsunomiya.Suzumenomiya",
-				    "odpt:toStation" : "odpt.Station:JR-East.Utsunomiya.Utsunomiya",
-				    "odpt:destinationStation" : [ "odpt.Station:JR-East.Utsunomiya.Utsunomiya" ],
-				    "odpt:index" : 1,
-				    "odpt:delay" : 0,
-				    "odpt:carComposition" : 15
+"@context" : "http://vocab.odpt.org/context_odpt.jsonld",
+"@id" : "urn:uuid:5d7dd592-ef17-4b69-b955-5b4fe5f7e350",
+"@type" : "odpt:Train",
+"dc:date" : "2017-12-07T01:24:33+09:00",
+"owl:sameAs" : "odpt.Train:JR-East.Utsunomiya.565M",
+"odpt:operator" : "odpt.Operator:JR-East",
+"odpt:railway" : "odpt.Railway:JR-East.Utsunomiya",
+"odpt:railDirection" : "odpt.RailwayDirection:Outbound",
+"odpt:trainNumber" : "565M",
+"odpt:fromStation" : "odpt.Station:JR-East.Utsunomiya.Suzumenomiya",
+"odpt:toStation" : "odpt.Station:JR-East.Utsunomiya.Utsunomiya",
+"odpt:destinationStation" : [ "odpt.Station:JR-East.Utsunomiya.Utsunomiya" ],
+"odpt:index" : 1,
+"odpt:delay" : 0,
+"odpt:carComposition" : 15
 } ]
 3.2.8. GET /api/v4/odpt:TrainInformation
 説明
 列車運行情報を取得する。
 
 パラメータ
-Type	Name	Description	Schema
+Type Name Description Schema
 Query
 
 acl:consumerKey
@@ -2172,7 +2172,7 @@ optional
 string (odpt:Railway owl:sameAs)
 
 レスポンス
-HTTP Code	Description	Schema
+HTTP Code Description Schema
 200
 
 正常終了
@@ -2221,26 +2221,26 @@ Request path
 Example HTTP response
 Response 200
 [ {
-				    "@context" : "http://vocab.odpt.org/context_odpt.json",
-				    "@id" : "urn:ucode:_00001C000000000000010000030C3BE4",
-				    "@type" : "odpt:TrainInformation",
-				    "dc:date" : "2017-12-07T01:25:03+09:00",
-				    "owl:sameAs" : "odpt.TrainInformation:TokyoMetro.Ginza",
-				    "dct:valid" : "2017-12-07T01:30:03+09:00",
-				    "odpt:timeOfOrigin" : "2017-11-21T11:31:00+09:00",
-				    "odpt:operator" : "odpt.Operator:TokyoMetro",
-				    "odpt:railway" : "odpt.Railway:TokyoMetro.Ginza",
-				    "odpt:trainInformationText" : {
-				    "ja" : "現在、平常どおり運転しています。",
-				    "en" : "Running on schedule."
-				    }
+"@context" : "http://vocab.odpt.org/context_odpt.json",
+"@id" : "urn:ucode:_00001C000000000000010000030C3BE4",
+"@type" : "odpt:TrainInformation",
+"dc:date" : "2017-12-07T01:25:03+09:00",
+"owl:sameAs" : "odpt.TrainInformation:TokyoMetro.Ginza",
+"dct:valid" : "2017-12-07T01:30:03+09:00",
+"odpt:timeOfOrigin" : "2017-11-21T11:31:00+09:00",
+"odpt:operator" : "odpt.Operator:TokyoMetro",
+"odpt:railway" : "odpt.Railway:TokyoMetro.Ginza",
+"odpt:trainInformationText" : {
+"ja" : "現在、平常どおり運転しています。",
+"en" : "Running on schedule."
+}
 } ]
 3.2.9. GET /api/v4/odpt:TrainTimetable
 説明
 列車時刻表を取得する。
 
 パラメータ
-Type	Name	Description	Schema
+Type Name Description Schema
 Query
 
 acl:consumerKey
@@ -2323,7 +2323,7 @@ optional
 string (odpt:Calendar owl:sameAs)
 
 レスポンス
-HTTP Code	Description	Schema
+HTTP Code Description Schema
 200
 
 Successful response
@@ -2372,37 +2372,37 @@ Request path
 Example HTTP response
 Response 200
 [ {
-				    "@context" : "http://vocab.odpt.org/context_odpt.jsonld",
-				    "@id" : "urn:ucode:_00001C000000000000010000030FD7E5",
-				    "@type" : "odpt:TrainTimetable",
-				    "dc:date" : "2017-01-13T15:10:00+09:00",
-				    "dct:issued" : "2017-01-01",
-				    "owl:sameAs" : "odpt.TrainTimetable:JR-East.ChuoRapid.123M.Weekday",
-				    "odpt:operator" : "odpt.Operator:JR-East",
-				    "odpt:railway" : "odpt.Railway:JR-East.ChuoRapid",
-				    "odpt:railDirection" : "odpt.RailDirection:Outbound",
-				    "odpt:calendar" : "odpt.Calendar:Weekday",
-				    "odpt:trainNumber" : "123M",
-				    "odpt:trainType" : "odpt.TrainType:JR-East.Rapid",
-				    "odpt:originStation" : [ "odpt.Station:JR-East.ChuoRapid.Tokyo" ],
-				    "odpt:destinationStation" : [ "odpt.Station:JR-East.ChuoRapid.Takao" ],
-				    "odpt:trainTimetableObject" : [ {
-				    "odpt:departureTime" : "06:00",
-				    "odpt:departureStation" : "odpt.Station:JR-East.ChuoRapid.Tokyo"
-				    }, {
-				    "odpt:departureTime" : "06:30",
-				    "odpt:departureStation" : "odpt.Station:JR-East.ChuoRapid.Tachikawa"
-				    }, {
-				    "odpt:arrivalTime" : "07:00",
-				    "odpt:arrivalStation" : "odpt.Station:JR-East.ChuoRapid.Takao"
-				    } ]
+"@context" : "http://vocab.odpt.org/context_odpt.jsonld",
+"@id" : "urn:ucode:\_00001C000000000000010000030FD7E5",
+"@type" : "odpt:TrainTimetable",
+"dc:date" : "2017-01-13T15:10:00+09:00",
+"dct:issued" : "2017-01-01",
+"owl:sameAs" : "odpt.TrainTimetable:JR-East.ChuoRapid.123M.Weekday",
+"odpt:operator" : "odpt.Operator:JR-East",
+"odpt:railway" : "odpt.Railway:JR-East.ChuoRapid",
+"odpt:railDirection" : "odpt.RailDirection:Outbound",
+"odpt:calendar" : "odpt.Calendar:Weekday",
+"odpt:trainNumber" : "123M",
+"odpt:trainType" : "odpt.TrainType:JR-East.Rapid",
+"odpt:originStation" : [ "odpt.Station:JR-East.ChuoRapid.Tokyo" ],
+"odpt:destinationStation" : [ "odpt.Station:JR-East.ChuoRapid.Takao" ],
+"odpt:trainTimetableObject" : [ {
+"odpt:departureTime" : "06:00",
+"odpt:departureStation" : "odpt.Station:JR-East.ChuoRapid.Tokyo"
+}, {
+"odpt:departureTime" : "06:30",
+"odpt:departureStation" : "odpt.Station:JR-East.ChuoRapid.Tachikawa"
+}, {
+"odpt:arrivalTime" : "07:00",
+"odpt:arrivalStation" : "odpt.Station:JR-East.ChuoRapid.Takao"
+} ]
 } ]
 3.2.10. GET /api/v4/odpt:TrainType
 説明
 列車種別の定義を取得する。
 
 パラメータ
-Type	Name	Description	Schema
+Type Name Description Schema
 Query
 
 acl:consumerKey
@@ -2440,7 +2440,7 @@ optional
 string (odpt:Operator owl:sameAs)
 
 レスポンス
-HTTP Code	Description	Schema
+HTTP Code Description Schema
 200
 
 正常終了
@@ -2489,23 +2489,23 @@ Request path
 Example HTTP response
 Response 200
 [ {
-				    "@context" : "http://vocab.odpt.org/context_odpt.jsonld",
-				    "@id" : "urn:ucode:_00001C000000000000010000030FD7E5",
-				    "@type" : "odpt:TrainType",
-				    "dc:date" : "2017-01-13T15:10:00+09:00",
-				    "owl:sameAs" : "odpt.TrainType:JR-East.Local",
-				    "odpt:operator" : "odpt.Operator:JR-East",
-				    "dc:title" : "普通",
-				    "odpt:trainTypeTitle" : {
-				    "ja" : "普通",
-				    "en" : "Local"
-				    }
+"@context" : "http://vocab.odpt.org/context_odpt.jsonld",
+"@id" : "urn:ucode:_00001C000000000000010000030FD7E5",
+"@type" : "odpt:TrainType",
+"dc:date" : "2017-01-13T15:10:00+09:00",
+"owl:sameAs" : "odpt.TrainType:JR-East.Local",
+"odpt:operator" : "odpt.Operator:JR-East",
+"dc:title" : "普通",
+"odpt:trainTypeTitle" : {
+"ja" : "普通",
+"en" : "Local"
+}
 } ]
 3.3. 定義
 3.3.1. odpt:PassengerSurvey
 駅の乗降人員数または乗車人員数を示す。データは各事業者が公表している値となっている。
 
-Name	Description	Schema
+Name Description Schema
 @context
 required
 
@@ -2518,7 +2518,7 @@ string (URL)
 required
 
 固有識別子(ucode)
-Example : "urn:ucode:_00001C000000000000010000030FD7E5"
+Example : "urn:ucode:\_00001C000000000000010000030FD7E5"
 
 string (URN)
 
@@ -2588,7 +2588,7 @@ Example : [ {"odpt:surveyYear" : 2017, "odpt:passengerJourneys" : 12345 } ]
 
 odpt:PassengerSurveyObject
 
-Name	Description	Schema
+Name Description Schema
 odpt:surveyYear
 required
 
@@ -2610,7 +2610,7 @@ integer
 
 鉄道会社や路線によっては、南行や北行などと案内する場合でも、便宜上、odpt.RailDirection:Inbound や odpt.RailDirection:Outbound で表す場合がある。
 
-Name	Description	Schema
+Name Description Schema
 @context
 required
 
@@ -2623,7 +2623,7 @@ string (URL)
 required
 
 固有識別子(ucode)
-Example : "urn:ucode:_00001C000000000000010000030FD7E5"
+Example : "urn:ucode:\_00001C000000000000010000030FD7E5"
 
 string (URN)
 
@@ -2670,7 +2670,7 @@ object
 3.3.3. odpt:Railway
 鉄道路線（運行系統）の情報を示す。 運行系統名 dc:title は、一般的に用いられる路線名・愛称を示す。 例えば dc:title が山手線の場合、一般的に認知されている都内を一周している山手線の情報を示す。
 
-Name	Description	Schema
+Name Description Schema
 @context
 required
 
@@ -2683,7 +2683,7 @@ string (URL)
 required
 
 固有識別子(ucode)
-Example : "urn:ucode:_00001C000000000000010000030FD7E5"
+Example : "urn:ucode:\_00001C000000000000010000030FD7E5"
 
 string (URN)
 
@@ -2793,7 +2793,7 @@ Example : [ {"odpt:index" : 1, "odpt:station" : "odpt.Station:JR-East.ChuoRapid.
 
 odpt:StationOrder
 
-Name	Description	Schema
+Name Description Schema
 odpt:station
 required
 
@@ -2821,7 +2821,7 @@ integer
 3.3.4. odpt:RailwayFare
 2駅間の運賃情報を示す。この情報は各事業者より提供された情報を元に構築されている。
 
-Name	Description	Schema
+Name Description Schema
 @context
 required
 
@@ -2834,7 +2834,7 @@ string (URL)
 required
 
 固有識別子(ucode)
-Example : "urn:ucode:_00001C000000000000010000030FD7E5"
+Example : "urn:ucode:\_00001C000000000000010000030FD7E5"
 
 string (URN)
 
@@ -2969,7 +2969,7 @@ Example : [ "string" ]
 3.3.5. odpt:Station
 駅情報を示す。この情報は各事業者より提供された情報を元に構築されている。
 
-Name	Description	Schema
+Name Description Schema
 @context
 required
 
@@ -2982,7 +2982,7 @@ string (URL)
 required
 
 固有識別子(ucode)
-Example : "urn:ucode:_00001C000000000000010000030FD7E5"
+Example : "urn:ucode:\_00001C000000000000010000030FD7E5"
 
 string (URN)
 
@@ -3119,7 +3119,7 @@ Example : [ "odpt.PassengerSurvey:JR-East.Tokyo" ]
 
 日付を超える場合、odpt:arrivalTime, odpt:departureTimeは00:00〜23:59 までの時刻表現となるため、A駅-B駅間での発車時刻表現は、A駅 23:58発 -> B駅 00:03着 といった表現になる。 従って、日付超えを判断するには、前駅からの時刻（時）変化で23 -> 00 となった場合に日付を超えたとクライアント側で判定する必要がある。
 
-Name	Description	Schema
+Name Description Schema
 @context
 required
 
@@ -3132,7 +3132,7 @@ string (URL)
 required
 
 固有識別子(ucode)
-Example : "urn:ucode:_00001C000000000000010000030FD7E5"
+Example : "urn:ucode:\_00001C000000000000010000030FD7E5"
 
 string (URN)
 
@@ -3250,7 +3250,7 @@ object
 
 odpt:stationTimetableObject
 
-Name	Description	Schema
+Name Description Schema
 odpt:arrivalTime
 optional
 
@@ -3390,7 +3390,7 @@ object
 3.3.7. odpt:Train
 リアルアイムな列車の位置情報を示す。 具体的には、「駅から駅へ移動」というodpt:fromStation, odpt:toStationを用いた相対位置情報表記を行う。
 
-現在位置	odpt:fromStaion	odpt:toStation
+現在位置 odpt:fromStaion odpt:toStation
 A駅-B駅間に在線
 
 A駅
@@ -3407,7 +3407,7 @@ null
 
 「A駅付近に在線」の判別がつかない場合は、 odpt:toStation が null とはならない場合がある。
 
-Name	Description	Schema
+Name Description Schema
 @context
 required
 
@@ -3420,7 +3420,7 @@ string (URL)
 required
 
 固有識別子(ucode又はuuid)
-Example : "urn:ucode:_00001C000000000000010000030FD7E5"
+Example : "urn:ucode:\_00001C000000000000010000030FD7E5"
 
 string (URN)
 
@@ -3595,7 +3595,7 @@ object
 3.3.8. odpt:TrainInformation
 リアルアイムな列車運行情報を示す。 運行障害発生時のみ運行情報が生成される路線と、 平常運転時でも「平常」などの文字列を含んだ文字列を返す路線が存在する。
 
-Name	Description	Schema
+Name Description Schema
 @context
 required
 
@@ -3608,7 +3608,7 @@ string (URL)
 required
 
 固有識別子(ucode又はuuid)
-Example : "urn:ucode:_00001C000000000000010000030FD7E5"
+Example : "urn:ucode:\_00001C000000000000010000030FD7E5"
 
 string (URN)
 
@@ -3759,7 +3759,7 @@ string (xsd:dateTime)
 3.3.9. odpt:TrainTimetable
 列車時刻表を示す。
 
-Name	Description	Schema
+Name Description Schema
 @context
 required
 
@@ -3772,7 +3772,7 @@ string (URL)
 required
 
 固有識別子(ucode)
-Example : "urn:ucode:_00001C000000000000010000030FD7E5"
+Example : "urn:ucode:\_00001C000000000000010000030FD7E5"
 
 string (URN)
 
@@ -3962,7 +3962,7 @@ object
 
 odpt:trainTimetableObject
 
-Name	Description	Schema
+Name Description Schema
 odpt:arrivalTime
 optional
 
@@ -4022,7 +4022,7 @@ object
 3.3.10. odpt:TrainType
 普通、快速など、列車の種別を定義する
 
-Name	Description	Schema
+Name Description Schema
 @context
 required
 
@@ -4035,7 +4035,7 @@ string (URL)
 required
 
 固有識別子(ucode)
-Example : "urn:ucode:_00001C000000000000010000030FD7E5"
+Example : "urn:ucode:\_00001C000000000000010000030FD7E5"
 
 string (URN)
 
@@ -4088,8 +4088,8 @@ Example : {"ja" : "普通", "en" : "Local"}
 object
 
 4. ODPT Bus API
-4.1. 概要
-Bus API では、バスに関係した以下の6種類のデータを取得できる。
+   4.1. 概要
+   Bus API では、バスに関係した以下の6種類のデータを取得できる。
 
 odpt:Bus
 
@@ -4139,7 +4139,7 @@ application/json
 バス車両の運行情報(odpt:Bus)を取得する。
 
 パラメータ
-Type	Name	Description	Schema
+Type Name Description Schema
 Query
 
 acl:consumerKey
@@ -4204,7 +4204,7 @@ optional
 string (odpt:BusstopPole owl:sameAs)
 
 レスポンス
-HTTP Code	Description	Schema
+HTTP Code Description Schema
 200
 
 正常終了
@@ -4253,28 +4253,28 @@ Request path
 Example HTTP response
 Response 200
 [ {
-				    "@context" : "http://vocab.odpt.org/context_odpt_Bus.jsonld",
-				    "@type" : "odpt:Bus",
-				    "owl:sameAs" : "odpt.Bus:Toei.Ou57.40301.1.V366",
-				    "odpt:busroute" : "odpt.Busroute:Toei.Ou57",
-				    "odpt:operator" : "odpt.Operator:Toei",
-				    "odpt:busNumber" : "V366",
-				    "odpt:frequency" : 15,
-				    "odpt:busroutePattern" : "odpt.BusroutePattern:Toei.Ou57.40301.1",
-				    "odpt:fromBusstopPole" : "odpt.BusstopPole:Toei.Shimoicchoume.663.1",
-				    "odpt:fromBusstopPoleTime" : "2017-11-22T14:54:42+09:00",
-				    "odpt:toBusstopPole" : "odpt.BusstopPole:Toei.Kitashakoiriguchi.2294.1",
-				    "odpt:startingBusstopPole" : "odpt.BusstopPole:Toei.Akabaneekihigashiguchi.21.1",
-				    "odpt:terminalBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "dc:date" : "2017-11-22T14:56:49+09:00",
-				    "dct:valid" : "2017-11-22T14:57:04+09:00"
+"@context" : "http://vocab.odpt.org/context_odpt_Bus.jsonld",
+"@type" : "odpt:Bus",
+"owl:sameAs" : "odpt.Bus:Toei.Ou57.40301.1.V366",
+"odpt:busroute" : "odpt.Busroute:Toei.Ou57",
+"odpt:operator" : "odpt.Operator:Toei",
+"odpt:busNumber" : "V366",
+"odpt:frequency" : 15,
+"odpt:busroutePattern" : "odpt.BusroutePattern:Toei.Ou57.40301.1",
+"odpt:fromBusstopPole" : "odpt.BusstopPole:Toei.Shimoicchoume.663.1",
+"odpt:fromBusstopPoleTime" : "2017-11-22T14:54:42+09:00",
+"odpt:toBusstopPole" : "odpt.BusstopPole:Toei.Kitashakoiriguchi.2294.1",
+"odpt:startingBusstopPole" : "odpt.BusstopPole:Toei.Akabaneekihigashiguchi.21.1",
+"odpt:terminalBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"dc:date" : "2017-11-22T14:56:49+09:00",
+"dct:valid" : "2017-11-22T14:57:04+09:00"
 } ]
 4.2.2. GET /api/v4/odpt:BusTimetable
 説明
 バス時刻表(odpt:BusTimetable)の取得
 
 パラメータ
-Type	Name	Description	Schema
+Type Name Description Schema
 Query
 
 acl:consumerKey
@@ -4339,7 +4339,7 @@ optional
 string (odpt:Calendar owl:sameAs)
 
 レスポンス
-HTTP Code	Description	Schema
+HTTP Code Description Schema
 200
 
 正常終了
@@ -4388,181 +4388,181 @@ Request path
 Example HTTP response
 Response 200
 [ {
-				    "@context" : "http://vocab.odpt.org/context_odpt_BusTimetable.jsonld",
-				    "@type" : "odpt:BusTimetable",
-				    "owl:sameAs" : "odpt.BusTimetable:SeibuBus.NeriDaka01.1001.1.1.Weekday",
-				    "dc:date" : "2017-11-15T09:57:34+09:00",
-				    "dc:title" : "練高０１",
-				    "odpt:operator" : "odpt.Operator:SeibuBus",
-				    "odpt:busroutePattern" : "odpt.BusroutePattern:SeibuBus.NeriDaka01.1001.1",
-				    "odpt:calendar" : "odpt.Calendar:Weekday",
-				    "odpt:busTimetableObject" : [ {
-				    "odpt:index" : 0,
-				    "odpt:busstopPole" : "odpt.BusstopPole:SeibuBus.Nerimatakanodaieki.20053.1",
-				    "odpt:departureTime" : "6:56",
-				    "odpt:destinationSign" : "成増駅南口",
-				    "odpt:isMidnight" : false,
-				    "odpt:canGetOn" : true,
-				    "odpt:canGetOff" : false
-				    }, {
-				    "odpt:index" : 1,
-				    "odpt:busstopPole" : "odpt.BusstopPole:SeibuBus.Takanodaiicchoume.20054.1",
-				    "odpt:arrivalTime" : "6:57",
-				    "odpt:departureTime" : "6:57",
-				    "odpt:destinationSign" : "成増駅南口",
-				    "odpt:isMidnight" : false,
-				    "odpt:canGetOn" : true,
-				    "odpt:canGetOff" : true
-				    }, {
-				    "odpt:index" : 2,
-				    "odpt:busstopPole" : "odpt.BusstopPole:SeibuBus.Yaharasanchoume.20069.5",
-				    "odpt:arrivalTime" : "6:59",
-				    "odpt:departureTime" : "6:59",
-				    "odpt:destinationSign" : "成増駅南口",
-				    "odpt:isMidnight" : false,
-				    "odpt:canGetOn" : true,
-				    "odpt:canGetOff" : true
-				    }, {
-				    "odpt:index" : 3,
-				    "odpt:busstopPole" : "odpt.BusstopPole:SeibuBus.Hikarigaokaminamiiriguchi.20111.3",
-				    "odpt:arrivalTime" : "7:00",
-				    "odpt:departureTime" : "7:00",
-				    "odpt:destinationSign" : "成増駅南口",
-				    "odpt:isMidnight" : false,
-				    "odpt:canGetOn" : true,
-				    "odpt:canGetOff" : true
-				    }, {
-				    "odpt:index" : 4,
-				    "odpt:busstopPole" : "odpt.BusstopPole:SeibuBus.Hikarigaokadainichuugakkou.20092.1",
-				    "odpt:arrivalTime" : "7:03",
-				    "odpt:departureTime" : "7:03",
-				    "odpt:destinationSign" : "成増駅南口",
-				    "odpt:isMidnight" : false,
-				    "odpt:canGetOn" : true,
-				    "odpt:canGetOff" : true
-				    }, {
-				    "odpt:index" : 5,
-				    "odpt:busstopPole" : "odpt.BusstopPole:SeibuBus.Hikarigaokaminamidoori.20091.1",
-				    "odpt:arrivalTime" : "7:03",
-				    "odpt:departureTime" : "7:03",
-				    "odpt:destinationSign" : "成増駅南口",
-				    "odpt:isMidnight" : false,
-				    "odpt:canGetOn" : true,
-				    "odpt:canGetOff" : true
-				    }, {
-				    "odpt:index" : 6,
-				    "odpt:busstopPole" : "odpt.BusstopPole:SeibuBus.Takamatsuyonchoume.20087.1",
-				    "odpt:arrivalTime" : "7:04",
-				    "odpt:departureTime" : "7:04",
-				    "odpt:destinationSign" : "成増駅南口",
-				    "odpt:isMidnight" : false,
-				    "odpt:canGetOn" : true,
-				    "odpt:canGetOff" : true
-				    }, {
-				    "odpt:index" : 7,
-				    "odpt:busstopPole" : "odpt.BusstopPole:SeibuBus.Hikarigaokasanchoume.20086.1",
-				    "odpt:arrivalTime" : "7:05",
-				    "odpt:departureTime" : "7:05",
-				    "odpt:destinationSign" : "成増駅南口",
-				    "odpt:isMidnight" : false,
-				    "odpt:canGetOn" : true,
-				    "odpt:canGetOff" : true
-				    }, {
-				    "odpt:index" : 8,
-				    "odpt:busstopPole" : "odpt.BusstopPole:SeibuBus.Hikarigaokaeki.20088.1",
-				    "odpt:arrivalTime" : "7:09",
-				    "odpt:departureTime" : "7:09",
-				    "odpt:destinationSign" : "成増駅南口",
-				    "odpt:isMidnight" : false,
-				    "odpt:canGetOn" : true,
-				    "odpt:canGetOff" : true
-				    }, {
-				    "odpt:index" : 9,
-				    "odpt:busstopPole" : "odpt.BusstopPole:SeibuBus.Hikarigaokaima.20089.1",
-				    "odpt:arrivalTime" : "7:09",
-				    "odpt:departureTime" : "7:09",
-				    "odpt:destinationSign" : "成増駅南口",
-				    "odpt:isMidnight" : false,
-				    "odpt:canGetOn" : true,
-				    "odpt:canGetOff" : true
-				    }, {
-				    "odpt:index" : 10,
-				    "odpt:busstopPole" : "odpt.BusstopPole:SeibuBus.Hikarigaokadanchi.20093.1",
-				    "odpt:arrivalTime" : "7:10",
-				    "odpt:departureTime" : "7:10",
-				    "odpt:destinationSign" : "成増駅南口",
-				    "odpt:isMidnight" : false,
-				    "odpt:canGetOn" : true,
-				    "odpt:canGetOff" : true
-				    }, {
-				    "odpt:index" : 11,
-				    "odpt:busstopPole" : "odpt.BusstopPole:SeibuBus.Hikarigaokarokuchoume.20094.1",
-				    "odpt:arrivalTime" : "7:11",
-				    "odpt:departureTime" : "7:11",
-				    "odpt:destinationSign" : "成増駅南口",
-				    "odpt:isMidnight" : false,
-				    "odpt:canGetOn" : true,
-				    "odpt:canGetOff" : true
-				    }, {
-				    "odpt:index" : 12,
-				    "odpt:busstopPole" : "odpt.BusstopPole:SeibuBus.Asahichouminamichikukuminkan.20095.1",
-				    "odpt:arrivalTime" : "7:12",
-				    "odpt:departureTime" : "7:12",
-				    "odpt:destinationSign" : "成増駅南口",
-				    "odpt:isMidnight" : false,
-				    "odpt:canGetOn" : true,
-				    "odpt:canGetOff" : true
-				    }, {
-				    "odpt:index" : 13,
-				    "odpt:busstopPole" : "odpt.BusstopPole:SeibuBus.Hikarigaokakoukou.20098.1",
-				    "odpt:arrivalTime" : "7:13",
-				    "odpt:departureTime" : "7:13",
-				    "odpt:destinationSign" : "成増駅南口",
-				    "odpt:isMidnight" : false,
-				    "odpt:canGetOn" : true,
-				    "odpt:canGetOff" : true
-				    }, {
-				    "odpt:index" : 14,
-				    "odpt:busstopPole" : "odpt.BusstopPole:SeibuBus.Asahichounichoume.20099.1",
-				    "odpt:arrivalTime" : "7:14",
-				    "odpt:departureTime" : "7:14",
-				    "odpt:destinationSign" : "成増駅南口",
-				    "odpt:isMidnight" : false,
-				    "odpt:canGetOn" : true,
-				    "odpt:canGetOff" : true
-				    }, {
-				    "odpt:index" : 15,
-				    "odpt:busstopPole" : "odpt.BusstopPole:SeibuBus.Hikarigaokakouenkita.20100.1",
-				    "odpt:arrivalTime" : "7:14",
-				    "odpt:departureTime" : "7:14",
-				    "odpt:destinationSign" : "成増駅南口",
-				    "odpt:isMidnight" : false,
-				    "odpt:canGetOn" : true,
-				    "odpt:canGetOff" : true
-				    }, {
-				    "odpt:index" : 16,
-				    "odpt:busstopPole" : "odpt.BusstopPole:SeibuBus.Asahichoutoeijuutakumae.20101.1",
-				    "odpt:arrivalTime" : "7:15",
-				    "odpt:departureTime" : "7:15",
-				    "odpt:destinationSign" : "成増駅南口",
-				    "odpt:isMidnight" : false,
-				    "odpt:canGetOn" : true,
-				    "odpt:canGetOff" : true
-				    }, {
-				    "odpt:index" : 17,
-				    "odpt:busstopPole" : "odpt.BusstopPole:SeibuBus.Narimasuekiminamiguchi.20104.15",
-				    "odpt:arrivalTime" : "7:22",
-				    "odpt:isMidnight" : "false,",
-				    "odpt:canGetOn" : "false,",
-				    "odpt:canGetOff" : true
-				    } ]
+"@context" : "http://vocab.odpt.org/context_odpt_BusTimetable.jsonld",
+"@type" : "odpt:BusTimetable",
+"owl:sameAs" : "odpt.BusTimetable:SeibuBus.NeriDaka01.1001.1.1.Weekday",
+"dc:date" : "2017-11-15T09:57:34+09:00",
+"dc:title" : "練高０１",
+"odpt:operator" : "odpt.Operator:SeibuBus",
+"odpt:busroutePattern" : "odpt.BusroutePattern:SeibuBus.NeriDaka01.1001.1",
+"odpt:calendar" : "odpt.Calendar:Weekday",
+"odpt:busTimetableObject" : [ {
+"odpt:index" : 0,
+"odpt:busstopPole" : "odpt.BusstopPole:SeibuBus.Nerimatakanodaieki.20053.1",
+"odpt:departureTime" : "6:56",
+"odpt:destinationSign" : "成増駅南口",
+"odpt:isMidnight" : false,
+"odpt:canGetOn" : true,
+"odpt:canGetOff" : false
+}, {
+"odpt:index" : 1,
+"odpt:busstopPole" : "odpt.BusstopPole:SeibuBus.Takanodaiicchoume.20054.1",
+"odpt:arrivalTime" : "6:57",
+"odpt:departureTime" : "6:57",
+"odpt:destinationSign" : "成増駅南口",
+"odpt:isMidnight" : false,
+"odpt:canGetOn" : true,
+"odpt:canGetOff" : true
+}, {
+"odpt:index" : 2,
+"odpt:busstopPole" : "odpt.BusstopPole:SeibuBus.Yaharasanchoume.20069.5",
+"odpt:arrivalTime" : "6:59",
+"odpt:departureTime" : "6:59",
+"odpt:destinationSign" : "成増駅南口",
+"odpt:isMidnight" : false,
+"odpt:canGetOn" : true,
+"odpt:canGetOff" : true
+}, {
+"odpt:index" : 3,
+"odpt:busstopPole" : "odpt.BusstopPole:SeibuBus.Hikarigaokaminamiiriguchi.20111.3",
+"odpt:arrivalTime" : "7:00",
+"odpt:departureTime" : "7:00",
+"odpt:destinationSign" : "成増駅南口",
+"odpt:isMidnight" : false,
+"odpt:canGetOn" : true,
+"odpt:canGetOff" : true
+}, {
+"odpt:index" : 4,
+"odpt:busstopPole" : "odpt.BusstopPole:SeibuBus.Hikarigaokadainichuugakkou.20092.1",
+"odpt:arrivalTime" : "7:03",
+"odpt:departureTime" : "7:03",
+"odpt:destinationSign" : "成増駅南口",
+"odpt:isMidnight" : false,
+"odpt:canGetOn" : true,
+"odpt:canGetOff" : true
+}, {
+"odpt:index" : 5,
+"odpt:busstopPole" : "odpt.BusstopPole:SeibuBus.Hikarigaokaminamidoori.20091.1",
+"odpt:arrivalTime" : "7:03",
+"odpt:departureTime" : "7:03",
+"odpt:destinationSign" : "成増駅南口",
+"odpt:isMidnight" : false,
+"odpt:canGetOn" : true,
+"odpt:canGetOff" : true
+}, {
+"odpt:index" : 6,
+"odpt:busstopPole" : "odpt.BusstopPole:SeibuBus.Takamatsuyonchoume.20087.1",
+"odpt:arrivalTime" : "7:04",
+"odpt:departureTime" : "7:04",
+"odpt:destinationSign" : "成増駅南口",
+"odpt:isMidnight" : false,
+"odpt:canGetOn" : true,
+"odpt:canGetOff" : true
+}, {
+"odpt:index" : 7,
+"odpt:busstopPole" : "odpt.BusstopPole:SeibuBus.Hikarigaokasanchoume.20086.1",
+"odpt:arrivalTime" : "7:05",
+"odpt:departureTime" : "7:05",
+"odpt:destinationSign" : "成増駅南口",
+"odpt:isMidnight" : false,
+"odpt:canGetOn" : true,
+"odpt:canGetOff" : true
+}, {
+"odpt:index" : 8,
+"odpt:busstopPole" : "odpt.BusstopPole:SeibuBus.Hikarigaokaeki.20088.1",
+"odpt:arrivalTime" : "7:09",
+"odpt:departureTime" : "7:09",
+"odpt:destinationSign" : "成増駅南口",
+"odpt:isMidnight" : false,
+"odpt:canGetOn" : true,
+"odpt:canGetOff" : true
+}, {
+"odpt:index" : 9,
+"odpt:busstopPole" : "odpt.BusstopPole:SeibuBus.Hikarigaokaima.20089.1",
+"odpt:arrivalTime" : "7:09",
+"odpt:departureTime" : "7:09",
+"odpt:destinationSign" : "成増駅南口",
+"odpt:isMidnight" : false,
+"odpt:canGetOn" : true,
+"odpt:canGetOff" : true
+}, {
+"odpt:index" : 10,
+"odpt:busstopPole" : "odpt.BusstopPole:SeibuBus.Hikarigaokadanchi.20093.1",
+"odpt:arrivalTime" : "7:10",
+"odpt:departureTime" : "7:10",
+"odpt:destinationSign" : "成増駅南口",
+"odpt:isMidnight" : false,
+"odpt:canGetOn" : true,
+"odpt:canGetOff" : true
+}, {
+"odpt:index" : 11,
+"odpt:busstopPole" : "odpt.BusstopPole:SeibuBus.Hikarigaokarokuchoume.20094.1",
+"odpt:arrivalTime" : "7:11",
+"odpt:departureTime" : "7:11",
+"odpt:destinationSign" : "成増駅南口",
+"odpt:isMidnight" : false,
+"odpt:canGetOn" : true,
+"odpt:canGetOff" : true
+}, {
+"odpt:index" : 12,
+"odpt:busstopPole" : "odpt.BusstopPole:SeibuBus.Asahichouminamichikukuminkan.20095.1",
+"odpt:arrivalTime" : "7:12",
+"odpt:departureTime" : "7:12",
+"odpt:destinationSign" : "成増駅南口",
+"odpt:isMidnight" : false,
+"odpt:canGetOn" : true,
+"odpt:canGetOff" : true
+}, {
+"odpt:index" : 13,
+"odpt:busstopPole" : "odpt.BusstopPole:SeibuBus.Hikarigaokakoukou.20098.1",
+"odpt:arrivalTime" : "7:13",
+"odpt:departureTime" : "7:13",
+"odpt:destinationSign" : "成増駅南口",
+"odpt:isMidnight" : false,
+"odpt:canGetOn" : true,
+"odpt:canGetOff" : true
+}, {
+"odpt:index" : 14,
+"odpt:busstopPole" : "odpt.BusstopPole:SeibuBus.Asahichounichoume.20099.1",
+"odpt:arrivalTime" : "7:14",
+"odpt:departureTime" : "7:14",
+"odpt:destinationSign" : "成増駅南口",
+"odpt:isMidnight" : false,
+"odpt:canGetOn" : true,
+"odpt:canGetOff" : true
+}, {
+"odpt:index" : 15,
+"odpt:busstopPole" : "odpt.BusstopPole:SeibuBus.Hikarigaokakouenkita.20100.1",
+"odpt:arrivalTime" : "7:14",
+"odpt:departureTime" : "7:14",
+"odpt:destinationSign" : "成増駅南口",
+"odpt:isMidnight" : false,
+"odpt:canGetOn" : true,
+"odpt:canGetOff" : true
+}, {
+"odpt:index" : 16,
+"odpt:busstopPole" : "odpt.BusstopPole:SeibuBus.Asahichoutoeijuutakumae.20101.1",
+"odpt:arrivalTime" : "7:15",
+"odpt:departureTime" : "7:15",
+"odpt:destinationSign" : "成増駅南口",
+"odpt:isMidnight" : false,
+"odpt:canGetOn" : true,
+"odpt:canGetOff" : true
+}, {
+"odpt:index" : 17,
+"odpt:busstopPole" : "odpt.BusstopPole:SeibuBus.Narimasuekiminamiguchi.20104.15",
+"odpt:arrivalTime" : "7:22",
+"odpt:isMidnight" : "false,",
+"odpt:canGetOn" : "false,",
+"odpt:canGetOff" : true
+} ]
 } ]
 4.2.3. GET /api/v4/odpt:BusroutePattern
 説明
 運行系統情報(odpt:BusroutePattern)の取得
 
 パラメータ
-Type	Name	Description	Schema
+Type Name Description Schema
 Query
 
 acl:consumerKey
@@ -4618,7 +4618,7 @@ optional
 string
 
 レスポンス
-HTTP Code	Description	Schema
+HTTP Code Description Schema
 200
 
 正常終了
@@ -4667,81 +4667,81 @@ Request path
 Example HTTP response
 Response 200
 [ {
-				    "@context" : "http://vocab.odpt.org/context_odpt_BusroutePattern.jsonld",
-				    "@type" : "odpt:BusroutePattern",
-				    "ow:sameAs" : "odpt.BusroutePattern:Toei.Ou57.40301.1",
-				    "dc:date" : "2017-11-14T17:45:28+09:00",
-				    "dc:title" : "王５７",
-				    "odpt:kana" : "おう、ごじゅうなな",
-				    "odpt:operator" : "odpt.Operator:Toei",
-				    "odpt:busroute" : "odpt.Busroute:Toei.Ou57",
-				    "odpt:pattern" : "40301",
-				    "odpt:direction" : "1",
-				    "odpt:busstopPoleOrder" : [ {
-				    "odpt:busstopPole" : "odpt.BusstopPole:Toei.Akabaneekihigashiguchi.21.1",
-				    "odpt:index" : 1
-				    }, {
-				    "odpt:busstopPole" : "odpt.BusstopPole:Toei.Akabanenichoume.23.1",
-				    "odpt:index" : 2
-				    }, {
-				    "odpt:busstopPole" : "odpt.BusstopPole:Toei.Iwabuchimachi.126.1",
-				    "odpt:index" : 3
-				    }, {
-				    "odpt:busstopPole" : "odpt.BusstopPole:Toei.Shimonichoume.664.1",
-				    "odpt:index" : 4
-				    }, {
-				    "odpt:busstopPole" : "odpt.BusstopPole:Toei.Shimoicchoume.663.1",
-				    "odpt:index" : 5
-				    }, {
-				    "odpt:busstopPole" : "odpt.BusstopPole:Toei.Kitashakoiriguchi.2294.1",
-				    "odpt:index" : 6
-				    }, {
-				    "odpt:busstopPole" : "odpt.BusstopPole:Toei.Kitashakomae.407.2",
-				    "odpt:index" : 7
-				    }, {
-				    "odpt:busstopPole" : "odpt.BusstopPole:Toei.Kamiyarikkyou.2290.3",
-				    "odpt:index" : 8
-				    }, {
-				    "odpt:busstopPole" : "odpt.BusstopPole:Toei.Kitakukamiyachou.403.1",
-				    "odpt:index" : 9
-				    }, {
-				    "odpt:busstopPole" : "odpt.BusstopPole:Toei.Oujigochoume.201.1",
-				    "odpt:index" : 10
-				    }, {
-				    "odpt:busstopPole" : "odpt.BusstopPole:Toei.Oujiyonchoume.200.1",
-				    "odpt:index" : 11
-				    }, {
-				    "odpt:busstopPole" : "odpt.BusstopPole:Toei.Oujisanchoume.199.1",
-				    "odpt:index" : 12
-				    }, {
-				    "odpt:busstopPole" : "odpt.BusstopPole:Toei.Oujinichoume.198.1",
-				    "odpt:index" : 13
-				    }, {
-				    "odpt:busstopPole" : "odpt.BusstopPole:Toei.Oujiekimae.196.10",
-				    "odpt:index" : 14
-				    }, {
-				    "odpt:busstopPole" : "odpt.BusstopPole:Toei.Toshimanichoume.1001.2",
-				    "odpt:index" : 15
-				    }, {
-				    "odpt:busstopPole" : "odpt.BusstopPole:Toei.Toshimasanchoume.1002.2",
-				    "odpt:index" : 16
-				    }, {
-				    "odpt:busstopPole" : "odpt.BusstopPole:Toei.Toshimayonchoume.1003.1",
-				    "odpt:index" : 17
-				    }, {
-				    "odpt:busstopPole" : "odpt.BusstopPole:Toei.Toshimarokuchoume.1007.2",
-				    "odpt:index" : 18
-				    }, {
-				    "odpt:busstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:index" : 19
-				    } ]
+"@context" : "http://vocab.odpt.org/context_odpt_BusroutePattern.jsonld",
+"@type" : "odpt:BusroutePattern",
+"ow:sameAs" : "odpt.BusroutePattern:Toei.Ou57.40301.1",
+"dc:date" : "2017-11-14T17:45:28+09:00",
+"dc:title" : "王５７",
+"odpt:kana" : "おう、ごじゅうなな",
+"odpt:operator" : "odpt.Operator:Toei",
+"odpt:busroute" : "odpt.Busroute:Toei.Ou57",
+"odpt:pattern" : "40301",
+"odpt:direction" : "1",
+"odpt:busstopPoleOrder" : [ {
+"odpt:busstopPole" : "odpt.BusstopPole:Toei.Akabaneekihigashiguchi.21.1",
+"odpt:index" : 1
+}, {
+"odpt:busstopPole" : "odpt.BusstopPole:Toei.Akabanenichoume.23.1",
+"odpt:index" : 2
+}, {
+"odpt:busstopPole" : "odpt.BusstopPole:Toei.Iwabuchimachi.126.1",
+"odpt:index" : 3
+}, {
+"odpt:busstopPole" : "odpt.BusstopPole:Toei.Shimonichoume.664.1",
+"odpt:index" : 4
+}, {
+"odpt:busstopPole" : "odpt.BusstopPole:Toei.Shimoicchoume.663.1",
+"odpt:index" : 5
+}, {
+"odpt:busstopPole" : "odpt.BusstopPole:Toei.Kitashakoiriguchi.2294.1",
+"odpt:index" : 6
+}, {
+"odpt:busstopPole" : "odpt.BusstopPole:Toei.Kitashakomae.407.2",
+"odpt:index" : 7
+}, {
+"odpt:busstopPole" : "odpt.BusstopPole:Toei.Kamiyarikkyou.2290.3",
+"odpt:index" : 8
+}, {
+"odpt:busstopPole" : "odpt.BusstopPole:Toei.Kitakukamiyachou.403.1",
+"odpt:index" : 9
+}, {
+"odpt:busstopPole" : "odpt.BusstopPole:Toei.Oujigochoume.201.1",
+"odpt:index" : 10
+}, {
+"odpt:busstopPole" : "odpt.BusstopPole:Toei.Oujiyonchoume.200.1",
+"odpt:index" : 11
+}, {
+"odpt:busstopPole" : "odpt.BusstopPole:Toei.Oujisanchoume.199.1",
+"odpt:index" : 12
+}, {
+"odpt:busstopPole" : "odpt.BusstopPole:Toei.Oujinichoume.198.1",
+"odpt:index" : 13
+}, {
+"odpt:busstopPole" : "odpt.BusstopPole:Toei.Oujiekimae.196.10",
+"odpt:index" : 14
+}, {
+"odpt:busstopPole" : "odpt.BusstopPole:Toei.Toshimanichoume.1001.2",
+"odpt:index" : 15
+}, {
+"odpt:busstopPole" : "odpt.BusstopPole:Toei.Toshimasanchoume.1002.2",
+"odpt:index" : 16
+}, {
+"odpt:busstopPole" : "odpt.BusstopPole:Toei.Toshimayonchoume.1003.1",
+"odpt:index" : 17
+}, {
+"odpt:busstopPole" : "odpt.BusstopPole:Toei.Toshimarokuchoume.1007.2",
+"odpt:index" : 18
+}, {
+"odpt:busstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:index" : 19
+} ]
 } ]
 4.2.4. GET /api/v4/odpt:BusroutePatternFare
 説明
 運賃情報(odpt:BusroutePatternFare)の取得
 
 パラメータ
-Type	Name	Description	Schema
+Type Name Description Schema
 Query
 
 acl:consumerKey
@@ -4833,7 +4833,7 @@ ICカード利用時の子供運賃
 integer
 
 レスポンス
-HTTP Code	Description	Schema
+HTTP Code Description Schema
 200
 
 正常終了
@@ -4882,28 +4882,28 @@ Request path
 Example HTTP response
 Response 200
 [ {
-				    "@context" : "http://vocab.odpt.org/context_odpt_BusroutePatternFare.jsonld",
-				    "@type" : "odpt:BusroutePatternFare",
-				    "owl:sameAs" : "odpt.BusroutePatternFare:Toei.Ou57.40301.1.1.Akabaneekihigashiguchi.Toei.Ou57.40301.1.2.Akabanenichoume",
-				    "dc:date" : "2017-11-14T17:45:31+09:00",
-				    "odpt:operator" : "odpt.Operator:Toei",
-				    "odpt:fromBusroutePattern" : "odpt.BusroutePattern:Toei.Ou57.40301.1",
-				    "odpt:fromBusstopPoleOrder" : 1,
-				    "odpt:fromBusstopPole" : "odpt.BusstopPole:Toei.Akabaneekihigashiguchi.21.1",
-				    "odpt:toBusroutePattern" : "odpt.BusroutePattern:Toei.Ou57.40301.1",
-				    "odpt:toBusstopPoleOrder" : 2,
-				    "odpt:toBusstopPole" : "odpt.BusstopPole:Toei.Akabanenichoume.23.1",
-				    "odpt:ticketFare" : 210,
-				    "odpt:childTicketFare" : 110,
-				    "odpt:icCardFare" : 206,
-				    "odpt:childIcCardFare" : 103
+"@context" : "http://vocab.odpt.org/context_odpt_BusroutePatternFare.jsonld",
+"@type" : "odpt:BusroutePatternFare",
+"owl:sameAs" : "odpt.BusroutePatternFare:Toei.Ou57.40301.1.1.Akabaneekihigashiguchi.Toei.Ou57.40301.1.2.Akabanenichoume",
+"dc:date" : "2017-11-14T17:45:31+09:00",
+"odpt:operator" : "odpt.Operator:Toei",
+"odpt:fromBusroutePattern" : "odpt.BusroutePattern:Toei.Ou57.40301.1",
+"odpt:fromBusstopPoleOrder" : 1,
+"odpt:fromBusstopPole" : "odpt.BusstopPole:Toei.Akabaneekihigashiguchi.21.1",
+"odpt:toBusroutePattern" : "odpt.BusroutePattern:Toei.Ou57.40301.1",
+"odpt:toBusstopPoleOrder" : 2,
+"odpt:toBusstopPole" : "odpt.BusstopPole:Toei.Akabanenichoume.23.1",
+"odpt:ticketFare" : 210,
+"odpt:childTicketFare" : 110,
+"odpt:icCardFare" : 206,
+"odpt:childIcCardFare" : 103
 } ]
 4.2.5. GET /api/v4/odpt:BusstopPole
 説明
 バス停(標柱)(odpt:BusstopPole)の取得
 
 パラメータ
-Type	Name	Description	Schema
+Type Name Description Schema
 Query
 
 acl:consumerKey
@@ -4977,7 +4977,7 @@ optional
 string (odpt:Operator owl:sameAs)
 
 レスポンス
-HTTP Code	Description	Schema
+HTTP Code Description Schema
 200
 
 正常終了
@@ -5026,25 +5026,25 @@ Request path
 Example HTTP response
 Response 200
 [ {
-				    "@context" : "http://vocab.odpt.org/context_odpt_BusstopPole.jsonld,",
-				    "@type" : "odpt:BusstopPole",
-				    "owl:sameAs" : "odpt.BusstopPole:Toei.Akabaneekihigashiguchi.21.1",
-				    "dc:date" : "2017-11-14T17:44:05+09:00",
-				    "dc:title" : "赤羽駅東口",
-				    "odpt:kana" : "あかばねえきひがしぐち",
-				    "geo:long" : 139.7214941,
-				    "geo:lat" : 35.7790549,
-				    "odpt:busroutePattern" : [ "odpt.BusroutePattern:Toei.Ou57.40301.1", "odpt.BusroutePattern:Toei.Ou57.40301.2", "odpt.BusroutePattern:Toei.Ou57.40302.2" ],
-				    "odpt:operator" : [ "odpt.Operator:Toei" ],
-				    "odpt:busstopPoleNumber" : "1",
-				    "odpt:busstopTimetable" : [ "odpt.BusstopPoleTimetable:Toei.Ou57.Akabaneekihigashiguchi.21.1.Toshimagochoumedanchi.Holiday", "odpt.BusstopPoleTimetable:Toei.Ou57.Akabaneekihigashiguchi.21.1.Toshimagochoumedanchi.Saturday", "odpt.BusstopPoleTimetable:Toei.Ou57.Akabaneekihigashiguchi.21.1.Toshimagochoumedanchi.Weekday" ]
+"@context" : "http://vocab.odpt.org/context_odpt_BusstopPole.jsonld,",
+"@type" : "odpt:BusstopPole",
+"owl:sameAs" : "odpt.BusstopPole:Toei.Akabaneekihigashiguchi.21.1",
+"dc:date" : "2017-11-14T17:44:05+09:00",
+"dc:title" : "赤羽駅東口",
+"odpt:kana" : "あかばねえきひがしぐち",
+"geo:long" : 139.7214941,
+"geo:lat" : 35.7790549,
+"odpt:busroutePattern" : [ "odpt.BusroutePattern:Toei.Ou57.40301.1", "odpt.BusroutePattern:Toei.Ou57.40301.2", "odpt.BusroutePattern:Toei.Ou57.40302.2" ],
+"odpt:operator" : [ "odpt.Operator:Toei" ],
+"odpt:busstopPoleNumber" : "1",
+"odpt:busstopTimetable" : [ "odpt.BusstopPoleTimetable:Toei.Ou57.Akabaneekihigashiguchi.21.1.Toshimagochoumedanchi.Holiday", "odpt.BusstopPoleTimetable:Toei.Ou57.Akabaneekihigashiguchi.21.1.Toshimagochoumedanchi.Saturday", "odpt.BusstopPoleTimetable:Toei.Ou57.Akabaneekihigashiguchi.21.1.Toshimagochoumedanchi.Weekday" ]
 } ]
 4.2.6. GET /api/v4/odpt:BusstopPoleTimetable
 説明
 バス停(標柱)時刻表(odpt:BusstopPoleTimetable) の取得
 
 パラメータ
-Type	Name	Description	Schema
+Type Name Description Schema
 Query
 
 acl:consumerKey
@@ -5127,7 +5127,7 @@ optional
 string (xsd:dateTime)
 
 レスポンス
-HTTP Code	Description	Schema
+HTTP Code Description Schema
 200
 
 正常終了
@@ -5176,425 +5176,425 @@ Request path
 Example HTTP response
 Response 200
 [ {
-				    "@context" : "http://vocab.odpt.org/context_odpt_BusstopPoleTimetable.jsonld",
-				    "@type" : "odpt:BusstopPoleTimetable",
-				    "owl:sameAs" : "odpt.BusstopPoleTimetable:Toei.Ou57.Akabaneekihigashiguchi.21.1.Toshimagochoumedanchi.Weekday",
-				    "dc:date" : "2017-11-14T17:29:41+09:00",
-				    "dc:title" : "王５７:赤羽駅東口:豊島五丁目団地行:平日",
-				    "odpt:busstopPole" : "odpt.BusstopPole:Toei.Akabaneekihigashiguchi.21.1",
-				    "odpt:busDirection" : "odpt.BusDirection:Toei.Toshimagochoumedanchi",
-				    "odpt:busroute" : "odpt.Busroute:Toei.Ou57",
-				    "odpt:operator" : "odpt.Operator:Toei",
-				    "odpt:calendar" : "odpt.Calendar:Weekday",
-				    "odpt:busstopPoleTimetableObject" : [ {
-				    "odpt:departureTime" : "06:21",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "06:35",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "06:52",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "07:05",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "07:17",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "07:29",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "07:39",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "07:49",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "08:00",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "08:10",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "08:21",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "08:32",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "08:44",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "08:55",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "09:07",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "09:18",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "09:30",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "09:42",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "09:54",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "10:07",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "10:19",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "10:28",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "10:40",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "10:52",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "11:08",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "11:24",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "11:38",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "11:52",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "12:06",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "12:19",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "12:35",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "12:50",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "12:50",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "13:04",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "13:18",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "13:32",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "13:46",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "14:01",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "14:16",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "14:32",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "14:47",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "15:01",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "15:15",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "15:30",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "15:46",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "16:02",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "16:17",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "16:31",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "16:45",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "17:00",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "17:15",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "17:30",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "17:45",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "18:00",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "18:15",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "18:30",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "18:45",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "19:00",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "19:14",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "19:34",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "19:54",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "20:15",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "20:36",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "21:00",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "21:29",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "21:52",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "22:12",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    }, {
-				    "odpt:departureTime" : "22:40",
-				    "odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
-				    "odpt:destinationSign" : "豊島五丁目団地行",
-				    "odpt:isNonStepBus" : true,
-				    "odpt:isMidnight" : false
-				    } ]
+"@context" : "http://vocab.odpt.org/context_odpt_BusstopPoleTimetable.jsonld",
+"@type" : "odpt:BusstopPoleTimetable",
+"owl:sameAs" : "odpt.BusstopPoleTimetable:Toei.Ou57.Akabaneekihigashiguchi.21.1.Toshimagochoumedanchi.Weekday",
+"dc:date" : "2017-11-14T17:29:41+09:00",
+"dc:title" : "王５７:赤羽駅東口:豊島五丁目団地行:平日",
+"odpt:busstopPole" : "odpt.BusstopPole:Toei.Akabaneekihigashiguchi.21.1",
+"odpt:busDirection" : "odpt.BusDirection:Toei.Toshimagochoumedanchi",
+"odpt:busroute" : "odpt.Busroute:Toei.Ou57",
+"odpt:operator" : "odpt.Operator:Toei",
+"odpt:calendar" : "odpt.Calendar:Weekday",
+"odpt:busstopPoleTimetableObject" : [ {
+"odpt:departureTime" : "06:21",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "06:35",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "06:52",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "07:05",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "07:17",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "07:29",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "07:39",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "07:49",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "08:00",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "08:10",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "08:21",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "08:32",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "08:44",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "08:55",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "09:07",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "09:18",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "09:30",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "09:42",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "09:54",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "10:07",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "10:19",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "10:28",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "10:40",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "10:52",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "11:08",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "11:24",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "11:38",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "11:52",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "12:06",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "12:19",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "12:35",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "12:50",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "12:50",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "13:04",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "13:18",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "13:32",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "13:46",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "14:01",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "14:16",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "14:32",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "14:47",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "15:01",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "15:15",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "15:30",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "15:46",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "16:02",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "16:17",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "16:31",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "16:45",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "17:00",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "17:15",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "17:30",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "17:45",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "18:00",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "18:15",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "18:30",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "18:45",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "19:00",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "19:14",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "19:34",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "19:54",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "20:15",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "20:36",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "21:00",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "21:29",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "21:52",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "22:12",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+}, {
+"odpt:departureTime" : "22:40",
+"odpt:destinationBusstopPole" : "odpt.BusstopPole:Toei.Toshimagochoumedanchi.1004.4",
+"odpt:destinationSign" : "豊島五丁目団地行",
+"odpt:isNonStepBus" : true,
+"odpt:isMidnight" : false
+} ]
 } ]
 4.3. 定義
 4.3.1. odpt:Bus
@@ -5602,7 +5602,7 @@ odpt:Busは、バスの運行情報を示すクラスである。
 
 odpt:busroutePattern が運行中の系統を示し、 odpt:fromBusstopPole, odpt:toBusstopPole で現在位置を示す。
 
-現在位置	odpt:fromBusstopPole	odpt:toBusstopPole
+現在位置 odpt:fromBusstopPole odpt:toBusstopPole
 Aバス停とBバス停の間
 
 Aバス停
@@ -5627,7 +5627,7 @@ Bバス停
 
 odpt:occupancyStatus は車両の混雑度を示す。
 
-値域	説明
+値域 説明
 odpt.OccupancyStatus:Empty　　　　　　　　　
 
 車両はほぼ空席
@@ -5656,7 +5656,7 @@ odpt.OccupancyStatus:NotAcceptingPassengers
 
 乗車不可
 
-Name	Description	Schema
+Name Description Schema
 @context
 required
 
@@ -5844,7 +5844,7 @@ enum (odpt.OccupancyStatus:Empty, odpt.OccupancyStatus:ManySeatsAvailable, odpt.
 4.3.2. odpt:BusTimetable
 バスの便の時刻表である。
 
-Name	Description	Schema
+Name Description Schema
 @context
 required
 
@@ -5857,7 +5857,7 @@ string (URL)
 required
 
 固有識別子(ucode)
-Example : "urn:ucode:_00001C000000000000010000030FD7E5"
+Example : "urn:ucode:\_00001C000000000000010000030FD7E5"
 
 string (URN)
 
@@ -5951,7 +5951,7 @@ Example : [ "object" ]
 
 odpt:busTimetableObject
 
-Name	Description	Schema
+Name Description Schema
 odpt:index
 required
 
@@ -6035,7 +6035,7 @@ string
 4.3.3. odpt:BusroutePattern
 バス系統情報 odpt:BusroutePattern は、バス路線の系統情報を示す。 odpt:busstopPoleOrder が、運行するバスの停車する停留所(標柱)の順序を表現している。 バス路線（'王５７’等）は、通常、複数の系統情報から構成される。(e.g. 往路、復路、異なる停留所通過順のバリエーション)
 
-Name	Description	Schema
+Name Description Schema
 @context
 required
 
@@ -6048,7 +6048,7 @@ string (URL)
 required
 
 固有識別子 (ucode)
-Example : "urn:ucode:_00001C000000000000010000030FD7E5"
+Example : "urn:ucode:\_00001C000000000000010000030FD7E5"
 
 string (URN)
 
@@ -6166,7 +6166,7 @@ string (URL)
 
 odpt:busstopPoleOrder
 
-Name	Description	Schema
+Name Description Schema
 odpt:busstopPole
 required
 
@@ -6210,7 +6210,7 @@ string
 4.3.4. odpt:BusroutePatternFare
 乗車バス停(標柱)、降車バス停(標柱)についての運賃情報
 
-Name	Description	Schema
+Name Description Schema
 @context
 required
 
@@ -6223,7 +6223,7 @@ string (URL)
 required
 
 固有識別子(ucode)
-Example : "urn:ucode:_00001C000000000000010000030FD7E5"
+Example : "urn:ucode:\_00001C000000000000010000030FD7E5"
 
 string (URN)
 
@@ -6358,7 +6358,7 @@ integer
 4.3.5. odpt:BusstopPole
 バス停情報 odpt:BusstopPoleは、バス停(標柱)の情報を示す。
 
-Name	Description	Schema
+Name Description Schema
 @context
 required
 
@@ -6371,7 +6371,7 @@ string (URL)
 required
 
 固有識別子(ucode)
-Example : "urn:ucode:_00001C000000000000010000030FD7E5"
+Example : "urn:ucode:\_00001C000000000000010000030FD7E5"
 
 string (URN)
 
@@ -6498,7 +6498,7 @@ Example : [ "string" ]
 4.3.6. odpt:BusstopPoleTimetable
 バス停(標柱)時刻表 odpt:busstopPole で示されたバス停(標柱)の時刻表。曜日区分や行先、路線等によって別個のデータになる場合がある。
 
-Name	Description	Schema
+Name Description Schema
 @context
 required
 
@@ -6511,7 +6511,7 @@ string (URL)
 required
 
 固有識別子(ucode)
-Example : "urn:ucode:_00001C000000000000010000030FD7E5"
+Example : "urn:ucode:\_00001C000000000000010000030FD7E5"
 
 string (URN)
 
@@ -6613,7 +6613,7 @@ Example : [ "object" ]
 
 odpt:busstopPoleTimetableObject
 
-Name	Description	Schema
+Name Description Schema
 odpt:arrivalTime
 optional
 
@@ -6703,8 +6703,8 @@ Example : "string"
 string
 
 5. ODPT Airplane API
-5.1. 概要
-Airplane API では、航空機に関係した以下のデータを取得できる。
+   5.1. 概要
+   Airplane API では、航空機に関係した以下のデータを取得できる。
 
 odpt:Airport
 
@@ -6737,7 +6737,7 @@ application/json
 空港の情報を取得する。
 
 パラメータ
-Type	Name	Description	Schema
+Type Name Description Schema
 Query
 
 acl:consumerKey
@@ -6766,7 +6766,7 @@ optional
 string (URL)
 
 レスポンス
-HTTP Code	Description	Schema
+HTTP Code Description Schema
 200
 
 正常終了
@@ -6815,24 +6815,24 @@ Request path
 Example HTTP response
 Response 200
 [ {
-				    "@context" : "http://vocab.odpt.org/context_odpt.jsonld",
-				    "@id" : "urn:ucode:_00001C000000000000010000030FD7E5",
-				    "@type" : "odpt:Airport",
-				    "dc:date" : "2017-01-13T15:10:00+09:00",
-				    "owl:sameAs" : "odpt.Airport:HND",
-				    "dc:title" : "東京(羽田)",
-				    "odpt:airportTitle" : {
-				    "ja" : "東京(羽田)",
-				    "en" : "Tokyo (Haneda)"
-				    },
-				    "odpt:airportTerminal" : [ "odpt.AirportTerminal:HND.DomesticTerminal1", "odpt.AirportTerminal:HND.DomesticTerminal2", "odpt.AirportTerminal:HND.InternationalTerminal" ]
+"@context" : "http://vocab.odpt.org/context_odpt.jsonld",
+"@id" : "urn:ucode:\_00001C000000000000010000030FD7E5",
+"@type" : "odpt:Airport",
+"dc:date" : "2017-01-13T15:10:00+09:00",
+"owl:sameAs" : "odpt.Airport:HND",
+"dc:title" : "東京(羽田)",
+"odpt:airportTitle" : {
+"ja" : "東京(羽田)",
+"en" : "Tokyo (Haneda)"
+},
+"odpt:airportTerminal" : [ "odpt.AirportTerminal:HND.DomesticTerminal1", "odpt.AirportTerminal:HND.DomesticTerminal2", "odpt.AirportTerminal:HND.InternationalTerminal" ]
 } ]
 5.2.2. GET /api/v4/odpt:AirportTerminal
 説明
 空港のターミナルの情報を取得する。
 
 パラメータ
-Type	Name	Description	Schema
+Type Name Description Schema
 Query
 
 acl:consumerKey
@@ -6870,7 +6870,7 @@ optional
 string (odpt:Airport owl:sameAs)
 
 レスポンス
-HTTP Code	Description	Schema
+HTTP Code Description Schema
 200
 
 正常終了
@@ -6919,24 +6919,24 @@ Request path
 Example HTTP response
 Response 200
 [ {
-				    "@context" : "http://vocab.odpt.org/context_odpt.jsonld",
-				    "@id" : "urn:ucode:_00001C000000000000010000030FD7E5",
-				    "@type" : "odpt:AirportTerminal",
-				    "dc:date" : "2017-01-13T15:10:00+09:00",
-				    "owl:sameAs" : "odpt.AirportTerminal:HND.DomesticTerminal1",
-				    "dc:title" : "国内線第１ターミナル",
-				    "odpt:airportTerminalTitle" : {
-				    "ja" : "国内線第１ターミナル",
-				    "en" : "Domestic Terminal 1"
-				    },
-				    "odpt.airport" : "odpt.Airport:HND"
+"@context" : "http://vocab.odpt.org/context_odpt.jsonld",
+"@id" : "urn:ucode:_00001C000000000000010000030FD7E5",
+"@type" : "odpt:AirportTerminal",
+"dc:date" : "2017-01-13T15:10:00+09:00",
+"owl:sameAs" : "odpt.AirportTerminal:HND.DomesticTerminal1",
+"dc:title" : "国内線第１ターミナル",
+"odpt:airportTerminalTitle" : {
+"ja" : "国内線第１ターミナル",
+"en" : "Domestic Terminal 1"
+},
+"odpt.airport" : "odpt.Airport:HND"
 } ]
 5.2.3. GET /api/v4/odpt:FlightInformationArrival
 説明
 フライト到着情報(空港に当日到着する航空機のリアルタイムな情報)を取得する。
 
 パラメータ
-Type	Name	Description	Schema
+Type Name Description Schema
 Query
 
 acl:consumerKey
@@ -7019,7 +7019,7 @@ optional
 string (odpt:Airport owl:sameAs)
 
 レスポンス
-HTTP Code	Description	Schema
+HTTP Code Description Schema
 200
 
 正常終了
@@ -7068,30 +7068,30 @@ Request path
 Example HTTP response
 Response 200
 [ {
-				    "@context" : "http://vocab.odpt.org/context_odpt.jsonld",
-				    "@id" : "urn:uuid:ff91feee-2d2c-4365-902e-26375fdf9d8b",
-				    "@type" : "odpt:FlightInformationArrival",
-				    "dc:date" : "2017-12-06T23:15:01+09:00",
-				    "owl:sameAs" : "odpt.FlightInformationArrival:NAA.NRT.NH832",
-				    "odpt:operator" : "odpt.Operator:NAA",
-				    "odpt:airline" : "odpt.Operator:ANA",
-				    "odpt:flightNumber" : [ "NH832" ],
-				    "odpt:flightStatus" : "odpt.FlightStatus:Arrived",
-				    "odpt:scheduledArrivalTime" : "06:45",
-				    "odpt:actualArrivalTime" : "06:48",
-				    "odpt:arrivalAirport" : "odpt.Airport:NRT",
-				    "odpt:arrivalAirportTerminal" : "odpt.AirportTerminal:NRT.Terminal1",
-				    "odpt:arrivalGate" : "27",
-				    "odpt:baggageClaim" : "27",
-				    "odpt:originAirport" : "odpt.Airport:SGN",
-				    "odpt:aircraftType" : "788"
+"@context" : "http://vocab.odpt.org/context_odpt.jsonld",
+"@id" : "urn:uuid:ff91feee-2d2c-4365-902e-26375fdf9d8b",
+"@type" : "odpt:FlightInformationArrival",
+"dc:date" : "2017-12-06T23:15:01+09:00",
+"owl:sameAs" : "odpt.FlightInformationArrival:NAA.NRT.NH832",
+"odpt:operator" : "odpt.Operator:NAA",
+"odpt:airline" : "odpt.Operator:ANA",
+"odpt:flightNumber" : [ "NH832" ],
+"odpt:flightStatus" : "odpt.FlightStatus:Arrived",
+"odpt:scheduledArrivalTime" : "06:45",
+"odpt:actualArrivalTime" : "06:48",
+"odpt:arrivalAirport" : "odpt.Airport:NRT",
+"odpt:arrivalAirportTerminal" : "odpt.AirportTerminal:NRT.Terminal1",
+"odpt:arrivalGate" : "27",
+"odpt:baggageClaim" : "27",
+"odpt:originAirport" : "odpt.Airport:SGN",
+"odpt:aircraftType" : "788"
 } ]
 5.2.4. GET /api/v4/odpt:FlightInformationDeparture
 説明
 フライト出発情報(空港を当日出発する航空機のリアルタイムな情報)を取得する。
 
 パラメータ
-Type	Name	Description	Schema
+Type Name Description Schema
 Query
 
 acl:consumerKey
@@ -7174,7 +7174,7 @@ optional
 string (odpt:Airport owl:sameAs)
 
 レスポンス
-HTTP Code	Description	Schema
+HTTP Code Description Schema
 200
 
 正常終了
@@ -7223,30 +7223,30 @@ Request path
 Example HTTP response
 Response 200
 [ {
-				    "@context" : "http://vocab.odpt.org/context_odpt.jsonld",
-				    "@id" : "urn:uuid:f476346b-ae6d-4102-99d8-2bf80d7c4dd8",
-				    "@type" : "odpt:FlightInformationDeparture",
-				    "dc:date" : "2017-12-06T23:20:02+09:00",
-				    "owl:sameAs" : "odpt.FlightInformationDeparture:NAA.NRT.9W4807",
-				    "odpt:operator" : "odpt.Operator:NAA",
-				    "odpt:airline" : "odpt.Operator:JAI",
-				    "odpt:flightNumber" : [ "9W4807" ],
-				    "odpt:flightStatus" : "odpt.FlightStatus:Takeoff",
-				    "odpt:scheduledDepartureTime" : "08:30",
-				    "odpt:actualDepartureTime" : "08:32",
-				    "odpt:departureAirport" : "odpt.Airport:NRT",
-				    "odpt:departureAirportTerminal" : "odpt.AirportTerminal:NRT.Terminal2",
-				    "odpt:departureGate" : "85",
-				    "odpt:checkInCounter" : [ "B", "C" ],
-				    "odpt:destinationAirport" : "odpt.Airport:HKG",
-				    "odpt:aircraftType" : "788"
+"@context" : "http://vocab.odpt.org/context_odpt.jsonld",
+"@id" : "urn:uuid:f476346b-ae6d-4102-99d8-2bf80d7c4dd8",
+"@type" : "odpt:FlightInformationDeparture",
+"dc:date" : "2017-12-06T23:20:02+09:00",
+"owl:sameAs" : "odpt.FlightInformationDeparture:NAA.NRT.9W4807",
+"odpt:operator" : "odpt.Operator:NAA",
+"odpt:airline" : "odpt.Operator:JAI",
+"odpt:flightNumber" : [ "9W4807" ],
+"odpt:flightStatus" : "odpt.FlightStatus:Takeoff",
+"odpt:scheduledDepartureTime" : "08:30",
+"odpt:actualDepartureTime" : "08:32",
+"odpt:departureAirport" : "odpt.Airport:NRT",
+"odpt:departureAirportTerminal" : "odpt.AirportTerminal:NRT.Terminal2",
+"odpt:departureGate" : "85",
+"odpt:checkInCounter" : [ "B", "C" ],
+"odpt:destinationAirport" : "odpt.Airport:HKG",
+"odpt:aircraftType" : "788"
 } ]
 5.2.5. GET /api/v4/odpt:FlightSchedule
 説明
 フライト時刻表(空港を発着する航空機の予定時刻表)を取得する。
 
 パラメータ
-Type	Name	Description	Schema
+Type Name Description Schema
 Query
 
 acl:consumerKey
@@ -7311,7 +7311,7 @@ optional
 string (odpt:Airport owl:sameAs)
 
 レスポンス
-HTTP Code	Description	Schema
+HTTP Code Description Schema
 200
 
 正常終了
@@ -7360,30 +7360,30 @@ Request path
 Example HTTP response
 Response 200
 [ {
-				    "@context" : "http://vocab.odpt.org/context_odpt.jsonld",
-				    "@id" : "urn:ucode:_00001C000000000000010000030FD7E5",
-				    "@type" : "odpt:FlightSchedule",
-				    "dc:date" : "2017-10-31T23:06:38+09:00",
-				    "owl:sameAs" : "odpt.FlightSchedule:HND-TIAT.HND.IWJ.Wednesday",
-				    "odpt:operator" : "odpt.Operator:HND-TIAT",
-				    "odpt:calendar" : "odpt.Calendar:Wednesday",
-				    "odpt:originAirport" : "odpt.Airport:HND",
-				    "odpt:destinationAirport" : "odpt.Airport:IWJ",
-				    "odpt:flightScheduleObject" : [ {
-				    "odpt:airline" : "odpt.Operator:ANA",
-				    "odpt:flightNumber" : [ "NH575" ],
-				    "odpt:originTime" : "10:35",
-				    "odpt:destinationTime" : "12:15",
-				    "odpt:isValidFrom" : "2017-10-01T00:00:00+09:00",
-				    "odpt:isValidTo" : "2017-10-31T23:59:59+09:00"
-				    } ]
+"@context" : "http://vocab.odpt.org/context_odpt.jsonld",
+"@id" : "urn:ucode:\_00001C000000000000010000030FD7E5",
+"@type" : "odpt:FlightSchedule",
+"dc:date" : "2017-10-31T23:06:38+09:00",
+"owl:sameAs" : "odpt.FlightSchedule:HND-TIAT.HND.IWJ.Wednesday",
+"odpt:operator" : "odpt.Operator:HND-TIAT",
+"odpt:calendar" : "odpt.Calendar:Wednesday",
+"odpt:originAirport" : "odpt.Airport:HND",
+"odpt:destinationAirport" : "odpt.Airport:IWJ",
+"odpt:flightScheduleObject" : [ {
+"odpt:airline" : "odpt.Operator:ANA",
+"odpt:flightNumber" : [ "NH575" ],
+"odpt:originTime" : "10:35",
+"odpt:destinationTime" : "12:15",
+"odpt:isValidFrom" : "2017-10-01T00:00:00+09:00",
+"odpt:isValidTo" : "2017-10-31T23:59:59+09:00"
+} ]
 } ]
 5.2.6. GET /api/v4/odpt:FlightStatus
 説明
 フライト状況の定義を取得する。
 
 パラメータ
-Type	Name	Description	Schema
+Type Name Description Schema
 Query
 
 acl:consumerKey
@@ -7412,7 +7412,7 @@ optional
 string (URL)
 
 レスポンス
-HTTP Code	Description	Schema
+HTTP Code Description Schema
 200
 
 正常終了
@@ -7461,22 +7461,22 @@ Request path
 Example HTTP response
 Response 200
 [ {
-				    "@context" : "http://vocab.odpt.org/context_odpt.jsonld",
-				    "@id" : "urn:ucode:_00001C000000000000010000030FD7E5",
-				    "@type" : "odpt:FlightStatus",
-				    "dc:date" : "2017-01-13T15:10:00+09:00",
-				    "owl:sameAs" : "odpt.FlightStatus:CheckIn",
-				    "dc:title" : "搭乗手続中",
-				    "odpt:flightStatusTitle" : {
-				    "ja" : "搭乗手続中",
-				    "en" : "Check in"
-				    }
+"@context" : "http://vocab.odpt.org/context_odpt.jsonld",
+"@id" : "urn:ucode:_00001C000000000000010000030FD7E5",
+"@type" : "odpt:FlightStatus",
+"dc:date" : "2017-01-13T15:10:00+09:00",
+"owl:sameAs" : "odpt.FlightStatus:CheckIn",
+"dc:title" : "搭乗手続中",
+"odpt:flightStatusTitle" : {
+"ja" : "搭乗手続中",
+"en" : "Check in"
+}
 } ]
 5.3. 定義
 5.3.1. odpt:Airport
 空港の情報を表す
 
-Name	Description	Schema
+Name Description Schema
 @context
 required
 
@@ -7489,7 +7489,7 @@ string (URL)
 required
 
 固有識別子(ucode)
-Example : "urn:ucode:_00001C000000000000010000030FD7E5"
+Example : "urn:ucode:\_00001C000000000000010000030FD7E5"
 
 string (URN)
 
@@ -7568,7 +7568,7 @@ object
 5.3.2. odpt:AirportTerminal
 空港のターミナルの情報を表す
 
-Name	Description	Schema
+Name Description Schema
 @context
 required
 
@@ -7581,7 +7581,7 @@ string (URL)
 required
 
 固有識別子(ucode)
-Example : "urn:ucode:_00001C000000000000010000030FD7E5"
+Example : "urn:ucode:\_00001C000000000000010000030FD7E5"
 
 string (URN)
 
@@ -7660,7 +7660,7 @@ object
 5.3.3. odpt:FlightInformationArrival
 フライト到着情報は、空港に当日到着する航空機のリアルタイムな情報を表す
 
-Name	Description	Schema
+Name Description Schema
 @context
 required
 
@@ -7840,7 +7840,7 @@ string
 5.3.4. odpt:FlightInformationDeparture
 フライト出発情報は、空港から当日出発する航空機のリアルタイムな情報を表す
 
-Name	Description	Schema
+Name Description Schema
 @context
 required
 
@@ -8020,7 +8020,7 @@ string
 5.3.5. odpt:FlightSchedule
 フライト時刻表は、空港を発着する航空機の予定時刻表を表す
 
-Name	Description	Schema
+Name Description Schema
 @context
 required
 
@@ -8033,7 +8033,7 @@ string (URL)
 required
 
 固有識別子(ucode)
-Example : "urn:ucode:_00001C000000000000010000030FD7E5"
+Example : "urn:ucode:\_00001C000000000000010000030FD7E5"
 
 string (URN)
 
@@ -8103,7 +8103,7 @@ Example : [ "object" ]
 
 odpt:FlightScheduleObject
 
-Name	Description	Schema
+Name Description Schema
 odpt:airline
 required
 
@@ -8195,7 +8195,7 @@ object
 5.3.6. odpt:FlightStatus
 搭乗中、出発済みなど、空港を発着する航空機の状況を定義する
 
-Name	Description	Schema
+Name Description Schema
 @context
 required
 
@@ -8208,7 +8208,7 @@ string (URL)
 required
 
 固有識別子(ucode)
-Example : "urn:ucode:_00001C000000000000010000030FD7E5"
+Example : "urn:ucode:\_00001C000000000000010000030FD7E5"
 
 string (URN)
 
@@ -8253,8 +8253,8 @@ Example : {"ja" : "搭乗手続中", "en" : "Check in"}
 object
 
 6. ODPT File API
-6.1. 概要
-配布されるファイルを取得するためのAPI
+   6.1. 概要
+   配布されるファイルを取得するためのAPI
 
 6.1.1. バージョン情報
 Version : 1.0
@@ -8270,7 +8270,7 @@ Schemes : HTTPS
 各社提供ファイル取得用API
 
 パラメータ
-Type	Name	Description	Schema
+Type Name Description Schema
 Query
 
 acl:consumerKey
@@ -8291,8 +8291,7 @@ enum (Dictionary.yaml)
 
 Example HTTP request
 Request path
-/v4/files/?path=string
-7. 付録::RDF及びJSON-LDについて
+/v4/files/?path=string 7. 付録::RDF及びJSON-LDについて
 本項では、公共交通オープンデータで使われている技術を解説し、応用に関するTipsを紹介する。
 
 7.1. URI (Uniform Resource Identifier)
@@ -8328,7 +8327,7 @@ RDF はリソースとリソースの関係性を記述するが、関係性を�
 
 表1:クラスの定義
 
-URI	クラス名(rdfs:label)	説明(rdfs:comment)
+URI クラス名(rdfs:label) 説明(rdfs:comment)
 rdfs:ClassName
 
 ClassName
@@ -8343,7 +8342,7 @@ The className resource, everything.
 
 表2:プロパティの定義
 
-URI	プロパティ名(rdfs:label)	説明(rdfs:comment)	主語のクラス(rdfs:domain)	述語のクラス(rdfs:range)
+URI プロパティ名(rdfs:label) 説明(rdfs:comment) 主語のクラス(rdfs:domain) 述語のクラス(rdfs:range)
 rdfs:domain
 
 domain
@@ -8393,42 +8392,41 @@ RDF 文は、図2 で示したような入れ子型のグラフとなる場合�
 記述のサンプルとして、表1、表2に記述したボキャブラリの定義を、JSON-LD形式で表現した例を示す。 なお本ドキュメントでは、JSON-LD の仕様は説明しないため、詳細な仕様についてはW3CによるJSON-LDの仕様を参照されたい。また、各プログラミング言語で JSON-LD を RDF として扱うためのライブラリもJSON-LD のサイトのオフィシャルサイトで紹介されているので、合わせて参照されたい。
 
 {
-			    "@context": {
-			    "rdfs":"http://www.w3.org/2000/01/rdf-schema#"
-			    },
-			    "@id": "http://www.w3.org/2000/01/rdf-schema#",
-			    "@graph": [
-			    {
-			    "@id": "rdfs:Resource",
-			    "@type": "rdfs:ClassName",
-			    "rdfs:label": "Resource",
-			    "rdfs:comment": "The className resource, everything."
-			    },
-			    {
-			    "@id": "rdfs:ClassName",
-			    "@type": "rdfs:ClassName",
-			    "rdfs:label": "ClassName",
-			    "rdfs:comment": "The className of classNamees."
-			    },
-			    {
-			    "@id": "rdfs:comment",
-			    "@type": "rdfs:Property",
-			    "rdfs:label": "comment",
-			    "rdfs:comment": "A description of the subject resource.",
-			    "rdfs:domain": "rdfs:Resource",
-			    "rdfs:range": "rdfs:Literal"
-			    },
-			    {
-			    "@id": "rdfs:domain",
-			    "@type": "rdfs:Property",
-			    "rdfs:label": "domain",
-			    "rdfs:comment": "A domain of the subject property.",
-			    "rdfs:domain": "rdfs:ClassName",
-			    "rdfs:range": "rdf:Property"
-			    }
-			    ]
+"@context": {
+"rdfs":"http://www.w3.org/2000/01/rdf-schema#"
+},
+"@id": "http://www.w3.org/2000/01/rdf-schema#",
+"@graph": [
+{
+"@id": "rdfs:Resource",
+"@type": "rdfs:ClassName",
+"rdfs:label": "Resource",
+"rdfs:comment": "The className resource, everything."
+},
+{
+"@id": "rdfs:ClassName",
+"@type": "rdfs:ClassName",
+"rdfs:label": "ClassName",
+"rdfs:comment": "The className of classNamees."
+},
+{
+"@id": "rdfs:comment",
+"@type": "rdfs:Property",
+"rdfs:label": "comment",
+"rdfs:comment": "A description of the subject resource.",
+"rdfs:domain": "rdfs:Resource",
+"rdfs:range": "rdfs:Literal"
+},
+{
+"@id": "rdfs:domain",
+"@type": "rdfs:Property",
+"rdfs:label": "domain",
+"rdfs:comment": "A domain of the subject property.",
+"rdfs:domain": "rdfs:ClassName",
+"rdfs:range": "rdf:Property"
 }
-8. 更新履歴
+]
+} 8. 更新履歴
 2025-11-28
 
 データセットによっては、エンドポイントが https://api.odpt.org/api/v4/ 以外で始まる場合もあることを、留意点に追加しました。
