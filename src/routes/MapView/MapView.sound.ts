@@ -59,10 +59,10 @@ const VELOCITY_RANGE: Record<Instrument, [number, number]> = {
   saxophone: [30, 48],
   celesta: [18, 32],
   guitar: [25, 40],
-  maracas: [18, 28],
-  hihat: [14, 24],
-  rimshot: [18, 28],
-  percussion: [18, 28],
+  maracas: [45, 65],
+  hihat: [40, 60],
+  rimshot: [45, 65],
+  percussion: [40, 60],
 };
 
 const DRUM_NOTES: Record<string, number> = {
@@ -169,7 +169,7 @@ export async function initSound(): Promise<void> {
 
     const rolloff = ctx.createBiquadFilter();
     rolloff.type = "lowpass";
-    rolloff.frequency.value = 3500;
+    rolloff.frequency.value = 4500;
     rolloff.Q.value = 0.4;
 
     const convolver = ctx.createConvolver();
