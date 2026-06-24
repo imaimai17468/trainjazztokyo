@@ -73,13 +73,24 @@ export function createTicker(callbacks: TickerCallbacks) {
       setScanPosition(scanPos);
       updateTrainGroups(map, currentGroups, currentPositions);
 
+      const firingThisTick: number[] = [];
       currentGroups.forEach((g, i) => {
         if (firedThisCycle.has(i)) return;
         if (g.startProgress >= scanPos - SCAN_WINDOW && g.startProgress <= scanPos) {
-          firedThisCycle.add(i);
-          triggerGroupPulse(map, g);
-          playGroupNote(g, getGroupCoords(g), scanPos);
+          firingThisTick.push(i);
         }
+      });
+
+      const soloistActive = firingThisTick.some(
+        (i) =>
+          currentGroups[i].instrument === "trombone" || currentGroups[i].instrument === "saxophone",
+      );
+
+      firingThisTick.forEach((i) => {
+        firedThisCycle.add(i);
+        const g = currentGroups[i];
+        triggerGroupPulse(map, g);
+        playGroupNote(g, getGroupCoords(g), scanPos, firingThisTick.length, soloistActive);
       });
     }, 50);
   };

@@ -109,6 +109,9 @@ const DRUM_NOTES: Record<string, number> = {
   percussion: 38,
 };
 
+const SOLO_INSTRUMENTS = new Set<Instrument>(["trombone", "saxophone"]);
+const COMP_INSTRUMENTS = new Set<Instrument>(["piano", "guitar"]);
+
 const SCAN_DURATION = 15_000;
 
 let synth: WorkletSynthesizer | undefined;
@@ -244,7 +247,13 @@ function selectNote(scanPos: number, progress: number, instrument: Instrument): 
   return allNotes[idx];
 }
 
-export function playGroupNote(group: TrainGroup, coords: [number, number], scanPos: number): void {
+export function playGroupNote(
+  group: TrainGroup,
+  coords: [number, number],
+  scanPos: number,
+  concurrentCount: number,
+  soloistActive: boolean,
+): void {
   if (!synth || muted) return;
   if (soloLine && group.line !== soloLine) return;
   ensurePrograms();
@@ -259,7 +268,20 @@ export function playGroupNote(group: TrainGroup, coords: [number, number], scanP
     : selectNote(scanPos, midProgress, group.instrument);
 
   const [vLow, vHigh] = VELOCITY_RANGE[group.instrument];
-  const baseVelocity = vLow + Math.floor(Math.random() * (vHigh - vLow));
+  let baseVelocity = vLow + Math.floor(Math.random() * (vHigh - vLow));
+
+  if (concurrentCount > 1) {
+    baseVelocity = Math.floor(baseVelocity * Math.max(0.4, 1 / Math.sqrt(concurrentCount)));
+  }
+
+  if (soloistActive && COMP_INSTRUMENTS.has(group.instrument)) {
+    baseVelocity = Math.floor(baseVelocity * 0.78);
+  }
+
+  if (soloistActive && SOLO_INSTRUMENTS.has(group.instrument) && !soloLine) {
+    baseVelocity = Math.floor(baseVelocity * 0.55);
+  }
+
   const scale = proximityVelocityScale(coords);
   const velocity = Math.max(5, Math.floor(baseVelocity * scale));
 
