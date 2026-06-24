@@ -182,7 +182,7 @@ export async function initSound(): Promise<void> {
     wetGain.gain.value = 0.55;
 
     const masterGain = ctx.createGain();
-    masterGain.gain.value = 0.65;
+    masterGain.gain.value = 0.8;
 
     s.connect(warmth);
     warmth.connect(darken);
