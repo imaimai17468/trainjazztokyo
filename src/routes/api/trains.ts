@@ -28,7 +28,7 @@ type NormalizedTrain = {
 };
 
 let cachedOdpt: { data: NormalizedTrain[]; time: number } | undefined;
-let fetchingPromise: Promise<NormalizedTrain[]> | undefined;
+let fetchingPromise: Promise<void> | undefined;
 
 function strip(prefix: string, val: string): string {
   return val.replace(prefix, "");
@@ -183,10 +183,8 @@ async function getOdptTrains(apiKey: string): Promise<NormalizedTrain[]> {
       fetchingPromise = undefined;
     });
 
-  if (cachedOdpt) return cachedOdpt.data;
-
   await fetchingPromise;
-  return cachedOdpt?.data ?? [];
+  return cachedOdpt ? cachedOdpt.data : [];
 }
 
 export const Route = createFileRoute("/api/trains")({
