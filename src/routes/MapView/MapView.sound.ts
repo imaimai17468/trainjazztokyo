@@ -3,31 +3,54 @@ import type { Instrument } from "./MapView.lines";
 import type { TrainGroup } from "./gateway/groupTrains";
 
 const INSTRUMENT_MIDI: Record<Instrument, { program: number; channel: number }> = {
-  bass: { program: 33, channel: 0 },
-  piano: { program: 2, channel: 1 },
+  bass: { program: 32, channel: 0 },
+  piano: { program: 4, channel: 1 },
   vibraphone: { program: 11, channel: 2 },
-  trombone: { program: 58, channel: 3 },
-  saxophone: { program: 67, channel: 4 },
+  trombone: { program: 57, channel: 3 },
+  saxophone: { program: 66, channel: 4 },
   celesta: { program: 8, channel: 5 },
+  guitar: { program: 26, channel: 6 },
   maracas: { program: 0, channel: 9 },
   hihat: { program: 0, channel: 9 },
-  guitar: { program: 27, channel: 6 },
   rimshot: { program: 0, channel: 9 },
   percussion: { program: 0, channel: 9 },
 };
 
-// Cm diatonic minor progression (darker):
-//   0.00–0.25: Cm9      (C Eb G Bb D)
-//   0.25–0.50: Fm9      (F Ab C Eb G)
-//   0.50–0.75: Abmaj7   (Ab C Eb G)
-//   0.75–1.00: Gm7b5    (G Bb Db F)
+const REVERB_SEND: Record<Instrument, number> = {
+  bass: 18,
+  piano: 55,
+  vibraphone: 90,
+  trombone: 65,
+  saxophone: 65,
+  celesta: 95,
+  guitar: 55,
+  maracas: 60,
+  hihat: 50,
+  rimshot: 55,
+  percussion: 60,
+};
+
+const PAN: Record<Instrument, number> = {
+  bass: 64,
+  piano: 52,
+  vibraphone: 30,
+  trombone: 45,
+  saxophone: 83,
+  celesta: 98,
+  guitar: 76,
+  maracas: 64,
+  hihat: 40,
+  rimshot: 64,
+  percussion: 88,
+};
+
 type ChordTones = { roots: number[]; tones: number[] };
 
 const CHORDS: ChordTones[] = [
-  { roots: [36, 48], tones: [0, 3, 7, 10] }, // Cm: C=0, Eb=3, G=7, Bb=10
-  { roots: [41, 53], tones: [5, 8, 0, 3] }, // Fm: F=5, Ab=8, C=0, Eb=3
-  { roots: [44, 56], tones: [8, 0, 3, 7] }, // Ab: Ab=8, C=0, Eb=3, G=7
-  { roots: [43, 55], tones: [7, 10, 1, 5] }, // Gm7b5: G=7, Bb=10, Db=1, F=5
+  { roots: [38, 50], tones: [2, 5, 9, 0] },
+  { roots: [43, 55], tones: [7, 11, 2, 5] },
+  { roots: [36, 48], tones: [0, 4, 7, 11] },
+  { roots: [45, 57], tones: [9, 1, 4, 7] },
 ];
 
 function getChord(scanPos: number): ChordTones {
@@ -38,13 +61,13 @@ function getChord(scanPos: number): ChordTones {
 type InstrumentRange = { low: number; high: number };
 
 const INSTRUMENT_RANGE: Record<Instrument, InstrumentRange> = {
-  bass: { low: 36, high: 52 },
-  piano: { low: 55, high: 74 },
-  vibraphone: { low: 60, high: 79 },
-  trombone: { low: 48, high: 65 },
-  saxophone: { low: 53, high: 72 },
-  celesta: { low: 67, high: 84 },
-  guitar: { low: 53, high: 70 },
+  bass: { low: 38, high: 55 },
+  piano: { low: 48, high: 72 },
+  vibraphone: { low: 53, high: 77 },
+  trombone: { low: 50, high: 67 },
+  saxophone: { low: 48, high: 74 },
+  celesta: { low: 60, high: 96 },
+  guitar: { low: 52, high: 71 },
   maracas: { low: 0, high: 0 },
   hihat: { low: 0, high: 0 },
   rimshot: { low: 0, high: 0 },
@@ -52,17 +75,31 @@ const INSTRUMENT_RANGE: Record<Instrument, InstrumentRange> = {
 };
 
 const VELOCITY_RANGE: Record<Instrument, [number, number]> = {
-  bass: [25, 40],
-  piano: [18, 32],
-  vibraphone: [16, 28],
-  trombone: [20, 34],
-  saxophone: [22, 36],
-  celesta: [14, 24],
-  guitar: [18, 30],
-  maracas: [55, 75],
-  hihat: [50, 70],
-  rimshot: [55, 75],
-  percussion: [50, 70],
+  bass: [74, 86],
+  piano: [60, 72],
+  vibraphone: [22, 48],
+  trombone: [70, 82],
+  saxophone: [70, 82],
+  celesta: [22, 45],
+  guitar: [60, 72],
+  maracas: [65, 95],
+  hihat: [65, 95],
+  rimshot: [65, 95],
+  percussion: [65, 95],
+};
+
+const EXTRA_SUSTAIN: Record<Instrument, number> = {
+  bass: 350,
+  piano: 550,
+  vibraphone: 1000,
+  trombone: 200,
+  saxophone: 200,
+  celesta: 550,
+  guitar: 450,
+  maracas: 200,
+  hihat: 100,
+  rimshot: 150,
+  percussion: 200,
 };
 
 const DRUM_NOTES: Record<string, number> = {
@@ -120,21 +157,6 @@ function proximityVelocityScale(groupCoords: [number, number]): number {
   return 1 - t * 0.85;
 }
 
-function createImpulseResponse(ctx: AudioContext): AudioBuffer {
-  const rate = ctx.sampleRate;
-  const length = rate * 2.2;
-  const buffer = ctx.createBuffer(2, length, rate);
-
-  for (let ch = 0; ch < 2; ch++) {
-    const data = buffer.getChannelData(ch);
-    for (let i = 0; i < length; i++) {
-      data[i] = (Math.random() * 2 - 1) * Math.exp((-3.5 * i) / length);
-    }
-  }
-
-  return buffer;
-}
-
 export async function initSound(): Promise<void> {
   if (initialized) return;
   initialized = true;
@@ -150,53 +172,25 @@ export async function initSound(): Promise<void> {
     await s.isReady;
     await ctx.resume();
 
+    const masterGain = ctx.createGain();
+    masterGain.gain.value = 0.7;
+
+    const highpass = ctx.createBiquadFilter();
+    highpass.type = "highpass";
+    highpass.frequency.value = 55;
+    highpass.Q.value = 0.7;
+
     const compressor = ctx.createDynamicsCompressor();
-    compressor.threshold.value = -24;
-    compressor.knee.value = 12;
-    compressor.ratio.value = 3;
-    compressor.attack.value = 0.01;
+    compressor.threshold.value = -18;
+    compressor.knee.value = 8;
+    compressor.ratio.value = 2;
+    compressor.attack.value = 0.02;
     compressor.release.value = 0.25;
 
-    const warmth = ctx.createBiquadFilter();
-    warmth.type = "lowshelf";
-    warmth.frequency.value = 250;
-    warmth.gain.value = 4;
-
-    const darken = ctx.createBiquadFilter();
-    darken.type = "highshelf";
-    darken.frequency.value = 2500;
-    darken.gain.value = -3;
-
-    const rolloff = ctx.createBiquadFilter();
-    rolloff.type = "lowpass";
-    rolloff.frequency.value = 4500;
-    rolloff.Q.value = 0.4;
-
-    const convolver = ctx.createConvolver();
-    convolver.buffer = createImpulseResponse(ctx);
-
-    const dryGain = ctx.createGain();
-    dryGain.gain.value = 0.45;
-
-    const wetGain = ctx.createGain();
-    wetGain.gain.value = 0.55;
-
-    const masterGain = ctx.createGain();
-    masterGain.gain.value = 0.8;
-
-    s.connect(warmth);
-    warmth.connect(darken);
-    darken.connect(rolloff);
-    rolloff.connect(compressor);
-
-    compressor.connect(dryGain);
-    compressor.connect(convolver);
-
-    dryGain.connect(masterGain);
-    convolver.connect(wetGain);
-    wetGain.connect(masterGain);
-
-    masterGain.connect(ctx.destination);
+    s.connect(masterGain);
+    masterGain.connect(highpass);
+    highpass.connect(compressor);
+    compressor.connect(ctx.destination);
 
     synth = s;
   } catch {
@@ -208,10 +202,13 @@ function ensurePrograms() {
   if (!synth || programsSet) return;
   programsSet = true;
 
-  Object.values(INSTRUMENT_MIDI)
-    .filter((v) => v.channel !== 9)
-    .forEach((v) => {
+  Object.entries(INSTRUMENT_MIDI)
+    .filter(([, v]) => v.channel !== 9)
+    .forEach(([key, v]) => {
+      const inst = key as Instrument;
       synth!.programChange(v.channel, v.program);
+      synth!.controllerChange(v.channel, 91, REVERB_SEND[inst]);
+      synth!.controllerChange(v.channel, 10, PAN[inst]);
     });
 }
 
@@ -267,13 +264,13 @@ export function playGroupNote(group: TrainGroup, coords: [number, number], scanP
   const velocity = Math.max(5, Math.floor(baseVelocity * scale));
 
   const groupWidth = group.endProgress - group.startProgress;
-  const sustainMs = groupWidth * SCAN_DURATION;
+  const sustainMs = groupWidth * SCAN_DURATION + EXTRA_SUSTAIN[group.instrument];
 
   synth.noteOn(inst.channel, note, velocity);
 
   setTimeout(() => {
     synth?.noteOff(inst.channel, note);
-  }, sustainMs + 200);
+  }, sustainMs);
 }
 
 export function stopSound(): void {
