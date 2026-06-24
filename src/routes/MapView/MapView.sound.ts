@@ -52,17 +52,17 @@ const INSTRUMENT_RANGE: Record<Instrument, InstrumentRange> = {
 };
 
 const VELOCITY_RANGE: Record<Instrument, [number, number]> = {
-  bass: [35, 55],
-  piano: [25, 42],
-  vibraphone: [22, 38],
-  trombone: [28, 45],
-  saxophone: [30, 48],
-  celesta: [18, 32],
-  guitar: [25, 40],
-  maracas: [75, 100],
-  hihat: [70, 95],
-  rimshot: [75, 100],
-  percussion: [70, 95],
+  bass: [25, 40],
+  piano: [18, 32],
+  vibraphone: [16, 28],
+  trombone: [20, 34],
+  saxophone: [22, 36],
+  celesta: [14, 24],
+  guitar: [18, 30],
+  maracas: [55, 75],
+  hihat: [50, 70],
+  rimshot: [55, 75],
+  percussion: [50, 70],
 };
 
 const DRUM_NOTES: Record<string, number> = {
@@ -182,7 +182,7 @@ export async function initSound(): Promise<void> {
     wetGain.gain.value = 0.55;
 
     const masterGain = ctx.createGain();
-    masterGain.gain.value = 0.9;
+    masterGain.gain.value = 0.65;
 
     s.connect(warmth);
     warmth.connect(darken);
