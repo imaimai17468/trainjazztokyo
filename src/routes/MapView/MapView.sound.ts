@@ -3,15 +3,15 @@ import type { Instrument } from "./MapView.lines";
 import type { TrainGroup } from "./gateway/groupTrains";
 
 const INSTRUMENT_MIDI: Record<Instrument, { program: number; channel: number }> = {
-  bass: { program: 32, channel: 0 },
-  piano: { program: 4, channel: 1 },
+  bass: { program: 33, channel: 0 },
+  piano: { program: 2, channel: 1 },
   vibraphone: { program: 11, channel: 2 },
-  trombone: { program: 57, channel: 3 },
-  saxophone: { program: 66, channel: 4 },
+  trombone: { program: 58, channel: 3 },
+  saxophone: { program: 67, channel: 4 },
   celesta: { program: 8, channel: 5 },
   maracas: { program: 0, channel: 9 },
   hihat: { program: 0, channel: 9 },
-  guitar: { program: 26, channel: 6 },
+  guitar: { program: 27, channel: 6 },
   rimshot: { program: 0, channel: 9 },
   percussion: { program: 0, channel: 9 },
 };
@@ -38,13 +38,13 @@ function getChord(scanPos: number): ChordTones {
 type InstrumentRange = { low: number; high: number };
 
 const INSTRUMENT_RANGE: Record<Instrument, InstrumentRange> = {
-  bass: { low: 36, high: 55 }, // C2–G3
-  piano: { low: 63, high: 82 }, // Eb4–Bb5
-  vibraphone: { low: 70, high: 89 }, // Bb4–F6
-  trombone: { low: 51, high: 70 }, // Eb3–Bb4
-  saxophone: { low: 58, high: 77 }, // Bb3–F5
-  celesta: { low: 75, high: 94 }, // Eb5–Bb6
-  guitar: { low: 58, high: 75 }, // Bb3–Eb5
+  bass: { low: 36, high: 52 },
+  piano: { low: 55, high: 74 },
+  vibraphone: { low: 60, high: 79 },
+  trombone: { low: 48, high: 65 },
+  saxophone: { low: 53, high: 72 },
+  celesta: { low: 67, high: 84 },
+  guitar: { low: 53, high: 70 },
   maracas: { low: 0, high: 0 },
   hihat: { low: 0, high: 0 },
   rimshot: { low: 0, high: 0 },
@@ -52,17 +52,17 @@ const INSTRUMENT_RANGE: Record<Instrument, InstrumentRange> = {
 };
 
 const VELOCITY_RANGE: Record<Instrument, [number, number]> = {
-  bass: [30, 48],
-  piano: [20, 38],
-  vibraphone: [18, 35],
-  trombone: [25, 40],
-  saxophone: [25, 42],
-  celesta: [15, 28],
-  guitar: [20, 35],
-  maracas: [15, 25],
-  hihat: [12, 22],
-  rimshot: [15, 25],
-  percussion: [15, 25],
+  bass: [20, 36],
+  piano: [14, 28],
+  vibraphone: [12, 24],
+  trombone: [16, 30],
+  saxophone: [18, 32],
+  celesta: [10, 20],
+  guitar: [14, 26],
+  maracas: [10, 18],
+  hihat: [8, 16],
+  rimshot: [10, 18],
+  percussion: [10, 18],
 };
 
 const DRUM_NOTES: Record<string, number> = {
@@ -159,28 +159,34 @@ export async function initSound(): Promise<void> {
 
     const warmth = ctx.createBiquadFilter();
     warmth.type = "lowshelf";
-    warmth.frequency.value = 300;
-    warmth.gain.value = 3;
+    warmth.frequency.value = 250;
+    warmth.gain.value = 4;
+
+    const darken = ctx.createBiquadFilter();
+    darken.type = "highshelf";
+    darken.frequency.value = 2500;
+    darken.gain.value = -6;
 
     const rolloff = ctx.createBiquadFilter();
     rolloff.type = "lowpass";
-    rolloff.frequency.value = 6000;
-    rolloff.Q.value = 0.5;
+    rolloff.frequency.value = 3500;
+    rolloff.Q.value = 0.4;
 
     const convolver = ctx.createConvolver();
     convolver.buffer = createImpulseResponse(ctx);
 
     const dryGain = ctx.createGain();
-    dryGain.gain.value = 0.55;
+    dryGain.gain.value = 0.45;
 
     const wetGain = ctx.createGain();
-    wetGain.gain.value = 0.45;
+    wetGain.gain.value = 0.55;
 
     const masterGain = ctx.createGain();
-    masterGain.gain.value = 0.85;
+    masterGain.gain.value = 0.7;
 
     s.connect(warmth);
-    warmth.connect(rolloff);
+    warmth.connect(darken);
+    darken.connect(rolloff);
     rolloff.connect(compressor);
 
     compressor.connect(dryGain);
