@@ -10,7 +10,7 @@ export type TrainGroup = {
   trainCount: number;
 };
 
-const GROUP_THRESHOLD = 0.04;
+const GROUP_THRESHOLD = 0.3;
 const MAX_GROUP_WIDTH = 0.15;
 
 function pushGroup(groups: TrainGroup[], slice: TrainPosition[]) {
