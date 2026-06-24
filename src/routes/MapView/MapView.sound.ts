@@ -120,6 +120,21 @@ function proximityVelocityScale(groupCoords: [number, number]): number {
   return 1 - t * 0.85;
 }
 
+function createImpulseResponse(ctx: AudioContext): AudioBuffer {
+  const rate = ctx.sampleRate;
+  const length = rate * 2.2;
+  const buffer = ctx.createBuffer(2, length, rate);
+
+  for (let ch = 0; ch < 2; ch++) {
+    const data = buffer.getChannelData(ch);
+    for (let i = 0; i < length; i++) {
+      data[i] = (Math.random() * 2 - 1) * Math.exp((-3.5 * i) / length);
+    }
+  }
+
+  return buffer;
+}
+
 export async function initSound(): Promise<void> {
   if (initialized) return;
   initialized = true;
@@ -134,7 +149,48 @@ export async function initSound(): Promise<void> {
     await s.soundBankManager.addSoundBank(buf, "gm");
     await s.isReady;
     await ctx.resume();
-    s.connect(ctx.destination);
+
+    const compressor = ctx.createDynamicsCompressor();
+    compressor.threshold.value = -24;
+    compressor.knee.value = 12;
+    compressor.ratio.value = 3;
+    compressor.attack.value = 0.01;
+    compressor.release.value = 0.25;
+
+    const warmth = ctx.createBiquadFilter();
+    warmth.type = "lowshelf";
+    warmth.frequency.value = 300;
+    warmth.gain.value = 3;
+
+    const rolloff = ctx.createBiquadFilter();
+    rolloff.type = "lowpass";
+    rolloff.frequency.value = 6000;
+    rolloff.Q.value = 0.5;
+
+    const convolver = ctx.createConvolver();
+    convolver.buffer = createImpulseResponse(ctx);
+
+    const dryGain = ctx.createGain();
+    dryGain.gain.value = 0.55;
+
+    const wetGain = ctx.createGain();
+    wetGain.gain.value = 0.45;
+
+    const masterGain = ctx.createGain();
+    masterGain.gain.value = 0.85;
+
+    s.connect(warmth);
+    warmth.connect(rolloff);
+    rolloff.connect(compressor);
+
+    compressor.connect(dryGain);
+    compressor.connect(convolver);
+
+    dryGain.connect(masterGain);
+    convolver.connect(wetGain);
+    wetGain.connect(masterGain);
+
+    masterGain.connect(ctx.destination);
 
     synth = s;
   } catch {
