@@ -145,25 +145,48 @@ async function fetchOdptTrains(apiKey: string): Promise<NormalizedTrain[]> {
   return [...realtime, ...timetableFiltered];
 }
 
+const STALE_TTL = 120_000;
+
+function revalidateInBackground(apiKey: string) {
+  if (fetchingPromise) return;
+  fetchingPromise = fetchOdptTrains(apiKey)
+    .then((data) => {
+      cachedOdpt = { data, time: Date.now() };
+    })
+    .catch(() => {})
+    .finally(() => {
+      fetchingPromise = undefined;
+    });
+}
+
 async function getOdptTrains(apiKey: string): Promise<NormalizedTrain[]> {
   if (cachedOdpt && Date.now() - cachedOdpt.time < CACHE_TTL) {
     return cachedOdpt.data;
   }
 
-  if (fetchingPromise) return fetchingPromise;
+  if (cachedOdpt && Date.now() - cachedOdpt.time < STALE_TTL) {
+    revalidateInBackground(apiKey);
+    return cachedOdpt.data;
+  }
+
+  if (fetchingPromise) {
+    if (cachedOdpt) return cachedOdpt.data;
+    return fetchingPromise.then(() => cachedOdpt?.data ?? []);
+  }
 
   fetchingPromise = fetchOdptTrains(apiKey)
     .then((data) => {
       cachedOdpt = { data, time: Date.now() };
-      return data;
     })
+    .catch(() => {})
     .finally(() => {
       fetchingPromise = undefined;
     });
 
   if (cachedOdpt) return cachedOdpt.data;
 
-  return fetchingPromise;
+  await fetchingPromise;
+  return cachedOdpt?.data ?? [];
 }
 
 export const Route = createFileRoute("/api/trains")({

@@ -3,8 +3,8 @@ import { fetchTrains } from "./fetchTrains";
 import { convertTrains } from "./convertTrains";
 
 const SNAPSHOT_INTERVAL = 15_000;
-const MAX_RETRIES = 3;
-const RETRY_DELAY = 2_000;
+const MAX_RETRIES = 2;
+const RETRY_DELAY = 1_000;
 
 type TrainGateway = {
   init(): Promise<void>;
